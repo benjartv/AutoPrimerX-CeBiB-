@@ -12,13 +12,13 @@
         <br />
         <h:form>
         <h:panelGrid columns="4" cellpadding="5">
-            <h:outputLabel for="sequence" value="Secuencia:" />
-            <p:inputText id="sequences" value="#{primerG3.sequences}" />
+            <h:outputLabel for="sequence" value="Secuencias:" />
+            <p:inputTextarea rows="20" cols="20" id="sequences" value="#{primerG3.sequences}" />
 
-            <p:commandButton value="Submit" update="answer" />
+            <p:commandButton value="Submit" update="answer" action="#{primerG3.submit()}" />
             <br/>
-            <h:outputLabel value="Complemento: "/>
-            <h:outputText id="answer" />
+            <h:outputLabel value="Log: "/>
+            <h:outputText id="answer" value="#{primerG3.log}" />
         </h:panelGrid>
         </h:form>
         

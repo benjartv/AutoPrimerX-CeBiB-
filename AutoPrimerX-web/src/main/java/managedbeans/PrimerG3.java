@@ -14,7 +14,16 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 public class PrimerG3 {
     private String sequences;
+    private String log;
 
+    public String getLog() {
+        return log;
+    }
+
+    public void setLog(String log) {
+        this.log = log;
+    }
+    
     public String getSequences() {
         return sequences;
     }
@@ -23,5 +32,19 @@ public class PrimerG3 {
         this.sequences = sequences;
     }
     
+    public void submit(){
+        String [] sequencesSplit = sequences.split("\n");
+        Integer largo = sequencesSplit[0].length();
+        System.out.println(largo);
+        // La ultima secuencia marca largo -1 no entiendo porque
+        for (int i = 1; i < sequencesSplit.length; i++) {
+               System.out.println("aa " + sequencesSplit[i].length() +" " +sequencesSplit[i] );
+               if(largo != sequencesSplit[i].length()) {
+                   log = "Las sequiencias deben tener el mismo largo";
+                   break;
+            } else log = "OK";
+        }
+    
+    }
     
 }
