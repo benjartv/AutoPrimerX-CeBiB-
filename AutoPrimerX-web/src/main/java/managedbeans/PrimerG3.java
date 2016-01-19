@@ -49,14 +49,15 @@ public class PrimerG3 {
         }
         
         Integer largo = sequencesSplit[0].length();
-        if(!validateSequence(sequencesSplit[0])){
-            log = "La secuencia "+sequencesSplit[0]+" es inválida";
+        boolean validate = validateSequence(sequencesSplit[0]);
+        if(!validate){
+            log = "La secuencia 1 "+sequencesSplit[0]+" es inválida";
         }
         
         // SE COMPRUEBA QUE LAS SECUENCIAS TENGAN EL MISMO LARGO
-        for (int i = 1; i < sequencesSplit.length; i++) {
+        for (int i = 1; i < sequencesSplit.length && validate; i++) {
             if(!validateSequence(sequencesSplit[i])){
-                log = "La secuencia "+(i+1)+" es inválida";
+                log = "La secuencia "+(i+1)+" "+sequencesSplit[i]+" es inválida";
                 break;
             }
             if(largo != sequencesSplit[i].length()) {
