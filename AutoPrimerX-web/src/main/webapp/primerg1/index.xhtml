@@ -3,22 +3,73 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
         Diseño de Primer's
+        <p:growl id="growl" life="5000" />
         <br />
         <h:form>
-        <h:panelGrid columns="4" cellpadding="5">
+        <h:panelGrid columns="3" cellpadding="4">
             <h:outputLabel for="sequence" value="Secuencia:" />
-            <p:inputText id="sequence" value="#{primerG1.sequence}" />
-
-            <p:commandButton value="Submit" update="answer" action="#{primerG1.submit}" />
+            <p:inputTextarea id="sequence" value="#{primerG1.sequence}" autoResize="false" rows="6" cols="33" onkeyup="javascript:this.value=this.value.toUpperCase();" >
+                <f:validator validatorId="custom.seqValidator" />
+            </p:inputTextarea>
+            <br/>
+            <h:outputLabel for="largo1" value="Largo 1: "/>
+            <p:inputText id="largo1" value="#{primerG1.largo1}" >
+                <f:validator validatorId="custom.numValidator" />
+            </p:inputText>
+            <br/>
+            <h:outputLabel for="largo2" value="Largo 2: "/>
+            <p:inputText id="largo2" value="#{primerG1.largo2}" >
+                <f:validator validatorId="custom.numValidator" />
+            </p:inputText>
+            <p:commandButton value="Submit" update="answer, length, tabla, tabla2, :growl" action="#{primerG1.submit}" />
+            <h:outputText value="Largo: " />
+            <h:outputText id="length" value="#{primerG1.size_seq}" />
             <br/>
             <h:outputLabel value="Complemento: "/>
-            <h:outputText id="answer" value="#{primerG1.rev_sequence}" />
+            <h:outputText id="answer" value="#{primerG1.com_sequence}" style="display:block;width:135px" />
+            <br/>
+        </h:panelGrid>
+        <h:panelGrid cellpadding="2" >
+            <p:dataTable id="tabla" var="dato" value="#{primerG1.primers_seq}">
+                <f:facet name="header">
+                    Primer's secuencia original
+                </f:facet>
+                <p:column headerText="Secuencia">
+                    <h:outputText value="#{dato.seq}" />
+                </p:column>
+
+                <p:column headerText="Tm">
+                    <h:outputText value="#{dato.tm}" />
+                </p:column>
+
+                <p:column headerText="GC %">
+                    <h:outputText value="#{dato.GC}" />
+                </p:column>
+            </p:dataTable>
+            <br/>
+        
+            <p:dataTable id="tabla2" var="dato" value="#{primerG1.primers_com}" >
+                <f:facet name="header">
+                    Primer's secuencia complementaria
+                </f:facet>
+                <p:column headerText="Secuencia">
+                    <h:outputText value="#{dato.seq}" />
+                </p:column>
+
+                <p:column headerText="Tm">
+                    <h:outputText value="#{dato.tm}" />
+                </p:column>
+
+                <p:column headerText="GC %">
+                    <h:outputText value="#{dato.GC}" />
+                </p:column>
+            </p:dataTable>
         </h:panelGrid>
         </h:form>
         
