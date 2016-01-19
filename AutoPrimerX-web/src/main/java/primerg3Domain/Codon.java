@@ -7,20 +7,20 @@ package primerg3Domain;
 
 
 public class Codon {
-    private String cddon;
+    private String codon;
     private Double probabilidad;
 
-    public Codon(String cddon, Double probabilidad) {
-        this.cddon = cddon;
+    public Codon(String codon, Double probabilidad) {
+        this.codon = codon;
         this.probabilidad = probabilidad;
     }
 
-    public String getCddon() {
-        return cddon;
+    public String getcodon() {
+        return codon;
     }
 
-    public void setCddon(String cddon) {
-        this.cddon = cddon;
+    public void setcodon(String codon) {
+        this.codon = codon;
     }
 
     public Double getProbabilidad() {

@@ -14,7 +14,7 @@ public class NomenclaturaIUPAC {
     private Integer A;
     private Integer C;
     private Integer G;
-    private Integer ToU;
+    private Integer ToU; //Timina o Uracilo
 
     public NomenclaturaIUPAC(String nombreletra, Integer A, Integer C, Integer G, Integer ToU) {
         this.nombreletra = nombreletra;

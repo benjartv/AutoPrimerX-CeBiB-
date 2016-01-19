@@ -37,25 +37,52 @@ public class PrimerG3 {
     }
     
     public void submit(){
-        // SE CARGA EL ACEDARIO
+        // SE CARGA EL ABECEDARIO
         createIUPAC();
         // SE CARGA EL USO DE CODONES
         createCodonUsage();
         
-        // SE COMPRUEBA QUE LAS SECUENCIAS TENGAN EL MISMO LARGO
+        //Cada línea de las secuencias de entrada se guarda de manera individual en un arreglo
         String [] sequencesSplit = sequences.split("\n");
         for (int i = 0; i < sequencesSplit.length; i++) {
             sequencesSplit[i] = sequencesSplit[i].trim();
         }
+        
         Integer largo = sequencesSplit[0].length();
-        for (int i = 1; i < sequencesSplit.length; i++) {
-               if(largo != sequencesSplit[i].length()) {
-                   log = "Las sequiencias deben tener el mismo largo";
-                   break;
-            } else log = "OK";
+        boolean validate = validateSequence(sequencesSplit[0]);
+        if(!validate){
+            log = "La secuencia 1 "+sequencesSplit[0]+" es inválida";
+        }
+        
+        // SE COMPRUEBA QUE LAS SECUENCIAS TENGAN EL MISMO LARGO
+        for (int i = 1; i < sequencesSplit.length && validate; i++) {
+            if(!validateSequence(sequencesSplit[i])){
+                log = "La secuencia "+(i+1)+" "+sequencesSplit[i]+" es inválida";
+                break;
+            }
+            if(largo != sequencesSplit[i].length()) {
+                log = "Las secuencias deben tener el mismo largo";
+                break;
+            } 
+            else{
+                log = "OK";
+            }
         }
         //////////////////////////////////////////////////////////////
     
+    }
+    
+    public boolean validateSequence(String seq){
+        boolean validate = true;
+        
+        for(int i=0; i<seq.length()-1; i++){
+            if(!(seq.substring(i, i+1).equals("A") || seq.substring(i, i+1).equals("C") || seq.substring(i, i+1).equals("D") || seq.substring(i, i+1).equals("E") || seq.substring(i, i+1).equals("F") || seq.substring(i, i+1).equals("G") || seq.substring(i, i+1).equals("H") || seq.substring(i, i+1).equals("I") || seq.substring(i, i+1).equals("K") || seq.substring(i, i+1).equals("L") || seq.substring(i, i+1).equals("M") || seq.substring(i, i+1).equals("N") || seq.substring(i, i+1).equals("P") || seq.substring(i, i+1).equals("Q") || seq.substring(i, i+1).equals("R") || seq.substring(i, i+1).equals("S") || seq.substring(i, i+1).equals("T") || seq.substring(i, i+1).equals("V") || seq.substring(i, i+1).equals("W") || seq.substring(i, i+1).equals("Y"))){
+                validate = false;
+                break;
+            }
+        }
+        
+        return validate;
     }
     
     public void createIUPAC(){
