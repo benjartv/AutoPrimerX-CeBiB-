@@ -9,66 +9,50 @@ import java.util.ArrayList;
 
 public class CondonUsage {
     
-        private ArrayList <Codon> G;
         private ArrayList <Codon> A;
+        private ArrayList <Codon> C;
+        private ArrayList <Codon> D;
+        private ArrayList <Codon> E;
+        private ArrayList <Codon> F;
+        private ArrayList <Codon> G;
+        private ArrayList <Codon> H;
+        private ArrayList <Codon> I;
+        private ArrayList <Codon> K;
         private ArrayList <Codon> L;
         private ArrayList <Codon> M;
-        private ArrayList <Codon> F;
-        private ArrayList <Codon> W;
-        private ArrayList <Codon> K;
-        private ArrayList <Codon> E;
-        private ArrayList <Codon> S;
-        private ArrayList <Codon> V;
-        private ArrayList <Codon> I;
-        private ArrayList <Codon> C;
-        private ArrayList <Codon> Y;
-        private ArrayList <Codon> H;
-        private ArrayList <Codon> R;
         private ArrayList <Codon> N;
-        private ArrayList <Codon> D;
+        private ArrayList <Codon> P;
+        private ArrayList <Codon> Q;
+        private ArrayList <Codon> R;
+        private ArrayList <Codon> S;
         private ArrayList <Codon> T;
+        private ArrayList <Codon> V;
+        private ArrayList <Codon> W;
+        private ArrayList <Codon> Y;
+
     // Esta variable guarda los nombres que significan los id de los aminoácidos
     public static final String [][] sinngleletter = {
-        {"G","Glycine","Gly"},
-        {"A","Alanine","Ala"},
-        {"L","Leucine","Leu"},
-        {"M","Methionine","Met"},
-        {"F","Phenylalanine","Phe"},
-        {"W","Tryptophan","Trp"},
-        {"K","Lysine","Lys"},
-        {"E","Glutamic Acid","Glu"},
-        {"S","Serine","Ser"},
-        {"V","Valine","Val"},
-        {"I","Isoleucine","Ile"},
-        {"C","Cysteine","Cys"},
-        {"Y","Tyrosine","Tyr"},
-        {"H","Histidine","His"},
-        {"R","Arginine","Arg"},
-        {"N","Asparagine","Asn"},
-        {"D","Aspartic Acid","Asp"},
-        {"T","Threonine","Thr"}
+        {"A", "Ala", "Alanine"},
+        {"C", "Cys", "Cysteine"},
+        {"D", "Asp", "Aspartic Acid"},
+        {"E", "Glu", "Glutamic Acid"},
+        {"F", "Phe", "Phenylalanine"},
+        {"G", "Gly", "Glycine"},
+        {"H", "His", "Histidine"},
+        {"I", "Ile", "Isoleucine"},
+        {"K", "Lys", "Lysine"},
+        {"L", "Leu", "Leucine"},
+        {"M", "Met", "Methionine"},
+        {"N", "Asn", "Asparagine"},
+        {"P", "Pro", "Proline"},
+        {"Q", "Gln", "Glutamine"},
+        {"R", "Arg", "Arginine"},
+        {"S", "Ser", "Serine"},
+        {"T", "Thr", "Threonine"},
+        {"V", "Val", "Valine"},
+        {"W", "Trp", "Tryptophan"},
+        {"Y", "Tyr", "Tyrosine"}
     };
-
-    public CondonUsage(ArrayList<Codon> G, ArrayList<Codon> A, ArrayList<Codon> L, ArrayList<Codon> M, ArrayList<Codon> F, ArrayList<Codon> W, ArrayList<Codon> K, ArrayList<Codon> E, ArrayList<Codon> S, ArrayList<Codon> V, ArrayList<Codon> I, ArrayList<Codon> C, ArrayList<Codon> Y, ArrayList<Codon> H, ArrayList<Codon> R, ArrayList<Codon> N, ArrayList<Codon> D, ArrayList<Codon> T) {
-        this.G = G;
-        this.A = A;
-        this.L = L;
-        this.M = M;
-        this.F = F;
-        this.W = W;
-        this.K = K;
-        this.E = E;
-        this.S = S;
-        this.V = V;
-        this.I = I;
-        this.C = C;
-        this.Y = Y;
-        this.H = H;
-        this.R = R;
-        this.N = N;
-        this.D = D;
-        this.T = T;
-    }
 
   
 /*
@@ -149,12 +133,28 @@ P CCA 16.92
 P CCT 17.54 
 P CCC 19.79
 */  
-    public ArrayList<Codon> getG() {
-        return G;
-    }
 
-    public void setG(ArrayList<Codon> G) {
+    public CondonUsage(ArrayList<Codon> A, ArrayList<Codon> C, ArrayList<Codon> D, ArrayList<Codon> E, ArrayList<Codon> F, ArrayList<Codon> G, ArrayList<Codon> H, ArrayList<Codon> I, ArrayList<Codon> K, ArrayList<Codon> L, ArrayList<Codon> M, ArrayList<Codon> N, ArrayList<Codon> P, ArrayList<Codon> Q, ArrayList<Codon> R, ArrayList<Codon> S, ArrayList<Codon> T, ArrayList<Codon> V, ArrayList<Codon> W, ArrayList<Codon> Y) {
+        this.A = A;
+        this.C = C;
+        this.D = D;
+        this.E = E;
+        this.F = F;
         this.G = G;
+        this.H = H;
+        this.I = I;
+        this.K = K;
+        this.L = L;
+        this.M = M;
+        this.N = N;
+        this.P = P;
+        this.Q = Q;
+        this.R = R;
+        this.S = S;
+        this.T = T;
+        this.V = V;
+        this.W = W;
+        this.Y = Y;
     }
 
     public ArrayList<Codon> getA() {
@@ -163,6 +163,70 @@ P CCC 19.79
 
     public void setA(ArrayList<Codon> A) {
         this.A = A;
+    }
+
+    public ArrayList<Codon> getC() {
+        return C;
+    }
+
+    public void setC(ArrayList<Codon> C) {
+        this.C = C;
+    }
+
+    public ArrayList<Codon> getD() {
+        return D;
+    }
+
+    public void setD(ArrayList<Codon> D) {
+        this.D = D;
+    }
+
+    public ArrayList<Codon> getE() {
+        return E;
+    }
+
+    public void setE(ArrayList<Codon> E) {
+        this.E = E;
+    }
+
+    public ArrayList<Codon> getF() {
+        return F;
+    }
+
+    public void setF(ArrayList<Codon> F) {
+        this.F = F;
+    }
+
+    public ArrayList<Codon> getG() {
+        return G;
+    }
+
+    public void setG(ArrayList<Codon> G) {
+        this.G = G;
+    }
+
+    public ArrayList<Codon> getH() {
+        return H;
+    }
+
+    public void setH(ArrayList<Codon> H) {
+        this.H = H;
+    }
+
+    public ArrayList<Codon> getI() {
+        return I;
+    }
+
+    public void setI(ArrayList<Codon> I) {
+        this.I = I;
+    }
+
+    public ArrayList<Codon> getK() {
+        return K;
+    }
+
+    public void setK(ArrayList<Codon> K) {
+        this.K = K;
     }
 
     public ArrayList<Codon> getL() {
@@ -181,84 +245,28 @@ P CCC 19.79
         this.M = M;
     }
 
-    public ArrayList<Codon> getF() {
-        return F;
+    public ArrayList<Codon> getN() {
+        return N;
     }
 
-    public void setF(ArrayList<Codon> F) {
-        this.F = F;
+    public void setN(ArrayList<Codon> N) {
+        this.N = N;
     }
 
-    public ArrayList<Codon> getW() {
-        return W;
+    public ArrayList<Codon> getP() {
+        return P;
     }
 
-    public void setW(ArrayList<Codon> W) {
-        this.W = W;
+    public void setP(ArrayList<Codon> P) {
+        this.P = P;
     }
 
-    public ArrayList<Codon> getK() {
-        return K;
+    public ArrayList<Codon> getQ() {
+        return Q;
     }
 
-    public void setK(ArrayList<Codon> K) {
-        this.K = K;
-    }
-
-    public ArrayList<Codon> getE() {
-        return E;
-    }
-
-    public void setE(ArrayList<Codon> E) {
-        this.E = E;
-    }
-
-    public ArrayList<Codon> getS() {
-        return S;
-    }
-
-    public void setS(ArrayList<Codon> S) {
-        this.S = S;
-    }
-
-    public ArrayList<Codon> getV() {
-        return V;
-    }
-
-    public void setV(ArrayList<Codon> V) {
-        this.V = V;
-    }
-
-    public ArrayList<Codon> getI() {
-        return I;
-    }
-
-    public void setI(ArrayList<Codon> I) {
-        this.I = I;
-    }
-
-    public ArrayList<Codon> getC() {
-        return C;
-    }
-
-    public void setC(ArrayList<Codon> C) {
-        this.C = C;
-    }
-
-    public ArrayList<Codon> getY() {
-        return Y;
-    }
-
-    public void setY(ArrayList<Codon> Y) {
-        this.Y = Y;
-    }
-
-    public ArrayList<Codon> getH() {
-        return H;
-    }
-
-    public void setH(ArrayList<Codon> H) {
-        this.H = H;
+    public void setQ(ArrayList<Codon> Q) {
+        this.Q = Q;
     }
 
     public ArrayList<Codon> getR() {
@@ -269,20 +277,12 @@ P CCC 19.79
         this.R = R;
     }
 
-    public ArrayList<Codon> getN() {
-        return N;
+    public ArrayList<Codon> getS() {
+        return S;
     }
 
-    public void setN(ArrayList<Codon> N) {
-        this.N = N;
-    }
-
-    public ArrayList<Codon> getD() {
-        return D;
-    }
-
-    public void setD(ArrayList<Codon> D) {
-        this.D = D;
+    public void setS(ArrayList<Codon> S) {
+        this.S = S;
     }
 
     public ArrayList<Codon> getT() {
@@ -292,8 +292,31 @@ P CCC 19.79
     public void setT(ArrayList<Codon> T) {
         this.T = T;
     }
-    
-    
+
+    public ArrayList<Codon> getV() {
+        return V;
+    }
+
+    public void setV(ArrayList<Codon> V) {
+        this.V = V;
+    }
+
+    public ArrayList<Codon> getW() {
+        return W;
+    }
+
+    public void setW(ArrayList<Codon> W) {
+        this.W = W;
+    }
+
+    public ArrayList<Codon> getY() {
+        return Y;
+    }
+
+    public void setY(ArrayList<Codon> Y) {
+        this.Y = Y;
+    }
+
     
 }
 
