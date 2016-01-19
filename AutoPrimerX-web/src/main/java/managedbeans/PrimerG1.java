@@ -27,8 +27,8 @@ public class PrimerG1{
     private String sequence;
     private String com_sequence;
     private int size_seq;
-    private int largo1;
-    private int largo2;
+    private int largo1 = 1;
+    private int largo2 = 1;
     
     private List<Primer> primers_seq;
     private List<Primer> primers_com;
@@ -96,6 +96,7 @@ public class PrimerG1{
 
 
     public void submit(){
+        sequence = sequence.replaceAll("\\s+","");
         size_seq = sequence.length();
         com_sequence = service.complemento(sequence);
         String rev_sequence = new StringBuilder(sequence).reverse().toString();
