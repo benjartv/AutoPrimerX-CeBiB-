@@ -16,98 +16,235 @@ and open the template in the editor.
         Seleccione el uso de codón de su preferencia:
         <br />
         <h:form>
-            <h:panelGrid columns="5" cellpadding="3">
+            <h:panelGrid columns="5" cellpadding="3" >
                 <h:column>
-                    <h:outputLabel for="sequences" value="A:" />
-                    <p:inputText id="sequences" value="" onkeyup=""/>
+                    <p:outputLabel value="A:" for="a" />
+                    <p:selectOneMenu id="a" value="#{selectCodon.aglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.a}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
                 </h:column>
                 <h:column>
-                    <h:outputLabel for="sequences2" value="C:" />
-                    <p:inputText id="sequences2" value="" onkeyup=""/>
+                    <p:outputLabel value="C:" for="c" />
+                    <p:selectOneMenu id="c" value="#{selectCodon.cglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.c}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
                 </h:column>
                 <h:column>
-                    <h:outputLabel for="sequences3" value="D:" />
-                    <p:inputText  id="sequences3" value="" onkeyup=""/>
+                    <p:outputLabel value="D:" for="d" />
+                    <p:selectOneMenu id="d" value="#{selectCodon.dglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.d}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
                 </h:column>
                 <h:column>
-                    <h:outputLabel for="sequences4" value="E:" />
-                    <p:inputText  id="sequences4" value="" onkeyup=""/>
-                </h:column>
-            </h:panelGrid>
-            <h:panelGrid columns="5" cellpadding="3">
-                <h:column>
-                    <h:outputLabel for="sequences5" value="F:" />
-                    <p:inputText  id="sequences5" value="" onkeyup=""/>
-                </h:column>
-
-                <h:column>
-                    <h:outputLabel for="sequences6" value="G:" />
-                    <p:inputText id="sequences6" value="" onkeyup=""/>
-                </h:column>
-                <h:column>
-                    <h:outputLabel for="sequences7" value="H:" />
-                    <p:inputText id="sequences7" value="" onkeyup=""/>
-                </h:column>
-                <h:column>
-                    <h:outputLabel for="sequences8" value="I:" />
-                    <p:inputText  id="sequences8" value="" onkeyup=""/>
-                </h:column>
-            </h:panelGrid>
-            <h:panelGrid columns="5" cellpadding="3">
-                <h:column>
-                    <h:outputLabel for="sequences9" value="K:" />
-                    <p:inputText  id="sequences9" value="" onkeyup=""/>
-                </h:column>
-                <h:column>
-                    <h:outputLabel for="sequences10" value="L:" />
-                    <p:inputText  id="sequences10" value="" onkeyup=""/>
-                </h:column>
-
-                <h:column>
-                    <h:outputLabel for="sequences11" value="M:" />
-                    <p:inputText  id="sequences11" value="" onkeyup=""/>
-                </h:column>
-
-                <h:column>
-                    <h:outputLabel for="sequences12" value="N:" />
-                    <p:inputText id="sequences12" value="" onkeyup=""/>
+                    <p:outputLabel value="E:" for="e" />
+                    <p:selectOneMenu id="e" value="#{selectCodon.eglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.e}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
                 </h:column>
             </h:panelGrid>
             <h:panelGrid columns="5" cellpadding="3">
                 <h:column>
-                    <h:outputLabel for="sequences13" value="P:" />
-                    <p:inputText id="sequences13" value="" onkeyup=""/>
+                <p:outputLabel value="F:" for="f" />
+                <p:selectOneMenu id="f" value="#{selectCodon.fglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.f}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                </p:selectOneMenu>
                 </h:column>
                 <h:column>
-                    <h:outputLabel for="sequences14" value="Q:" />
-                    <p:inputText  id="sequences14" value="" onkeyup=""/>
+                    <p:outputLabel value="G:" for="g" />
+                    <p:selectOneMenu id="g" value="#{selectCodon.gglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.g}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
                 </h:column>
                 <h:column>
-                    <h:outputLabel for="sequences15" value="R:" />
-                    <p:inputText  id="sequences15" value="" onkeyup=""/>
+                    <p:outputLabel value="H:" for="h" />
+                    <p:selectOneMenu id="h" value="#{selectCodon.hglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.h}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
                 </h:column>
                 <h:column>
-                    <h:outputLabel for="sequences16" value="S:" />
-                    <p:inputText  id="sequences16" value="" onkeyup=""/>
+                    <p:outputLabel value="I:" for="i" />
+                    <p:selectOneMenu id="i" value="#{selectCodon.iglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.i}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
+                </h:column>
+            </h:panelGrid>
+            <h:panelGrid columns="5" cellpadding="3">
+                <h:column>
+                    <p:outputLabel value="K:" for="k" />
+                    <p:selectOneMenu id="k" value="#{selectCodon.kglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.k}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu></h:column>
+                <h:column>
+                    <p:outputLabel value="L:" for="l" />
+                    <p:selectOneMenu id="l" value="#{selectCodon.lglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.l}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
+                </h:column>
+
+                <h:column>
+                    <p:outputLabel value="M:" for="m" />
+                    <p:selectOneMenu id="m" value="#{selectCodon.mglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.m}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
+                </h:column>
+
+                <h:column>
+                    <p:outputLabel value="N:" for="n" />
+                    <p:selectOneMenu id="n" value="#{selectCodon.nglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.n}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
+                </h:column>
+            </h:panelGrid>
+            <h:panelGrid columns="5" cellpadding="3">
+                <h:column>
+                <p:outputLabel value="P:" for="p" />
+                    <p:selectOneMenu id="p" value="#{selectCodon.pglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.p}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu></h:column>
+                <h:column>
+                    <p:outputLabel value="Q:" for="q" />
+                    <p:selectOneMenu id="q" value="#{selectCodon.qglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.q}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
+                </h:column>
+                <h:column>
+                    <p:outputLabel value="R:" for="r" />
+                    <p:selectOneMenu id="r" value="#{selectCodon.rglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.r}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
+                </h:column>
+                <h:column>
+                    <p:outputLabel value="S:" for="s" />
+                    <p:selectOneMenu id="s" value="#{selectCodon.sglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.s}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
                 </h:column>
 
             </h:panelGrid>
             <h:panelGrid columns="5" cellpadding="3">
                 <h:column>
-                    <h:outputLabel for="sequences17" value="T:" />
-                    <p:inputText id="sequences17" value="" onkeyup=""/>
+                    <p:outputLabel value="T:" for="t" />
+                    <p:selectOneMenu id="t" value="#{selectCodon.tglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.t}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
                 </h:column>
                 <h:column>
-                    <h:outputLabel for="sequences18" value="V:" />
-                    <p:inputText id="sequences18" value="" onkeyup=""/>
+                    <p:outputLabel value="V:" for="v" />
+                    <p:selectOneMenu id="v" value="#{selectCodon.vglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.v}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
                 </h:column>
                 <h:column>
-                    <h:outputLabel for="sequences19" value="W:" />
-                    <p:inputText  id="sequences19" value="" onkeyup=""/>
+                    <p:outputLabel value="W:" for="w" />
+                    <p:selectOneMenu id="w" value="#{selectCodon.wglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.w}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
                 </h:column>
                 <h:column>
-                    <h:outputLabel for="sequence20" value="Y:" />
-                    <p:inputText  id="sequences20" value="" onkeyup=""/>
+                    <p:outputLabel value="Y:" for="y" />
+                    <p:selectOneMenu id="y" value="#{selectCodon.yglobal}"  required="true" requiredMessage="Debe seleccionar un codón A" panelStyle="width:180px"
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{selectCodon.codonusage.y}"
+                       var="codon"
+                       itemValue="#{codon}"
+                       itemLabel="#{selectCodon.getlabel(codon)}"
+                       />
+                    </p:selectOneMenu>
                 </h:column>
             </h:panelGrid>
         </h:form>

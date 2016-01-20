@@ -18,7 +18,28 @@ import primerg3Domain.CondonUsage;
 public class selectCodon implements Serializable {
      
     private CondonUsage codonusage;
-     
+    private String Aglobal;
+    private String Cglobal;
+    private String Dglobal;
+    private String Eglobal;
+    private String Fglobal;
+    private String Gglobal;
+    private String Hglobal;
+    private String Iglobal;
+    private String Kglobal;
+    private String Lglobal;
+    private String Mglobal;
+    private String Nglobal;
+    private String Pglobal;
+    private String Qglobal;
+    private String Rglobal;
+    private String Sglobal;
+    private String Tglobal;
+    private String Vglobal;
+    private String Wglobal;
+    private String Yglobal;
+    
+    
     @PostConstruct
     public void init() {
         ArrayList <Codon> G= new ArrayList<>();
@@ -95,15 +116,195 @@ public class selectCodon implements Serializable {
             T.add(new Codon("ACT",13.12));
             T.add(new Codon("ACC",18.89));
         ArrayList <Codon> P= new ArrayList<>();
-            T.add(new Codon("CCU",17.5));
-            T.add(new Codon("CCC",19.8));
-            T.add(new Codon("CCA",16.9));
-            T.add(new Codon("CCG",6.9));
+            P.add(new Codon("CCU",17.5));
+            P.add(new Codon("CCC",19.8));
+            P.add(new Codon("CCA",16.9));
+            P.add(new Codon("CCG",6.9));
         ArrayList <Codon> Q= new ArrayList<>();
-            T.add(new Codon("CAA",12.3));
-            T.add(new Codon("CAG ", 34.2));
-        codonusage = new CondonUsage(A, C, D, E, F, G, H, I, K, M, N, L , P, Q, R, S, T, V, W, Y);
+            Q.add(new Codon("CAA",12.3));
+            Q.add(new Codon("CAG ", 34.2));
+        codonusage = new CondonUsage(A, C, D, E, F, G, H, I, K, L, M, N , P, Q, R, S, T, V, W, Y);
     }
- 
+
+    public CondonUsage getCodonusage() {
+        return codonusage;
+    }
+
+    public void setCodonusage(CondonUsage codonusage) {
+        this.codonusage = codonusage;
+    }
+
+    public String getA() {
+        return Aglobal;
+    }
+
+    public void setA(String A) {
+        this.Aglobal = A;
+    }
+
+    public String getAglobal() {
+        return Aglobal;
+    }
+
+    public void setAglobal(String Aglobal) {
+        this.Aglobal = Aglobal;
+    }
+
+    public String getCglobal() {
+        return Cglobal;
+    }
+
+    public void setCglobal(String Cglobal) {
+        this.Cglobal = Cglobal;
+    }
+
+    public String getDglobal() {
+        return Dglobal;
+    }
+
+    public void setDglobal(String Dglobal) {
+        this.Dglobal = Dglobal;
+    }
+
+    public String getEglobal() {
+        return Eglobal;
+    }
+
+    public void setEglobal(String Eglobal) {
+        this.Eglobal = Eglobal;
+    }
+
+    public String getFglobal() {
+        return Fglobal;
+    }
+
+    public void setFglobal(String Fglobal) {
+        this.Fglobal = Fglobal;
+    }
+
+    public String getGglobal() {
+        return Gglobal;
+    }
+
+    public void setGglobal(String Gglobal) {
+        this.Gglobal = Gglobal;
+    }
+
+    public String getHglobal() {
+        return Hglobal;
+    }
+
+    public void setHglobal(String Hglobal) {
+        this.Hglobal = Hglobal;
+    }
+
+    public String getIglobal() {
+        return Iglobal;
+    }
+
+    public void setIglobal(String Iglobal) {
+        this.Iglobal = Iglobal;
+    }
+
+    public String getKglobal() {
+        return Kglobal;
+    }
+
+    public void setKglobal(String Kglobal) {
+        this.Kglobal = Kglobal;
+    }
+
+    public String getLglobal() {
+        return Lglobal;
+    }
+
+    public void setLglobal(String Lglobal) {
+        this.Lglobal = Lglobal;
+    }
+
+    public String getMglobal() {
+        return Mglobal;
+    }
+
+    public void setMglobal(String Mglobal) {
+        this.Mglobal = Mglobal;
+    }
+
+    public String getNglobal() {
+        return Nglobal;
+    }
+
+    public void setNglobal(String Nglobal) {
+        this.Nglobal = Nglobal;
+    }
+
+    public String getPglobal() {
+        return Pglobal;
+    }
+
+    public void setPglobal(String Pglobal) {
+        this.Pglobal = Pglobal;
+    }
+
+    public String getQglobal() {
+        return Qglobal;
+    }
+
+    public void setQglobal(String Qglobal) {
+        this.Qglobal = Qglobal;
+    }
+
+    public String getRglobal() {
+        return Rglobal;
+    }
+
+    public void setRglobal(String Rglobal) {
+        this.Rglobal = Rglobal;
+    }
+
+    public String getSglobal() {
+        return Sglobal;
+    }
+
+    public void setSglobal(String Sglobal) {
+        this.Sglobal = Sglobal;
+    }
+
+    public String getTglobal() {
+        return Tglobal;
+    }
+
+    public void setTglobal(String Tglobal) {
+        this.Tglobal = Tglobal;
+    }
+
+    public String getVglobal() {
+        return Vglobal;
+    }
+
+    public void setVglobal(String Vglobal) {
+        this.Vglobal = Vglobal;
+    }
+
+    public String getWglobal() {
+        return Wglobal;
+    }
+
+    public void setWglobal(String Wglobal) {
+        this.Wglobal = Wglobal;
+    }
+
+    public String getYglobal() {
+        return Yglobal;
+    }
+
+    public void setYglobal(String Yglobal) {
+        this.Yglobal = Yglobal;
+    }
+    
+    
+    public String getlabel(Codon codon){
+        return codon.getcodon() + " : " + codon.getProbabilidad();
+    }
     
 }
