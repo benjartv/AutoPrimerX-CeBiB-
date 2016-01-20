@@ -14,7 +14,10 @@
         <h:panelGrid columns="4" cellpadding="5">
             <h:outputLabel for="sequence" value="Secuencias:" />
             <p:inputTextarea rows="20" cols="20" id="sequences" value="#{primerG3.sequences}" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-
+            <h:outputLabel for="conservado" value="Ingrese margen: " />
+            <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" />
+            <h:outputLabel for="tamanoPrimer" value="Ingrese tamaño partidor" />
+            <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" />
             <p:commandButton value="Submit" update="answer" action="#{primerG3.submit()}" />
             <br/>
             <h:outputLabel value="Log: "/>
