@@ -302,6 +302,18 @@ public class selectCodon implements Serializable {
         this.Yglobal = Yglobal;
     }
     
+    public Codon getProbabilidadMayor(ArrayList amino){
+        Codon max = (Codon) amino.get(0);
+        
+        for(int i=1; i<amino.size(); i++){
+            Codon aux = (Codon) amino.get(i);
+            if(max.getProbabilidad() < aux.getProbabilidad()){
+                max = aux;
+            }
+        }
+        
+        return max;
+    }
     
     public String getlabel(Codon codon){
         return codon.getcodon() + " : " + codon.getProbabilidad();

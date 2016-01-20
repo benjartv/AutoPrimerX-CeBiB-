@@ -18,12 +18,22 @@ public class PrimerG3 {
     private String sequences;
     private String log;
     public ArrayList<NomenclaturaIUPAC> iupac;
-    public CondonUsage codonusage;
+    //public CondonUsage codonusage;
     private Integer conservado;
     private Integer tamanoPrimer;
     public ArrayList <String> resultado=new ArrayList <String>();
     public ArrayList <String> consensos=new ArrayList <String>();
-    
+    public selectCodon codons = new selectCodon();
+    public ArrayList <String> secuenciasNucleotidos = new ArrayList <String>();
+
+    public ArrayList<String> getSecuenciasNucleotidos() {
+        return secuenciasNucleotidos;
+    }
+
+    public void setSecuenciasNucleotidos(ArrayList<String> secuenciasNucleotidos) {
+        this.secuenciasNucleotidos = secuenciasNucleotidos;
+    }
+        
     public Integer getConservado() {
         return conservado;
     }
@@ -89,15 +99,14 @@ public class PrimerG3 {
             else{
                 log = "OK";
                 prueba=true;
-                //System.out.println("--------------------------");
                 resultado = resultado=determinarConservado(sequencesSplit);
-                 consensos = determinarConsenso(resultado, conservado, tamanoPrimer);
+                consensos = determinarConsenso(resultado, conservado, tamanoPrimer);
                 
             }
         }
         //////////////////////////////////////////////////////////////
         for (int h = 0; h < consensos.size(); h++) {
-            System.out.print(consensos.get(h));
+            secuenciasNucleotidos.add(nucleotidSequence(consensos.get(h)));
         }
     
     }
@@ -106,7 +115,7 @@ public class PrimerG3 {
         boolean validate = true;
         
         for(int i=0; i<seq.length()-1; i++){
-            if(!(seq.substring(i, i+1).equals("A") || seq.substring(i, i+1).equals("C") || seq.substring(i, i+1).equals("D") || seq.substring(i, i+1).equals("E") || seq.substring(i, i+1).equals("F") || seq.substring(i, i+1).equals("G") || seq.substring(i, i+1).equals("H") || seq.substring(i, i+1).equals("I") || seq.substring(i, i+1).equals("K") || seq.substring(i, i+1).equals("L") || seq.substring(i, i+1).equals("M") || seq.substring(i, i+1).equals("N") || seq.substring(i, i+1).equals("P") || seq.substring(i, i+1).equals("Q") || seq.substring(i, i+1).equals("R") || seq.substring(i, i+1).equals("S") || seq.substring(i, i+1).equals("T") || seq.substring(i, i+1).equals("V") || seq.substring(i, i+1).equals("W") || seq.substring(i, i+1).equals("Y"))){
+            if(!(seq.substring(i, i+1).equals("-") || seq.substring(i, i+1).equals("A") || seq.substring(i, i+1).equals("C") || seq.substring(i, i+1).equals("D") || seq.substring(i, i+1).equals("E") || seq.substring(i, i+1).equals("F") || seq.substring(i, i+1).equals("G") || seq.substring(i, i+1).equals("H") || seq.substring(i, i+1).equals("I") || seq.substring(i, i+1).equals("K") || seq.substring(i, i+1).equals("L") || seq.substring(i, i+1).equals("M") || seq.substring(i, i+1).equals("N") || seq.substring(i, i+1).equals("P") || seq.substring(i, i+1).equals("Q") || seq.substring(i, i+1).equals("R") || seq.substring(i, i+1).equals("S") || seq.substring(i, i+1).equals("T") || seq.substring(i, i+1).equals("V") || seq.substring(i, i+1).equals("W") || seq.substring(i, i+1).equals("Y"))){
                 validate = false;
                 break;
             }
@@ -204,15 +213,207 @@ public class PrimerG3 {
             }
             String temporal = "";
             for (int i = 0; i < tam; i++) {
-                temporal = temporal.concat("[");
+                //temporal = temporal.concat("[");
                 temporal = temporal.concat(sitios.get(puntajeMax[1] + i));
                 tipo.set(puntajeMax[1] + i, "N");
-                temporal = temporal.concat("]");
+                //temporal = temporal.concat("]");
+                if(i != tam -1)
+                    temporal = temporal.concat("-");
             }
             puntajeMax[0] = 0;
             consenso.add(temporal);
         }
         return consenso;
+    }
+    
+    //Recibe Strings separados por un guión '-'
+    public String nucleotidSequence(String seq){
+        String nucleotidSeq = "";
+        String [] consenso = seq.split("-");
+        codons.init();
+        //System.out.println("Max codon F: "+codons.getProbabilidadMayor(codons.getCodonusage().getF()).getcodon());
+        
+        for (String cons : consenso){
+            if(cons.length() == 1){
+                String aux = getCodon(cons).getcodon();
+                System.out.println("______"+aux);
+                nucleotidSeq = nucleotidSeq.concat(aux);
+            }
+            else {
+                String nucleotidoIupac = "";
+                ArrayList <String> codones = new ArrayList<String>();
+                for(int i=0; i<cons.length(); i++){
+                    codones.add(getCodon(cons.substring(i, i+1)).getcodon());
+                }
+                
+                int largo = 3;
+                System.out.println("LARGO: "+largo);
+                
+                
+                for(int i=0; i<largo; i++){
+                    int sumaT = 0;
+                    int sumaA = 0;
+                    int sumaG = 0;
+                    int sumaC = 0;
+                    for(int j=0; j<codones.size(); j++){
+                        String aux = codones.get(j).substring(i, i+1);
+                        switch(aux){
+                            case "T":
+                                if(sumaT < 1){
+                                    sumaT += 1;
+                                }
+                                break;
+                            case "U":
+                                if(sumaT < 1){
+                                    sumaT += 1;
+                                }
+                                break;
+                            case "A":
+                                if(sumaA < 1000){
+                                    sumaA += 1000;
+                                }
+                                break;
+                            case "C":
+                                if(sumaC < 100){
+                                    sumaC += 100;
+                                }
+                                break;
+                            case "G":
+                                if(sumaG < 10){
+                                    sumaG += 10;
+                                }
+                                break;
+                        }
+                    }
+                    int suma = sumaT + sumaA + sumaC + sumaG;
+                
+                    switch(suma){
+                        case 1000:
+                            nucleotidoIupac = nucleotidoIupac.concat("A");
+                            break;
+                        case 100:
+                            nucleotidoIupac = nucleotidoIupac.concat("C");
+                            break; 
+                        case 10:
+                            nucleotidoIupac = nucleotidoIupac.concat("G");
+                            break;
+                        case 1:
+                            nucleotidoIupac = nucleotidoIupac.concat("T");
+                            break;
+                        case 1010:
+                            nucleotidoIupac = nucleotidoIupac.concat("R");
+                            break;
+                        case 101:
+                            nucleotidoIupac = nucleotidoIupac.concat("Y");
+                            break;
+                        case 110:
+                            nucleotidoIupac = nucleotidoIupac.concat("S");
+                            break;
+                        case 1001:
+                            nucleotidoIupac = nucleotidoIupac.concat("W");
+                            break;
+                        case 11:
+                            nucleotidoIupac = nucleotidoIupac.concat("K");
+                            break;
+                        case 1100:
+                            nucleotidoIupac = nucleotidoIupac.concat("M");
+                            break;
+                        case 111:
+                            nucleotidoIupac = nucleotidoIupac.concat("B");
+                            break;
+                        case 1011:
+                            nucleotidoIupac = nucleotidoIupac.concat("D");
+                            break;
+                        case 1101:
+                            nucleotidoIupac = nucleotidoIupac.concat("H");
+                            break;
+                        case 1110:
+                            nucleotidoIupac = nucleotidoIupac.concat("v");
+                            break;
+                        case 1111:
+                            nucleotidoIupac = nucleotidoIupac.concat("N");
+                            break;
+                        default:
+                            System.out.println("DEFAULT");
+                            break;
+                    }
+                }
+                System.out.println("++_______"+nucleotidoIupac);
+                nucleotidSeq = nucleotidSeq.concat(nucleotidoIupac);
+            }
+        }
+        return nucleotidSeq;
+    }
+    
+    public Codon getCodon(String amino){
+        Codon aux = new Codon();
+        
+        switch (amino) {
+            case "A":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getA());
+                break;
+            case "C":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getC());
+                break;
+            case "D":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getD());
+                break;
+            case "E":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getE());
+                break;
+            case "F":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getF());
+                break;
+            case "G":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getG());
+                break;
+            case "H":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getH());
+                break;
+            case "I":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getI());
+                break;
+            case "K":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getK());
+                break;
+            case "L":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getL());
+                break;
+            case "M":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getM());
+                break;
+            case "N":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getN());
+                break;
+            case "P":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getP());
+                break;
+            case "Q":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getQ());
+                break;
+            case "R":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getR());
+                break;
+            case "S":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getS());
+                break;
+            case "T":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getT());
+                break;
+            case "V":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getV());
+                break;
+            case "Y":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getY());
+                break;
+            case "W":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getW());
+                break;
+            default:
+                break;
+        }
+        
+        return aux;
     }
     
     public void createIUPAC(){
