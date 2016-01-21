@@ -8,7 +8,7 @@
         <title>Diseño Primer's</title>
     </h:head>
     <h:body>
-        Diseño de Primer's para clonación
+        <h3>Diseño de Primer's para clonación</h3>
         <p:growl id="growl" life="5000" />
         <br />
         <h:form>
@@ -34,15 +34,8 @@
             <h:outputLabel value="Complemento de secuencia de entrada: "/>
             <h:outputText id="answer" value="#{primerG1.com_sequence}" style="display:block;width:135px" />
             <br/>
-            
- 
 
- 
-
-
-                
-
-        <h:panelGrid cellpadding="2" >
+            <h:panelGrid cellpadding="2" >
             <p:dataTable id="tabla" var="dato" value="#{primerG1.primers_seq}">
                 <f:facet name="header">
                     Primer's secuencia original
