@@ -12,6 +12,7 @@
         <div class="container-fluid">
             <h:form>
                 <p:messages autoUpdate="true"/>
+                <p:growl id="growl" showDetail="true" sticky="true" /> 
                 <div class="row form-group">
                     <h1 class="col-md-offset-1">Microorganismos</h1>
                     <div class="col-md-4 col-md-offset-1">                    
@@ -33,6 +34,8 @@
                         <br/>
                         <p:commandButton value="Envíar" update="nucleotidos" action="#{primerG3.submit()}" />
                         <br/>
+                        <br/>
+                        <label>Secuencias consenso:</label>
                         <br/>
                         <p:dataList id="nucleotidos" value="#{primerG3.secuenciasNucleotidos}" var="seq" emptyMessage="">
                             #{seq}
