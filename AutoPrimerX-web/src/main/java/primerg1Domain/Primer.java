@@ -100,6 +100,7 @@ public class Primer {
         else{
             Tm = 64.9 +41*(G+C-16.4)/(A+T+G+C);
         }
+        Tm = (double)Math.round(Tm * 1000d) / 1000d;
         return Tm;
     }
     
@@ -112,6 +113,7 @@ public class Primer {
             }
         }
         GC = (cantidadGC / seq.length())*100.00;
+        GC = (double)Math.round(GC * 1000d) / 1000d;
         return GC;
     }
     
