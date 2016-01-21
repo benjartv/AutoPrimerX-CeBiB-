@@ -27,8 +27,8 @@ public class PrimerG1{
     private String sequence;
     private String com_sequence;
     private int size_seq;
-    private int largo1 = 1;
-    private int largo2 = 1;
+    private int largo1 = 20;
+    private int largo2 = 30;
     
     private List<Primer> primers_seq;
     private List<Primer> primers_com;
