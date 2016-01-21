@@ -5,36 +5,43 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core" >
     <h:head>
-        <title>Facelet Title</title>
+        <title>Diseño Primer's</title>
     </h:head>
     <h:body>
-        Diseño de Primer's
+        Diseño de Primer's para clonación
         <p:growl id="growl" life="5000" />
         <br />
         <h:form>
         <h:panelGrid columns="3" cellpadding="4">
-            <h:outputLabel for="sequence" value="Secuencia:" />
-            <p:inputTextarea id="sequence" value="#{primerG1.sequence}" autoResize="false" rows="6" cols="33" onkeyup="javascript:this.value=this.value.toUpperCase();" >
+            <h:outputLabel for="sequence" value="Ingrese la secuencia de entrada:" />
+            <p:inputTextarea id="sequence" value="#{primerG1.sequence}" autoResize="false" rows="6" cols="100" onkeyup="javascript:this.value=this.value.toUpperCase();" >
                 <f:validator validatorId="custom.seqValidator" />
             </p:inputTextarea>
             <br/>
-            <h:outputLabel for="largo1" value="Largo 1: "/>
-            <p:inputText id="largo1" value="#{primerG1.largo1}" >
-                <f:validator validatorId="custom.numValidator" />
-            </p:inputText>
+            <h:outputText id="displayRange" value="Largo del Primer entre #{primerG1.largo1} y #{primerG1.largo2}" />
+            <p:slider for="largo1,largo2" display="displayRange" style="width: 400px" range="true" displayTemplate="Largo del Primer entre {min} y {max}" />
+            <h:inputHidden id="largo1" value="#{primerG1.largo1}" />
+            <h:inputHidden id="largo2" value="#{primerG1.largo2}" />
             <br/>
-            <h:outputLabel for="largo2" value="Largo 2: "/>
-            <p:inputText id="largo2" value="#{primerG1.largo2}" >
-                <f:validator validatorId="custom.numValidator" />
-            </p:inputText>
-            <p:commandButton value="Submit" update="answer, length, tabla, tabla2, :growl" action="#{primerG1.submit}" />
-            <h:outputText value="Largo: " />
+
+            <p:commandButton value="Generar" update="answer, length, tabla, tabla2, :growl" action="#{primerG1.submit}" />
+        </h:panelGrid>
+            <p:separator />
+            <br/>
+            <h:outputText value="Has ingresado una secuencia de largo: " />
             <h:outputText id="length" value="#{primerG1.size_seq}" />
             <br/>
-            <h:outputLabel value="Complemento: "/>
+            <h:outputLabel value="Complemento de secuencia de entrada: "/>
             <h:outputText id="answer" value="#{primerG1.com_sequence}" style="display:block;width:135px" />
             <br/>
-        </h:panelGrid>
+            
+ 
+
+ 
+
+
+                
+
         <h:panelGrid cellpadding="2" >
             <p:dataTable id="tabla" var="dato" value="#{primerG1.primers_seq}">
                 <f:facet name="header">
