@@ -236,7 +236,6 @@ public class PrimerG3 {
         for (String cons : consenso){
             if(cons.length() == 1){
                 String aux = getCodon(cons).getcodon();
-                System.out.println("______"+aux);
                 nucleotidSeq = nucleotidSeq.concat(aux);
             }
             else {
@@ -247,7 +246,6 @@ public class PrimerG3 {
                 }
                 
                 int largo = 3;
-                System.out.println("LARGO: "+largo);
                 
                 
                 for(int i=0; i<largo; i++){
@@ -338,7 +336,6 @@ public class PrimerG3 {
                             break;
                     }
                 }
-                System.out.println("++_______"+nucleotidoIupac);
                 nucleotidSeq = nucleotidSeq.concat(nucleotidoIupac);
             }
         }
