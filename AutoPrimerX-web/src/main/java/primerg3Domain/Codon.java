@@ -14,7 +14,12 @@ public class Codon {
         this.codon = codon;
         this.probabilidad = probabilidad;
     }
-
+    
+    public Codon(){
+        this.codon = "";
+        this.probabilidad = 0.0;
+    }
+    
     public String getcodon() {
         return codon;
     }

@@ -14,12 +14,18 @@
         <h:panelGrid columns="4" cellpadding="5">
             <h:outputLabel for="sequence" value="Secuencias:" />
             <p:inputTextarea rows="20" cols="20" id="sequences" value="#{primerG3.sequences}" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-
-            <p:commandButton value="Submit" update="answer" action="#{primerG3.submit()}" />
+            <h:outputLabel for="conservado" value="Ingrese tolerancia: " />
+            <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" />
+            <h:outputLabel for="tamanoPrimer" value="Ingrese tamaño partidor" />
+            <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" />
+            <p:commandButton value="Envíar" update="nucleotidos" action="#{primerG3.submit()}" />
             <br/>
             <h:outputLabel value="Log: "/>
             <h:outputText id="answer" value="#{primerG3.log}" />
         </h:panelGrid>
+            <p:dataList id="nucleotidos" value="#{primerG3.secuenciasNucleotidos}" var="seq">
+                #{seq}
+            </p:dataList>
         </h:form>
         
     </h:body>
