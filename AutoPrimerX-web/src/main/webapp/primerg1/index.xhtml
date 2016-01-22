@@ -36,9 +36,9 @@
             <br/>
 
             <h:panelGrid cellpadding="2" >
-            <p:dataTable id="tabla" var="dato" value="#{primerG1.primers_seq}">
+            <p:dataTable id="tabla" var="dato" resizableColumns="true" value="#{primerG1.primers_fwd}">
                 <f:facet name="header">
-                    Primer's secuencia original
+                    Fwd Sequence Primer's
                 </f:facet>
                 <p:column headerText="Secuencia">
                     <h:outputText value="#{dato.seq}" />
@@ -50,13 +50,25 @@
 
                 <p:column headerText="GC %">
                     <h:outputText value="#{dato.GC}" />
+                </p:column>
+                
+                <p:column headerText="Size primer">
+                    <h:outputText value="#{dato.largo}" />
+                </p:column>
+                
+                <p:column headerText="LCS Fwd">
+                    <h:outputText value="#{dato.maxAF}" />
+                </p:column>
+                
+                <p:column headerText="LCS Rev">
+                    <h:outputText value="#{dato.maxAR}" />
                 </p:column>
             </p:dataTable>
             <br/>
         
-            <p:dataTable id="tabla2" var="dato" value="#{primerG1.primers_com}" >
+            <p:dataTable id="tabla2" var="dato" resizableColumns="true" value="#{primerG1.primers_rev}" >
                 <f:facet name="header">
-                    Primer's secuencia complementaria
+                    Rev Sequence Primer's 
                 </f:facet>
                 <p:column headerText="Secuencia">
                     <h:outputText value="#{dato.seq}" />
@@ -68,6 +80,18 @@
 
                 <p:column headerText="GC %">
                     <h:outputText value="#{dato.GC}" />
+                </p:column>
+                
+                <p:column headerText="Size primer">
+                    <h:outputText value="#{dato.largo}" />
+                </p:column>
+                
+                <p:column headerText="LCS Fwd">
+                    <h:outputText value="#{dato.maxAR}" />
+                </p:column>
+                
+                <p:column headerText="LCS Rev">
+                    <h:outputText value="#{dato.maxAF}" />
                 </p:column>
             </p:dataTable>
         </h:panelGrid>

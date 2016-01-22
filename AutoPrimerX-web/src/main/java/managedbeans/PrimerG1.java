@@ -30,8 +30,8 @@ public class PrimerG1{
     private int largo1 = 20;
     private int largo2 = 30;
     
-    private List<Primer> primers_seq;
-    private List<Primer> primers_com;
+    private List<Primer> primers_rev;
+    private List<Primer> primers_fwd;
     
     private Primer service = new Primer();
     
@@ -78,20 +78,20 @@ public class PrimerG1{
         this.com_sequence = com_sequence;
     }
 
-    public List<Primer> getPrimers_seq() {
-        return primers_seq;
+    public List<Primer> getPrimers_rev() {
+        return primers_rev;
     }
 
-    public void setPrimers_seq(List<Primer> primers_seq) {
-        this.primers_seq = primers_seq;
+    public void setPrimers_rev(List<Primer> primers_rev) {
+        this.primers_rev = primers_rev;
     }
 
-    public List<Primer> getPrimers_com() {
-        return primers_com;
+    public List<Primer> getPrimers_fwd() {
+        return primers_fwd;
     }
 
-    public void setPrimers_com(List<Primer> primers_com) {
-        this.primers_com = primers_com;
+    public void setPrimers_fwd(List<Primer> primers_fwd) {
+        this.primers_fwd = primers_fwd;
     }
 
 
@@ -99,9 +99,9 @@ public class PrimerG1{
         sequence = sequence.replaceAll("\\s+","");
         size_seq = sequence.length();
         com_sequence = service.complemento(sequence);
-        String rev_sequence = new StringBuilder(sequence).reverse().toString();
-        primers_com = service.createPrimer(com_sequence, largo1, largo2);
-        primers_seq = service.createPrimer(rev_sequence, largo1, largo2);
+        String sequence_back = new StringBuilder(sequence).reverse().toString();
+        primers_rev = service.createPrimer(sequence_back, com_sequence, largo1, largo2);
+        primers_fwd = service.createPrimer(com_sequence, sequence_back, largo1, largo2);
     }
     
     
