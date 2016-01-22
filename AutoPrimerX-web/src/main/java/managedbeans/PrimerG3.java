@@ -6,8 +6,10 @@
 package managedbeans;
 
 import java.util.ArrayList;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import primerg3Domain.Codon;
 import primerg3Domain.NomenclaturaIUPAC;
 import primerg3Domain.CondonUsage;
@@ -83,28 +85,30 @@ public class PrimerG3 {
         Integer largo = sequencesSplit[0].length();
         boolean validate = validateSequence(sequencesSplit[0]);
         if(!validate){
-            log = "La secuencia 1 "+sequencesSplit[0]+" es inválida";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La secuencia 1 "+sequencesSplit[0]+" es inválida", null));
+            return;
         }
         boolean prueba=false;
         // SE COMPRUEBA QUE LAS SECUENCIAS TENGAN EL MISMO LARGO
         for (int i = 1; i < sequencesSplit.length && validate; i++) {
             if(!validateSequence(sequencesSplit[i])){
-                log = "La secuencia "+(i+1)+" "+sequencesSplit[i]+" es inválida";
-                break;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La secuencia "+(i+1)+" "+sequencesSplit[i]+" es inválida", null));
+                return;
             }
             if(largo != sequencesSplit[i].length()) {
-                log = "Las secuencias deben tener el mismo largo";
-                break;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Las secuencias deben tener el mismo largo", null));
+                return;
             } 
             else{
                 log = "OK";
                 prueba=true;
-                resultado = resultado=determinarConservado(sequencesSplit);
-                consensos = determinarConsenso(resultado, conservado, tamanoPrimer);
-                
             }
         }
         //////////////////////////////////////////////////////////////
+        
+        resultado = resultado=determinarConservado(sequencesSplit);
+        consensos = determinarConsenso(resultado, conservado, tamanoPrimer);
+
         for (int h = 0; h < consensos.size(); h++) {
             secuenciasNucleotidos.add(nucleotidSequence(consensos.get(h)));
         }
@@ -114,7 +118,7 @@ public class PrimerG3 {
     public boolean validateSequence(String seq){
         boolean validate = true;
         
-        for(int i=0; i<seq.length()-1; i++){
+        for(int i=0; i<seq.length(); i++){
             if(!(seq.substring(i, i+1).equals("-") || seq.substring(i, i+1).equals("A") || seq.substring(i, i+1).equals("C") || seq.substring(i, i+1).equals("D") || seq.substring(i, i+1).equals("E") || seq.substring(i, i+1).equals("F") || seq.substring(i, i+1).equals("G") || seq.substring(i, i+1).equals("H") || seq.substring(i, i+1).equals("I") || seq.substring(i, i+1).equals("K") || seq.substring(i, i+1).equals("L") || seq.substring(i, i+1).equals("M") || seq.substring(i, i+1).equals("N") || seq.substring(i, i+1).equals("P") || seq.substring(i, i+1).equals("Q") || seq.substring(i, i+1).equals("R") || seq.substring(i, i+1).equals("S") || seq.substring(i, i+1).equals("T") || seq.substring(i, i+1).equals("V") || seq.substring(i, i+1).equals("W") || seq.substring(i, i+1).equals("Y"))){
                 validate = false;
                 break;
