@@ -2,7 +2,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      >
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -10,6 +13,29 @@
         </ui:define>
 
     <ui:define name="body">
+        <b:container>
+            <p:tabView orientation="top" id="tab_principal" dynamic="true" cache="true" effect ="fade" effectDuration ="normal">
+        <p:tab title="Diseño de Primer's" id="tab_secundario">
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:graphicImage  id="img1" value="/resources/images/lab.jpg" />
+                <h:outputText
+                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fermentum ornare magna, eu ullamcorper dolor cursus non. Nulla eleifend volutpat orci id cursus. In mattis accumsan faucibus. In a orci sed tortor ornare porta vel ut leo. Nunc quam diam, elementum et nunc quis, finibus commodo lacus. Vivamus vel eros aliquam, blandit justo sed, volutpat massa. Phasellus eu laoreet lorem. Vestibulum sem dui, dictum ut massa nec, suscipit congue nisi. Phasellus ullamcorper commodo lacus, a consectetur sapien vulputate maximus. Integer in quam id elit ullamcorper malesuada sed sed nunc. Maecenas imperdiet in augue non laoreet. Ut vel fermentum mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque pharetra massa non pretium laoreet. Nullam felis risus, vestibulum non velit tincidunt, lobortis malesuada urna." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Primer 2">
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:graphicImage id="img2"  value="/resources/images/lab2.jpg" />
+                <h:outputText value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fermentum ornare magna, eu ullamcorper dolor cursus non. Nulla eleifend volutpat orci id cursus. In mattis accumsan faucibus. In a orci sed tortor ornare porta vel ut leo. Nunc quam diam, elementum et nunc quis, finibus commodo lacus. Vivamus vel eros aliquam, blandit justo sed, volutpat massa. Phasellus eu laoreet lorem. Vestibulum sem dui, dictum ut massa nec, suscipit congue nisi. Phasellus ullamcorper commodo lacus, a consectetur sapien vulputate maximus. Integer in quam id elit ullamcorper malesuada sed sed nunc. Maecenas imperdiet in augue non laoreet. Ut vel fermentum mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque pharetra massa non pretium laoreet. Nullam felis risus, vestibulum non velit tincidunt, lobortis malesuada urna." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Microorganismos">
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:graphicImage  id="img3"  value="/resources/images/lab3.jpg" />
+                <h:outputText value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fermentum ornare magna, eu ullamcorper dolor cursus non. Nulla eleifend volutpat orci id cursus. In mattis accumsan faucibus. In a orci sed tortor ornare porta vel ut leo. Nunc quam diam, elementum et nunc quis, finibus commodo lacus. Vivamus vel eros aliquam, blandit justo sed, volutpat massa. Phasellus eu laoreet lorem. Vestibulum sem dui, dictum ut massa nec, suscipit congue nisi. Phasellus ullamcorper commodo lacus, a consectetur sapien vulputate maximus. Integer in quam id elit ullamcorper malesuada sed sed nunc. Maecenas imperdiet in augue non laoreet. Ut vel fermentum mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque pharetra massa non pretium laoreet. Nullam felis risus, vestibulum non velit tincidunt, lobortis malesuada urna." />
+            </h:panelGrid>
+        </p:tab>
+    </p:tabView>
+    </b:container>
     </ui:define>
     </ui:composition>
 </html>
