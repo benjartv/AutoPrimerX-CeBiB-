@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet library="css" name="main.css"/>
+        <h:outputScript library="js" name="main.js"/>
+    </h:head>
+    <b:container id="headerContainer">
+            <b:row id="headerTop" styleClass="show-grid">
+                <b:column span="4">
+                    <a id="logocebib" href="/AutoPrimerX-web/faces/index.xhtml"><h:graphicImage id="adaptar_logo" value="/resources/images/logo_usach.jpg"/><h:graphicImage id="adaptar_imagen" value="/resources/images/logo_cebib.png"/></a>       
+                </b:column>
+                <b:column id="topRight"  span="8">
+                    <b:row>
+                        <b:column  id="contacto">
+                            <h:outputText value="+56 9 un numero "/><b:iconAwesome name="phone" flip="H"/>
+                            <br />
+                            <h:outputText value="+56 9 un numero "/><b:iconAwesome name="phone" flip="H"/>
+                            <br />
+                            <h:outputText value="autroprimer@usach.cl "/><b:iconAwesome name="envelope-o"/>
+                        </b:column>
+                    </b:row>
+                </b:column>
+            </b:row>
+        </b:container>
+
+        <b:navBar brand="AUTOPRIMERX - CEBIB" brandHref="/AutoPrimerX-web/faces/index.xhtml">
+            <b:navbarLinks>
+                <b:navLink href="/faces/index.xhtml" value="INICIO" ></b:navLink>
+                    <b:navLink href="/faces/primerg1/index.xhtml" value="DISEÑO DE PRIMER"></b:navLink>
+                    <b:navLink href="/faces/primerg2/index.xhtml" value="PRIMER 2"></b:navLink>
+                    <b:navLink href="/faces/primerg3/index.xhtml" value="MICROORGANISMOS"></b:navLink>
+            </b:navbarLinks>
+        </b:navBar>               
+            <ui:insert name="body"/> 
+
+</html>

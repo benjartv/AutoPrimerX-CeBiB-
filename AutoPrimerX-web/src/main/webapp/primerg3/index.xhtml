@@ -3,55 +3,65 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>Microorganismos</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
-    </h:head>
-    <h:body>
-        <div class="container-fluid">
-            <h:form>
-                <p:messages autoUpdate="true"/>
-                <p:growl id="growl" showDetail="true" sticky="true" /> 
-                <div class="row form-group">
-                    <h1 class="col-md-offset-1">Microorganismos</h1>
-                    <div class="col-md-4 col-md-offset-1">                    
-                        <!--h:outputLabel for="sequence" value="Secuencias:" /-->
-                        <label>Ingrese las secuencias alineadas para la búsqueda de consensos</label>
-                        <p:inputTextarea rows="20" cols="50" id="sequences" value="#{primerG3.sequences}" required="true" requiredMessage="Debe ingresar por lo menos dos secuencias" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                    </div>
-                    <div class="col-md-4" >
-                        <!--h:outputLabel for="conservado" value="Ingrese tolerancia: " /-->
-                        <label>Ingrese la tolerancia:</label>
-                        <br/>
-                        <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="Debe ingresar la tolerancia"/>
-                        <br/>
-                        <!--h:outputLabel for="tamanoPrimer" value="Ingrese tamaño partidor" /-->
-                        <label>Ingrese el tamaño del partidor:</label>
-                        <br/>
-                        <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" required="true" requiredMessage="Debe ingresar el tamaño del partidor"/>
-                        <br/>
-                        <br/>
-                        <p:commandButton value="Envíar" update="nucleotidos" action="#{primerG3.submit()}" />
-                        <br/>
-                        <br/>
-                        <label>Secuencias consenso:</label>
-                        <br/>
-                        <p:dataList id="nucleotidos" value="#{primerG3.secuenciasNucleotidos}" var="seq" emptyMessage="">
-                            #{seq}
-                        </p:dataList>
-                    </div>
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Microorganismos"></h:outputText>
+        </ui:define>
+        <h:head>
+ 
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+        </h:head>
+        <ui:define name="body">
+
+            <h:body>
+                <div>
+                    <h:form>
+                        <p:messages autoUpdate="true"/>
+                        <p:growl id="growl" showDetail="true" sticky="true" /> 
+                        <div class="row form-group">
+                            <h1 class="col-md-offset-1">Microorganismos</h1>
+                            <div class="col-md-4 col-md-offset-1">                    
+                                <!--h:outputLabel for="sequence" value="Secuencias:" /-->
+                                <label>Ingrese las secuencias alineadas para la búsqueda de consensos</label>
+                                <p:inputTextarea rows="20" cols="50" id="sequences" value="#{primerG3.sequences}" required="true" requiredMessage="Debe ingresar por lo menos dos secuencias" onkeyup="javascript:this.value = this.value.toUpperCase();"/>
+                            </div>
+                            <div class="col-md-4" >
+                                <!--h:outputLabel for="conservado" value="Ingrese tolerancia: " /-->
+                                <label>Ingrese la tolerancia:</label>
+                                <br/>
+                                <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="Debe ingresar la tolerancia"/>
+                                <br/>
+                                <!--h:outputLabel for="tamanoPrimer" value="Ingrese tamaño partidor" /-->
+                                <label>Ingrese el tamaño del partidor:</label>
+                                <br/>
+                                <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" required="true" requiredMessage="Debe ingresar el tamaño del partidor"/>
+                                <br/>
+                                <br/>
+                                <p:commandButton value="Envíar" update="nucleotidos" action="#{primerG3.submit()}" />
+                                <br/>
+                                <br/>
+                                <label>Secuencias consenso:</label>
+                                <br/>
+                                <p:dataList id="nucleotidos" value="#{primerG3.secuenciasNucleotidos}" var="seq" emptyMessage="">
+                                    #{seq}
+                                </p:dataList>
+                            </div>
+                        </div>
+                    </h:form>    
                 </div>
-            </h:form>    
-        </div>
-        
-        <br />
-        <h:panelGrid columns="2" cellpadding="5">
-            <br/>
-            <!--h:outputLabel value="Log: "/-->
-            <h:outputText id="answer" value="#{primerG3.log}" />
-        </h:panelGrid>
-        
-        
-    </h:body>
+
+                <br />
+                <h:panelGrid columns="2" cellpadding="5">
+                    <br/>
+                    <!--h:outputLabel value="Log: "/-->
+                    <h:outputText id="answer" value="#{primerG3.log}" />
+                </h:panelGrid>
+
+
+            </h:body>
+        </ui:define>
+
+    </ui:composition>
 </html>

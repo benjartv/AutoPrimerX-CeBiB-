@@ -3,99 +3,108 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core" >
-    <h:head>
-        <title>Diseño Primer's</title>
-    </h:head>
-    <h:body>
-        <h3>Diseño de Primer's para clonación</h3>
-        <p:growl id="growl" life="5000" />
-        <br />
-        <h:form>
-        <h:panelGrid columns="3" cellpadding="4">
-            <h:outputLabel for="sequence" value="Ingrese la secuencia de entrada:" />
-            <p:inputTextarea id="sequence" value="#{primerG1.sequence}" autoResize="false" rows="6" cols="100" onkeyup="javascript:this.value=this.value.toUpperCase();" >
-                <f:validator validatorId="custom.seqValidator" />
-            </p:inputTextarea>
-            <br/>
-            <h:outputText id="displayRange" value="Largo del Primer entre #{primerG1.largo1} y #{primerG1.largo2}" />
-            <p:slider for="largo1,largo2" display="displayRange" style="width: 400px" range="true" displayTemplate="Largo del Primer entre {min} y {max}" />
-            <h:inputHidden id="largo1" value="#{primerG1.largo1}" />
-            <h:inputHidden id="largo2" value="#{primerG1.largo2}" />
-            <br/>
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui">
 
-            <p:commandButton value="Generar" update="answer, length, tabla, tabla2, :growl" action="#{primerG1.submit}" />
-        </h:panelGrid>
-            <p:separator />
-            <br/>
-            <h:outputText value="Has ingresado una secuencia de largo: " />
-            <h:outputText id="length" value="#{primerG1.size_seq}" />
-            <br/>
-            <h:outputLabel value="Complemento de secuencia de entrada: "/>
-            <h:outputText id="answer" value="#{primerG1.com_sequence}" style="display:block;width:135px" />
-            <br/>
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Diseño Primer's"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:body>
+                <b:container>
+                <h3>Diseño de Primer's para clonación</h3>
+                <p:growl id="growl" life="5000" />
+                <br />
+                <h:form>
+                    <h:panelGrid columns="3" cellpadding="4">
+                        <h:outputLabel for="sequence" value="Ingrese la secuencia de entrada:" />
+                        <p:inputTextarea id="sequence" value="#{primerG1.sequence}" autoResize="false" rows="6" cols="100" onkeyup="javascript:this.value = this.value.toUpperCase();" >
+                            <f:validator validatorId="custom.seqValidator" />
+                        </p:inputTextarea>
+                        <br/>
+                        <h:outputText id="displayRange" value="Largo del Primer entre #{primerG1.largo1} y #{primerG1.largo2}" />
+                        <p:slider for="largo1,largo2" display="displayRange" style="width: 400px" range="true" displayTemplate="Largo del Primer entre {min} y {max}" />
+                        <h:inputHidden id="largo1" value="#{primerG1.largo1}" />
+                        <h:inputHidden id="largo2" value="#{primerG1.largo2}" />
+                        <br/>
 
-            <h:panelGrid cellpadding="2" >
-            <p:dataTable id="tabla" var="dato" resizableColumns="true" value="#{primerG1.primers_fwd}">
-                <f:facet name="header">
-                    Fwd Sequence Primer's
-                </f:facet>
-                <p:column headerText="Secuencia">
-                    <h:outputText value="#{dato.seq}" />
-                </p:column>
+                        <p:commandButton value="Generar" update="answer, length, tabla, tabla2, :growl" action="#{primerG1.submit}" />
+                    </h:panelGrid>
+                    <p:separator />
+                    <br/>
+                    <h:outputText value="Has ingresado una secuencia de largo: " />
+                    <h:outputText id="length" value="#{primerG1.size_seq}" />
+                    <br/>
+                    <h:outputLabel value="Complemento de secuencia de entrada: "/>
+                    <h:outputText id="answer" value="#{primerG1.com_sequence}" style="display:block;width:135px" />
+                    <br/>
 
-                <p:column headerText="Tm">
-                    <h:outputText value="#{dato.tm}" />
-                </p:column>
+                    <h:panelGrid cellpadding="2" >
+                        <p:dataTable id="tabla" var="dato" resizableColumns="true" value="#{primerG1.primers_fwd}">
+                            <f:facet name="header">
+                                Fwd Sequence Primer's
+                            </f:facet>
+                            <p:column headerText="Secuencia">
+                                <h:outputText value="#{dato.seq}" />
+                            </p:column>
 
-                <p:column headerText="GC %">
-                    <h:outputText value="#{dato.GC}" />
-                </p:column>
-                
-                <p:column headerText="Size primer">
-                    <h:outputText value="#{dato.largo}" />
-                </p:column>
-                
-                <p:column headerText="LCS Fwd">
-                    <h:outputText value="#{dato.maxAF}" />
-                </p:column>
-                
-                <p:column headerText="LCS Rev">
-                    <h:outputText value="#{dato.maxAR}" />
-                </p:column>
-            </p:dataTable>
-            <br/>
-        
-            <p:dataTable id="tabla2" var="dato" resizableColumns="true" value="#{primerG1.primers_rev}" >
-                <f:facet name="header">
-                    Rev Sequence Primer's 
-                </f:facet>
-                <p:column headerText="Secuencia">
-                    <h:outputText value="#{dato.seq}" />
-                </p:column>
+                            <p:column headerText="Tm">
+                                <h:outputText value="#{dato.tm}" />
+                            </p:column>
 
-                <p:column headerText="Tm">
-                    <h:outputText value="#{dato.tm}" />
-                </p:column>
+                            <p:column headerText="GC %">
+                                <h:outputText value="#{dato.GC}" />
+                            </p:column>
 
-                <p:column headerText="GC %">
-                    <h:outputText value="#{dato.GC}" />
-                </p:column>
-                
-                <p:column headerText="Size primer">
-                    <h:outputText value="#{dato.largo}" />
-                </p:column>
-                
-                <p:column headerText="LCS Fwd">
-                    <h:outputText value="#{dato.maxAR}" />
-                </p:column>
-                
-                <p:column headerText="LCS Rev">
-                    <h:outputText value="#{dato.maxAF}" />
-                </p:column>
-            </p:dataTable>
-        </h:panelGrid>
-        </h:form>
-        
-    </h:body>
+                            <p:column headerText="Size primer">
+                                <h:outputText value="#{dato.largo}" />
+                            </p:column>
+
+                            <p:column headerText="LCS Fwd">
+                                <h:outputText value="#{dato.maxAF}" />
+                            </p:column>
+
+                            <p:column headerText="LCS Rev">
+                                <h:outputText value="#{dato.maxAR}" />
+                            </p:column>
+                        </p:dataTable>
+                        <br/>
+
+                        <p:dataTable id="tabla2" var="dato" resizableColumns="true" value="#{primerG1.primers_rev}" >
+                            <f:facet name="header">
+                                Rev Sequence Primer's 
+                            </f:facet>
+                            <p:column headerText="Secuencia">
+                                <h:outputText value="#{dato.seq}" />
+                            </p:column>
+
+                            <p:column headerText="Tm">
+                                <h:outputText value="#{dato.tm}" />
+                            </p:column>
+
+                            <p:column headerText="GC %">
+                                <h:outputText value="#{dato.GC}" />
+                            </p:column>
+
+                            <p:column headerText="Size primer">
+                                <h:outputText value="#{dato.largo}" />
+                            </p:column>
+
+                            <p:column headerText="LCS Fwd">
+                                <h:outputText value="#{dato.maxAR}" />
+                            </p:column>
+
+                            <p:column headerText="LCS Rev">
+                                <h:outputText value="#{dato.maxAF}" />
+                            </p:column>
+                        </p:dataTable>
+                    </h:panelGrid>
+                </h:form>
+            </b:container>
+            </h:body>
+        </ui:define>
+
+    </ui:composition>
 </html>
