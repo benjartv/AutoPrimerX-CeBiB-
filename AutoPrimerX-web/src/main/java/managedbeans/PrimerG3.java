@@ -27,7 +27,16 @@ public class PrimerG3 {
     public ArrayList <String> consensos=new ArrayList <String>();
     public selectCodon codons = new selectCodon();
     public ArrayList <String> secuenciasNucleotidos = new ArrayList <String>();
+    private Integer identico;
 
+    public Integer getIdentico() {
+        return identico;
+    }
+
+    public void setIdentico(Integer identico) {
+        this.identico = identico;
+    }
+    
     public ArrayList<String> getSecuenciasNucleotidos() {
         return secuenciasNucleotidos;
     }
@@ -164,11 +173,13 @@ public class PrimerG3 {
         ArrayList<String> consenso = new ArrayList<String>();
         ArrayList<String> tipo = new ArrayList<String>();
         for (int i = 0; i < sitios.size(); i++) {
-            if (sitios.get(i).length() == 1) {
+            //if (sitios.get(i).length() == 1) {
+            if (sitios.get(i).length() == (identico+1)) {
                 tipo.add("I");
                 //System.out.println("tamI " +sitios.get(i).length());
             }
-            if (sitios.get(i).length() <= sitioConservados && sitios.get(i).length() > 1) {
+            //if (sitios.get(i).length() <= sitioConservados && sitios.get(i).length() > 1) {
+            if (sitios.get(i).length() <= sitioConservados && sitios.get(i).length() > (identico+1)) {
                 tipo.add("C");
                 //System.out.println("tamC " +sitios.get(i).length());
             }
@@ -216,16 +227,41 @@ public class PrimerG3 {
                 }
             }
             String temporal = "";
+            boolean esMenor = false; //para determinar si un región conservada es menor a lo solicitado
             for (int i = 0; i < tam; i++) {
-                //temporal = temporal.concat("[");
-                temporal = temporal.concat(sitios.get(puntajeMax[1] + i));
-                tipo.set(puntajeMax[1] + i, "N");
-                //temporal = temporal.concat("]");
-                if(i != tam -1)
-                    temporal = temporal.concat("-");
+                if (tipo.get(puntajeMax[1] + i).equals("N") == true) {
+                    esMenor = true;
+                }
+                if (tipo.get(puntajeMax[1] + i).equals("N") == false) { 
+                    if (i > 0 && esMenor == false) {
+                        //System.out.println("i " +i);                        
+                        temporal = temporal.concat("-");
+                        temporal = temporal.concat(sitios.get(puntajeMax[1] + i));
+                    }
+                    if (i > 0 && esMenor == true) {
+                        //System.out.println("i " + i);
+                        if ((puntajeMax[1] + i) - 1 < posicion) {
+                            temporal = temporal.concat("-");
+                            temporal = temporal.concat(sitios.get(puntajeMax[1] + i));
+                        }
+                    }
+                    if (i == 0) {
+                        temporal = temporal.concat(sitios.get(puntajeMax[1] + i));
+                    }
+                    tipo.set(puntajeMax[1] + i, "N");
+                    //temporal=temporal.concat("]");
+                    /*if(i != tam -1)
+                        temporal = temporal.concat("-");*/
+                }
             }
             puntajeMax[0] = 0;
-            consenso.add(temporal);
+            if (esMenor == false) {
+                consenso.add(temporal);
+            }
+            if (esMenor == true) {
+                int tempTam = consenso.size() - 1;
+                consenso.set(tempTam, consenso.get(tempTam).concat(temporal));
+            }
         }
         return consenso;
     }
