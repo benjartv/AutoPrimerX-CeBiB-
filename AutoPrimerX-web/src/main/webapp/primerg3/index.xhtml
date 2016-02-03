@@ -29,14 +29,18 @@
                             </div>
                             <div class="col-md-4" >
                                 <!--h:outputLabel for="conservado" value="Ingrese tolerancia: " /-->
-                                <label>Ingrese la tolerancia:</label>
+                                <label>Ingrese la tolerancia para aminoácidos conservados:</label>
                                 <br/>
-                                <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="Debe ingresar la tolerancia"/>
+                                <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="Debe ingresar la tolerancia para aminoácidos conservados"/>
+                                <br/>
+                                <label>Ingrese la tolerancia para aminoácidos idénticos</label>
+                                <br/>
+                                <p:inputText type="number" id="identico" value="#{primerG3.identico}" required="true" requiredMessage="Debe ingresar la tolerancia para aminoácidos idénticos" />
                                 <br/>
                                 <!--h:outputLabel for="tamanoPrimer" value="Ingrese tamaño partidor" /-->
-                                <label>Ingrese el tamaño del partidor:</label>
+                                <label>Ingrese el tamaño de la región conservada:</label>
                                 <br/>
-                                <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" required="true" requiredMessage="Debe ingresar el tamaño del partidor"/>
+                                <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" required="true" requiredMessage="Debe ingresar el tamaño de la región conservada"/>
                                 <br/>
                                 <br/>
                                 <p:commandButton value="Envíar" update="nucleotidos" action="#{primerG3.submit()}" />
