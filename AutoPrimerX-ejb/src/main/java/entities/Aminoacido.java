@@ -13,27 +13,36 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author Dany
  */
 @Entity
-public class TipoOrganismo implements Serializable {
+public class Aminoacido implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy=IDENTITY)
-    @Column(name = "id_tipoOrganismo")
+    @Column(name = "id_aminoacido")
     private Long id;
     
-    @NotNull(message = "Debe tener un nombre")
-    private String nombre;
+    @Size(max=1)
+    @NotNull(message = "Debe tener un letra")
+    private String letraAminoacido;
     
-    @OneToMany(cascade = ALL,mappedBy ="tipoOrganismo")
-    private List<Aminoacido> aminoacido;
- 
+    @NotNull(message = "Debe pertenecer a un aminoacido")
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private TipoOrganismo tipoOrganismo;
+    
+    @OneToMany(cascade = ALL,mappedBy ="aminoacido")
+    private List<CodonEntity> codonEntity;
+    
     public Long getId() {
         return id;
     }
@@ -42,21 +51,32 @@ public class TipoOrganismo implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getLetraAminoacido() {
+        return letraAminoacido;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setLetraAminoacido(String letraAminoacido) {
+        this.letraAminoacido = letraAminoacido;
     }
 
-    public List<Aminoacido> getAminoacido() {
-        return aminoacido;
+    public TipoOrganismo getTipoOrganismo() {
+        return tipoOrganismo;
     }
 
-    public void setAminoacido(List<Aminoacido> aminoacido) {
-        this.aminoacido = aminoacido;
+    public void setTipoOrganismo(TipoOrganismo tipoOrganismo) {
+        this.tipoOrganismo = tipoOrganismo;
     }
+
+    public List<CodonEntity> getCodonEntity() {
+        return codonEntity;
+    }
+
+    public void setCodonEntity(List<CodonEntity> codonEntity) {
+        this.codonEntity = codonEntity;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -67,10 +87,10 @@ public class TipoOrganismo implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TipoOrganismo)) {
+        if (!(object instanceof Aminoacido)) {
             return false;
         }
-        TipoOrganismo other = (TipoOrganismo) object;
+        Aminoacido other = (Aminoacido) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -79,7 +99,7 @@ public class TipoOrganismo implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.tipoOrganismo[ id=" + id + " ]";
+        return "entities.Aminoacido[ id=" + id + " ]";
     }
     
 }

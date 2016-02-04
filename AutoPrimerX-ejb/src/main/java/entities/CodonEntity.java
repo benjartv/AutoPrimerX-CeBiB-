@@ -6,34 +6,38 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.List;
-import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author Dany
  */
 @Entity
-public class TipoOrganismo implements Serializable {
+public class CodonEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy=IDENTITY)
-    @Column(name = "id_tipoOrganismo")
+    @Column(name = "id_codon")
     private Long id;
     
+    @Size(max=3)
     @NotNull(message = "Debe tener un nombre")
-    private String nombre;
+    private String nombre_codon;
+    @NotNull(message = "Debe tener un valor de probabilidad")
+    private Double probabilidad;
     
-    @OneToMany(cascade = ALL,mappedBy ="tipoOrganismo")
-    private List<Aminoacido> aminoacido;
- 
+    @NotNull(message = "Debe pertenecer a un aminoacido")
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private Aminoacido aminoacido;
     public Long getId() {
         return id;
     }
@@ -42,21 +46,31 @@ public class TipoOrganismo implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombre_codon() {
+        return nombre_codon;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre_codon(String nombre_codon) {
+        this.nombre_codon = nombre_codon;
     }
 
-    public List<Aminoacido> getAminoacido() {
+    public Double getProbabilidad() {
+        return probabilidad;
+    }
+
+    public void setProbabilidad(Double probabilidad) {
+        this.probabilidad = probabilidad;
+    }
+
+    public Aminoacido getAminoacido() {
         return aminoacido;
     }
 
-    public void setAminoacido(List<Aminoacido> aminoacido) {
+    public void setAminoacido(Aminoacido aminoacido) {
         this.aminoacido = aminoacido;
     }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -67,10 +81,10 @@ public class TipoOrganismo implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TipoOrganismo)) {
+        if (!(object instanceof CodonEntity)) {
             return false;
         }
-        TipoOrganismo other = (TipoOrganismo) object;
+        CodonEntity other = (CodonEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -79,7 +93,7 @@ public class TipoOrganismo implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.tipoOrganismo[ id=" + id + " ]";
+        return "entities.CodonEntity[ id=" + id + " ]";
     }
     
 }

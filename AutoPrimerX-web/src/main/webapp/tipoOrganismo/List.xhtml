@@ -14,7 +14,7 @@
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="TipoOrganismoListForm" prependId="false">
+            <h:form id="TipoOrganismoListForm">
                 <p:panel header="#{bundle.ListTipoOrganismoTitle}">
                     <p:dataTable id="datalist" value="#{tipoOrganismoController.items}" var="item"
                                  selectionMode="single" selection="#{tipoOrganismoController.selected}"
