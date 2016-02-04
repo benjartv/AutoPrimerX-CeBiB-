@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      >
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Ingresar Codon Usage"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <b:container>
+                <h:form>
+                <p:panelGrid style="margin-top:20px" styleClass="panelGridCenter">
+                    <p:row>
+                        <div align="left"><p:column colspan="20"  style="font-weight:bold" > Uso de codones</p:column></div>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column colspan="20">
+                        <p:outputLabel value="Organismo: " for="orgamismo" style="margin-right:20px"/>
+                        <p:inputText id="orgamismo" value="#{codonEntityController.selected.id}" title="Ingrese la especie" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column > </p:column>
+                        <p:column >Codon</p:column>
+                        <p:column >Aminoácido</p:column>
+                        <p:column >Porcentaje</p:column>
+                        
+                        <p:column >Codon</p:column>
+                        <p:column >Aminoácido</p:column>
+                        <p:column >Porcentaje</p:column>
+                        
+                        <p:column >Codon</p:column>
+                        <p:column >Aminoácido</p:column>
+                        <p:column >Porcentaje</p:column>
+                        
+                        <p:column >Codon</p:column>
+                        <p:column >Aminoácido</p:column>
+                        <p:column >Porcentaje</p:column>
+                        
+                        <p:column > </p:column>
+                    </p:row>
+
+
+                    <p:row>
+                        <p:column rowspan="11" style="font-weight: bold;">U</p:column>
+                        
+                        <p:column style="font-weight: bold;">UUU</p:column>
+                        <p:column style="font-weight: bold;">Phe(F)</p:column>
+                        <p:column >
+                            <p:inputText style="width: 50px;" id="porcetaje" value="#{codonEntityController.selected.id}" /> %
+                        </p:column>
+                        <p:column style="font-weight: bold;">UCU</p:column>
+                        <p:column style="font-weight: bold;">Ser(S)</p:column>
+                        <p:column >
+                            <p:inputText style="width: 50px;" id="porcetaje" value="#{codonEntityController.selected.id}" /> %
+                        </p:column>   
+                        <p:column style="font-weight: bold;">UAU</p:column>
+                        <p:column style="font-weight: bold;">Tyr(Y)</p:column>
+                        <p:column >
+                            <p:inputText style="width: 50px;" id="porcetaje" value="#{codonEntityController.selected.id}" /> %
+                        </p:column>   
+                        <p:column style="font-weight: bold;">UGU</p:column>
+                        <p:column style="font-weight: bold;">Cys(C)</p:column>
+                        <p:column >
+                            <p:inputText style="width: 50px;" id="porcetaje" value="#{codonEntityController.selected.id}" /> %
+                        </p:column> 
+                        
+                        <p:column rowspan="2" style="font-weight: bold;">U</p:column>
+                        
+                    </p:row>           
+                </p:panelGrid>
+                </h:form>
+            </b:container>
+        </ui:define>
+    </ui:composition>
+</html>
+

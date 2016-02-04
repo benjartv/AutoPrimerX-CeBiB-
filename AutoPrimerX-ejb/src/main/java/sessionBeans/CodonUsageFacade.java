@@ -5,7 +5,7 @@
  */
 package sessionBeans;
 
-import entities.Aminoacido;
+import entities.CodonUsage;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Dany
  */
 @Stateless
-public class AminoacidoFacade extends AbstractFacade<Aminoacido> implements AminoacidoFacadeLocal {
+public class CodonUsageFacade extends AbstractFacade<CodonUsage> implements CodonUsageFacadeLocal {
     @PersistenceContext(unitName = "AutoPrimerX")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class AminoacidoFacade extends AbstractFacade<Aminoacido> implements Amin
         return em;
     }
 
-    public AminoacidoFacade() {
-        super(Aminoacido.class);
+    public CodonUsageFacade() {
+        super(CodonUsage.class);
     }
     
 }

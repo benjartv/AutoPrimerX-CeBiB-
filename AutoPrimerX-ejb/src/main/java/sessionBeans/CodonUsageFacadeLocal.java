@@ -5,7 +5,7 @@
  */
 package sessionBeans;
 
-import entities.CodonEntity;
+import entities.CodonUsage;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author Dany
  */
 @Local
-public interface CodonEntityFacadeLocal {
+public interface CodonUsageFacadeLocal {
 
-    void create(CodonEntity codonEntity);
+    void create(CodonUsage codonUsage);
 
-    void edit(CodonEntity codonEntity);
+    void edit(CodonUsage codonUsage);
 
-    void remove(CodonEntity codonEntity);
+    void remove(CodonUsage codonUsage);
 
-    CodonEntity find(Object id);
+    CodonUsage find(Object id);
 
-    List<CodonEntity> findAll();
+    List<CodonUsage> findAll();
 
-    List<CodonEntity> findRange(int[] range);
+    List<CodonUsage> findRange(int[] range);
 
     int count();
     

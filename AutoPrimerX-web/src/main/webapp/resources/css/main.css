@@ -118,3 +118,7 @@ border: none;
     color:#ffffff;
     font-weight: normal;
 }
+
+.panelGridCenter {
+    margin: 0 auto;
+}
