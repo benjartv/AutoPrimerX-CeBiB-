@@ -17,12 +17,14 @@
 
             <h:body>
                 <div>
-                    <h:form>
+                    <h:form enctype="multipart/form-data">
                         <p:messages autoUpdate="true"/>
                         <p:growl id="growl" showDetail="true" sticky="true" /> 
                         <div class="row form-group">
                             <h1 class="col-md-offset-1">Microorganismos</h1>
-                            <div class="col-md-4 col-md-offset-1">                    
+                            <div class="col-md-4 col-md-offset-1">
+                                <!--h:inputFile id="file" value="# {primerG3.file}" required="true" requiredMessage="Debe seleccionar un archivo">/-->
+                                 <p:fileUpload value="#{primerG3.file}" mode="simple" required="true" requiredMessage="Debe seleccionar un archivo"/>
                                 <!--h:outputLabel for="sequence" value="Secuencias:" /-->
                                 <label>Ingrese las secuencias alineadas para la búsqueda de consensos</label>
                                 <p:inputTextarea rows="20" cols="50" id="sequences" value="#{primerG3.sequences}" required="true" requiredMessage="Debe ingresar por lo menos dos secuencias" onkeyup="javascript:this.value = this.value.toUpperCase();"/>
@@ -43,7 +45,10 @@
                                 <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" required="true" requiredMessage="Debe ingresar el tamaño de la región conservada"/>
                                 <br/>
                                 <br/>
-                                <p:commandButton value="Envíar" update="nucleotidos" action="#{primerG3.submit()}" />
+                                <p:commandButton value="Envíar" update="nucleotidos" actionListener="#{primerG3.submit()}" ajax="false"/>
+                                <!--h:commandButton value="Envíar" action="# {primerG3.submit()}" -->
+                                    <!--f:ajax execute="@form" render="nucleotidos"  /-->
+                                <!--/h:commandButton-->
                                 <br/>
                                 <br/>
                                 <label>Secuencias consenso:</label>

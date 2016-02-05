@@ -5,14 +5,17 @@
  */
 package managedbeans;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import org.primefaces.model.UploadedFile;
 import primerg3Domain.Codon;
 import primerg3Domain.NomenclaturaIUPAC;
-import primerg3Domain.CondonUsage;
 
 @Named(value = "primerG3")
 @ManagedBean
@@ -28,7 +31,18 @@ public class PrimerG3 {
     public selectCodon codons = new selectCodon();
     public ArrayList <String> secuenciasNucleotidos = new ArrayList <String>();
     private Integer identico;
+    private UploadedFile file;
+    public ArrayList<ArrayList<String>> input= new ArrayList<ArrayList<String>>();
+    public ArrayList<Integer> posiciones= new ArrayList<Integer>();  
 
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+    
     public Integer getIdentico() {
         return identico;
     }
@@ -77,9 +91,56 @@ public class PrimerG3 {
         this.sequences = sequences;
     }
     
-    public void submit(){
+    public void submit() throws IOException{
         int sitioConservado = conservado;
         
+        BufferedReader br=null;
+        try{
+            br = new BufferedReader(new InputStreamReader(file.getInputstream()));
+            String linea;
+            ArrayList<String> identificador= new ArrayList<String>();;
+            ArrayList<String> secuencia= new ArrayList<String>();;
+            int contador=-1;
+            boolean primero=false;
+            //linea = br.readLine();
+            while ((linea = br.readLine()) != null) {
+                if (linea.length() == 0) {
+                    //System.out.println("soy un salto");
+                }
+                else{
+                    if(linea.charAt(0)=='>'){
+                        //poner identificador
+                        identificador.add(linea);
+                        contador++;
+                        primero = true;
+                        //System.out.println(linea);
+                    }
+                    else{
+                        if (primero == true) {
+                            secuencia.add(linea);
+                            primero = false;
+                        } else {
+                            //System.out.println("concat");
+                            linea = secuencia.get(contador).concat(linea);
+                            secuencia.set(contador, linea);
+                            //System.out.println(linea);
+                        }
+
+                    }
+                }
+                
+            }
+            input.add(identificador);
+            input.add(secuencia);
+            
+        }catch (IOException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                br.close(); 
+            } catch (IOException e) {
+            }
+        }
         // SE CARGA EL ABECEDARIO
         createIUPAC();
         // SE CARGA EL USO DE CODONES
@@ -117,7 +178,12 @@ public class PrimerG3 {
         
         resultado = resultado=determinarConservado(sequencesSplit);
         consensos = determinarConsenso(resultado, conservado, tamanoPrimer);
+        
+        /*for (int i = 0; i < input.size(); i++) {
+            System.out.println(i + " " + input.get(i));
 
+        }*/
+        
         for (int h = 0; h < consensos.size(); h++) {
             secuenciasNucleotidos.add(nucleotidSequence(consensos.get(h)));
         }
@@ -257,10 +323,19 @@ public class PrimerG3 {
             puntajeMax[0] = 0;
             if (esMenor == false) {
                 consenso.add(temporal);
+                posiciones.add(puntajeMax[1]);
+                if (puntajeMax[2] >= sitios.size()) {
+                    puntajeMax[2] = sitios.size() - 1;
+                }
+                posiciones.add(puntajeMax[2]);
             }
             if (esMenor == true) {
                 int tempTam = consenso.size() - 1;
                 consenso.set(tempTam, consenso.get(tempTam).concat(temporal));
+                if (puntajeMax[2] >= sitios.size()) {
+                    puntajeMax[2] = sitios.size() - 1;
+                }
+                posiciones.set(posiciones.size() - 1, puntajeMax[2]);
             }
         }
         return consenso;
