@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CodonUsageViewDlg" widgetVar="CodonUsageViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCodonUsageTitle}">
+            <h:form id="CodonUsageViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{codonUsageController.selected != null}">
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_id}"/>
+                        <h:outputText value="#{codonUsageController.selected.id}" title="#{bundle.ViewCodonUsageTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_nombreOrganismo}"/>
+                        <h:outputText value="#{codonUsageController.selected.nombreOrganismo}" title="#{bundle.ViewCodonUsageTitle_nombreOrganismo}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UUU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UUU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UUU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UUU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UUU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UUU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UCU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UCU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UCU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UCU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UCU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UCU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UAU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UAU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UAU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UAU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UAU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UAU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UGU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UGU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UGU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UGU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UGU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UGU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UUC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UUC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UUC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UUC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UUC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UUC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UCC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UCC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UCC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UCC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UCC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UCC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UAC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UAC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UAC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UAC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UAC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UAC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UGC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UGC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UGC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UGC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UGC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UGC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UUA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UUA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UUA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UUA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UUA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UUA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UCA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UCA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UCA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UCA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UCA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UCA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UAA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UAA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UAA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UAA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UAA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UAA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UGA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UGA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UGA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UGA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UGA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UGA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UUG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UUG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UUG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UUG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UUG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UUG_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UCG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UCG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UCG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UCG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UCG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UCG_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UAG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UAG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UAG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UAG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UAG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UAG_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UGG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.UGG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_UGG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_UGG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.UGG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_UGG_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CUU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CUU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CUU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CUU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CUU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CUU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CCU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CCU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CCU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CCU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CCU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CCU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CAU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CAU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CAU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CAU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CAU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CAU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CGU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CGU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CGU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CGU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CGU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CGU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CUC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CUC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CUC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CUC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CUC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CUC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CCC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CCC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CCC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CCC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CCC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CCC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CAC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CAC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CAC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CAC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CAC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CAC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CGC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CGC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CGC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CGC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CGC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CGC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CUA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CUA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CUA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CUA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CUA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CUA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CCA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CCA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CCA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CCA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CCA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CCA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CAA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CAA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CAA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CAA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CAA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CAA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CGA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CGA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CGA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CGA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CGA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CGA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CUG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CUG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CUG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CUG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CUG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CUG_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CCG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CCG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CCG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CCG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CCG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CCG_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CAG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CAG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CAG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CAG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CAG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CAG_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CGG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.CGG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_CGG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_CGG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.CGG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_CGG_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AUU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.AUU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_AUU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AUU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.AUU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_AUU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_ACU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.ACU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_ACU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_ACU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.ACU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_ACU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AAU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.AAU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_AAU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AAU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.AAU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_AAU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AGU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.AGU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_AGU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AGU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.AGU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_AGU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AUC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.AUC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_AUC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AUC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.AUC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_AUC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_ACC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.ACC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_ACC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_ACC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.ACC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_ACC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AAC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.AAC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_AAC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AAC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.AAC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_AAC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AGC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.AGC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_AGC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AGC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.AGC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_AGC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AUA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.AUA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_AUA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AUA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.AUA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_AUA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_ACA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.ACA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_ACA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_ACA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.ACA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_ACA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AAA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.AAA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_AAA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AAA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.AAA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_AAA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AGA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.AGA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_AGA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AGA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.AGA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_AGA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AUG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.AUG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_AUG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AUG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.AUG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_AUG_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_ACG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.ACG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_ACG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_ACG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.ACG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_ACG_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AAG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.AAG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_AAG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AAG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.AAG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_AAG_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AGG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.AGG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_AGG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_AGG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.AGG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_AGG_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GUU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GUU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GUU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GUU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GUU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GUU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GCU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GCU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GCU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GCU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GCU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GCU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GAU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GAU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GAU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GAU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GAU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GAU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GGU_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GGU_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GGU_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GGU_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GGU_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GGU_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GUC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GUC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GUC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GUC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GUC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GUC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GCC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GCC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GCC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GCC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GCC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GCC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GAC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GAC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GAC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GAC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GAC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GAC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GGC_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GGC_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GGC_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GGC_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GGC_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GGC_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GUA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GUA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GUA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GUA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GUA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GUA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GCA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GCA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GCA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GCA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GCA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GCA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GAA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GAA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GAA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GAA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GAA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GAA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GGA_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GGA_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GGA_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GGA_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GGA_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GGA_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GUG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GUG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GUG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GUG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GUG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GUG_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GCG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GCG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GCG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GCG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GCG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GCG_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GAG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GAG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GAG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GAG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GAG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GAG_probabilidad}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GGG_letraAminoacido}"/>
+                        <h:outputText value="#{codonUsageController.selected.GGG_letraAminoacido}" title="#{bundle.ViewCodonUsageTitle_GGG_letraAminoacido}"/>
+                        <h:outputText value="#{bundle.ViewCodonUsageLabel_GGG_probabilidad}"/>
+                        <h:outputText value="#{codonUsageController.selected.GGG_probabilidad}" title="#{bundle.ViewCodonUsageTitle_GGG_probabilidad}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="CodonUsageViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

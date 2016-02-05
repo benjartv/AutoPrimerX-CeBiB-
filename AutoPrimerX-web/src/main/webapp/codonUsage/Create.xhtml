@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog  id="CodonUsageCreateDlg" widgetVar="CodonUsageCreateDialog" width="96%" resizable="false" modal="true" height="580px" appendTo="@(body)" header="Ingresar Uso de codones">
+            <h:form id="CodonUsageCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid style="margin-top:20px" styleClass="panelGridCenter" rendered="#{codonUsageController.selected != null}">
+                        <p:row>
+                            <div align="left"><p:column colspan="20"  style="font-weight:bold" > Uso de codones</p:column></div>
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="20">
+                                <p:outputLabel value="Organismo: " for="nombreOrganismo" style="margin-right:20px"/>
+                                <p:inputText id="nombreOrganismo" value="#{codonUsageController.selected.nombreOrganismo}" title="#{bundle.CreateCodonUsageTitle_nombreOrganismo}" />
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column > </p:column>
+                            <p:column >Codon</p:column>
+                            <p:column >Aminoácido</p:column>
+                            <p:column >Porcentaje %</p:column>
+
+                            <p:column >Codon</p:column>
+                            <p:column >Aminoácido</p:column>
+                            <p:column >Porcentaje %</p:column>
+
+                            <p:column >Codon</p:column>
+                            <p:column >Aminoácido</p:column>
+                            <p:column >Porcentaje %</p:column>
+
+                            <p:column >Codon</p:column>
+                            <p:column >Aminoácido</p:column>
+                            <p:column >Porcentaje %</p:column>
+
+                            <p:column > </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column rowspan="4" style="font-weight: bold;">U</p:column>
+
+
+                            <p:column style="font-weight: bold;">UUU</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="UUU_letraAminoacido" value="#{codonUsageController.selected.UUU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UUU_letraAminoacido}" /> Phe
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UUU_probabilidad" value="#{codonUsageController.selected.UUU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UUU_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">UCU</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="UCU_letraAminoacido" value="#{codonUsageController.selected.UCU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UCU_letraAminoacido}" />
+                                Ser</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UCU_probabilidad" value="#{codonUsageController.selected.UCU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UCU_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">UAU</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="UAU_letraAminoacido" value="#{codonUsageController.selected.UAU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UAU_letraAminoacido}" />
+                                Tyr</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UAU_probabilidad" value="#{codonUsageController.selected.UAU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UAU_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">UGU</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="UGU_letraAminoacido" value="#{codonUsageController.selected.UGU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UGU_letraAminoacido}" />
+                                Cys</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UGU_probabilidad" value="#{codonUsageController.selected.UGU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UGU_probabilidad}" />
+                            </p:column> 
+
+                            <p:column style="font-weight: bold;">U</p:column>
+
+                        </p:row>      
+
+                        <p:row>
+
+                            <p:column style="font-weight: bold;">UUC</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="UUC_letraAminoacido" value="#{codonUsageController.selected.UUC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UUC_letraAminoacido}" /> Phe
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UUC_probabilidad" value="#{codonUsageController.selected.UUC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UUC_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">UCC</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="UCC_letraAminoacido" value="#{codonUsageController.selected.UCC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UCC_letraAminoacido}" />
+                                Ser</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UCC_probabilidad" value="#{codonUsageController.selected.UCC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UCC_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">UAC</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="UAC_letraAminoacido" value="#{codonUsageController.selected.UAC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UAC_letraAminoacido}" />
+                                Tyr</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UAC_probabilidad" value="#{codonUsageController.selected.UAC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UAC_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">UGC</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="UGC_letraAminoacido" value="#{codonUsageController.selected.UGC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UGC_letraAminoacido}" />
+                                Cys</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UGC_probabilidad" value="#{codonUsageController.selected.UGC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UGC_probabilidad}" />
+                            </p:column> 
+
+                            <p:column  style="font-weight: bold;">C</p:column>
+
+                        </p:row>     
+
+
+                        <p:row>
+
+                            <p:column style="font-weight: bold;">UUA</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="UUA_letraAminoacido" value="#{codonUsageController.selected.UUA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UUA_letraAminoacido}" /> Leu
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UUA_probabilidad" value="#{codonUsageController.selected.UUA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UUA_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">UCA</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="UCA_letraAminoacido" value="#{codonUsageController.selected.UCA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UCA_letraAminoacido}" />
+                                Ser</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UCA_probabilidad" value="#{codonUsageController.selected.UCA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UCA_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">UAA</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="UAA_letraAminoacido" value="#{codonUsageController.selected.UAA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UAA_letraAminoacido}" />
+                                Stop</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UAA_probabilidad" value="#{codonUsageController.selected.UAA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UAA_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">UGA</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="UGA_letraAminoacido" value="#{codonUsageController.selected.UGA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UGA_letraAminoacido}" />
+                                Stop</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UGA_probabilidad" value="#{codonUsageController.selected.UGA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UGA_probabilidad}" />
+                            </p:column> 
+
+                            <p:column  style="font-weight: bold;">A</p:column>
+
+                        </p:row>    
+
+                        <p:row>
+
+                            <p:column style="font-weight: bold;">UUG</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="UUG_letraAminoacido" value="#{codonUsageController.selected.UUG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UUG_letraAminoacido}" /> Leu
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UUG_probabilidad" value="#{codonUsageController.selected.UUG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UUG_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">UCG</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="UCG_letraAminoacido" value="#{codonUsageController.selected.UCG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UCG_letraAminoacido}" />
+                                Ser</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UCG_probabilidad" value="#{codonUsageController.selected.UCG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UCG_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">UAG</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="UAG_letraAminoacido" value="#{codonUsageController.selected.UAG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UAG_letraAminoacido}" />
+                                Stop</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UAG_probabilidad" value="#{codonUsageController.selected.UAG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UAG_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">UGG</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="UGG_letraAminoacido" value="#{codonUsageController.selected.UGG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_UGG_letraAminoacido}" />
+                                Trp</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="UGG_probabilidad" value="#{codonUsageController.selected.UGG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_UGG_probabilidad}" />
+                            </p:column> 
+
+                            <p:column  style="font-weight: bold;">G</p:column>
+
+                        </p:row>
+
+
+
+
+
+                        <p:row>
+                            <p:column rowspan="4" style="font-weight: bold;">C</p:column>
+
+
+                            <p:column style="font-weight: bold;">CUU</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="CUU_letraAminoacido" value="#{codonUsageController.selected.CUU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CUU_letraAminoacido}" /> Leu
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CUU_probabilidad" value="#{codonUsageController.selected.CUU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CUU_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">CCU</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="CCU_letraAminoacido" value="#{codonUsageController.selected.CCU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CCU_letraAminoacido}" />
+                                Pro</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CCU_probabilidad" value="#{codonUsageController.selected.CCU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CCU_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">CAU</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="CAU_letraAminoacido" value="#{codonUsageController.selected.CAU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CAU_letraAminoacido}" />
+                                His</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CAU_probabilidad" value="#{codonUsageController.selected.CAU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CAU_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">CGU</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="CGU_letraAminoacido" value="#{codonUsageController.selected.CGU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CGU_letraAminoacido}" />
+                                Arg</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CGU_probabilidad" value="#{codonUsageController.selected.CGU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CGU_probabilidad}" />
+                            </p:column> 
+
+                            <p:column style="font-weight: bold;">U</p:column>
+
+                        </p:row>      
+
+                        <p:row>
+
+                            <p:column style="font-weight: bold;">CUC</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="CUC_letraAminoacido" value="#{codonUsageController.selected.CUC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CUC_letraAminoacido}" /> Leu
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CUC_probabilidad" value="#{codonUsageController.selected.CUC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CUC_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">CCC</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="CCC_letraAminoacido" value="#{codonUsageController.selected.CCC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CCC_letraAminoacido}" />
+                                Pro</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CCC_probabilidad" value="#{codonUsageController.selected.CCC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CCC_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">CAC</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="CAC_letraAminoacido" value="#{codonUsageController.selected.CAC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CAC_letraAminoacido}" />
+                                His</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CAC_probabilidad" value="#{codonUsageController.selected.CAC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CAC_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">CGC</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="CGC_letraAminoacido" value="#{codonUsageController.selected.CGC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CGC_letraAminoacido}" />
+                                Arg</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CGC_probabilidad" value="#{codonUsageController.selected.CGC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CGC_probabilidad}" />
+                            </p:column> 
+
+                            <p:column  style="font-weight: bold;">C</p:column>
+
+                        </p:row>     
+
+
+                        <p:row>
+
+                            <p:column style="font-weight: bold;">CUA</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="CUA_letraAminoacido" value="#{codonUsageController.selected.CUA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CUA_letraAminoacido}" /> Leu
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CUA_probabilidad" value="#{codonUsageController.selected.CUA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CUA_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">CCA</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="CCA_letraAminoacido" value="#{codonUsageController.selected.CCA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CCA_letraAminoacido}" />
+                                Pro</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CCA_probabilidad" value="#{codonUsageController.selected.CCA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CCA_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">CAA</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="CAA_letraAminoacido" value="#{codonUsageController.selected.CAA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CAA_letraAminoacido}" />
+                                Gln</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CAA_probabilidad" value="#{codonUsageController.selected.CAA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CAA_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">CGA</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="CGA_letraAminoacido" value="#{codonUsageController.selected.CGA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CGA_letraAminoacido}" />
+                                Arg</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CGA_probabilidad" value="#{codonUsageController.selected.CGA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CGA_probabilidad}" />
+                            </p:column> 
+
+                            <p:column  style="font-weight: bold;">A</p:column>
+
+                        </p:row>    
+
+                        <p:row>
+
+                            <p:column style="font-weight: bold;">CUG</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="CUG_letraAminoacido" value="#{codonUsageController.selected.CUG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CUG_letraAminoacido}" /> Leu
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CUG_probabilidad" value="#{codonUsageController.selected.CUG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CUG_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">CCG</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="CCG_letraAminoacido" value="#{codonUsageController.selected.CCG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CCG_letraAminoacido}" />
+                                Pro</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CCG_probabilidad" value="#{codonUsageController.selected.CCG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CCG_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">CAG</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="CAG_letraAminoacido" value="#{codonUsageController.selected.CAG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CAG_letraAminoacido}" />
+                                Gln</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CAG_probabilidad" value="#{codonUsageController.selected.CAG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CAG_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">CGG</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="CGG_letraAminoacido" value="#{codonUsageController.selected.CGG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_CGG_letraAminoacido}" />
+                                Arg</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="CGG_probabilidad" value="#{codonUsageController.selected.CGG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_CGG_probabilidad}" />
+                            </p:column> 
+
+                            <p:column  style="font-weight: bold;">G</p:column>
+
+                        </p:row>
+
+
+
+
+                        <p:row>
+                            <p:column rowspan="4" style="font-weight: bold;">A</p:column>
+
+
+                            <p:column style="font-weight: bold;">AUU</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="AUU_letraAminoacido" value="#{codonUsageController.selected.AUU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_AUU_letraAminoacido}" /> Ile
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="AUU_probabilidad" value="#{codonUsageController.selected.AUU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_AUU_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">ACU</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="ACU_letraAminoacido" value="#{codonUsageController.selected.ACU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_ACU_letraAminoacido}" />                     
+                                Thr</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="ACU_probabilidad" value="#{codonUsageController.selected.ACU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_ACU_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">AAU</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="AAU_letraAminoacido" value="#{codonUsageController.selected.AAU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_AAU_letraAminoacido}" />
+                                Asn</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="AAU_probabilidad" value="#{codonUsageController.selected.AAU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_AAU_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">AGU</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="AGU_letraAminoacido" value="#{codonUsageController.selected.AGU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_AGU_letraAminoacido}" />
+                                Ser</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="AGU_probabilidad" value="#{codonUsageController.selected.AGU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_AGU_probabilidad}" />
+                            </p:column> 
+
+                            <p:column style="font-weight: bold;">U</p:column>
+
+                        </p:row>      
+
+                        <p:row>
+
+                            <p:column style="font-weight: bold;">AUC</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="AUC_letraAminoacido" value="#{codonUsageController.selected.AUC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_AUC_letraAminoacido}" /> Ile
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="AUC_probabilidad" value="#{codonUsageController.selected.AUC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_AUC_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">ACC</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="ACC_letraAminoacido" value="#{codonUsageController.selected.ACC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_ACC_letraAminoacido}" />
+                                Thr</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="ACC_probabilidad" value="#{codonUsageController.selected.ACC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_ACC_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">AAC</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="AAC_letraAminoacido" value="#{codonUsageController.selected.AAC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_AAC_letraAminoacido}" />
+                                Asn</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="AAC_probabilidad" value="#{codonUsageController.selected.AAC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_AAC_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">AGC</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="AGC_letraAminoacido" value="#{codonUsageController.selected.AGC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_AGC_letraAminoacido}" />
+                                Ser</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="AGC_probabilidad" value="#{codonUsageController.selected.AGC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_AGC_probabilidad}" />
+                            </p:column> 
+
+                            <p:column  style="font-weight: bold;">C</p:column>
+
+                        </p:row>     
+
+
+                        <p:row>
+
+                            <p:column style="font-weight: bold;">AUA</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="AUA_letraAminoacido" value="#{codonUsageController.selected.AUA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_AUA_letraAminoacido}" /> Ile
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="AUA_probabilidad" value="#{codonUsageController.selected.AUA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_AUA_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">ACA</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="ACA_letraAminoacido" value="#{codonUsageController.selected.ACA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_ACA_letraAminoacido}" />
+                                Thr</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="ACA_probabilidad" value="#{codonUsageController.selected.ACA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_ACA_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">AAA</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="AAA_letraAminoacido" value="#{codonUsageController.selected.AAA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_AAA_letraAminoacido}" />
+                                Lys</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="AAA_probabilidad" value="#{codonUsageController.selected.AAA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_AAA_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">AGA</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="AGA_letraAminoacido" value="#{codonUsageController.selected.AGA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_AGA_letraAminoacido}" />
+                                Arg</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="AGA_probabilidad" value="#{codonUsageController.selected.AGA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_AGA_probabilidad}" />
+                            </p:column> 
+
+                            <p:column  style="font-weight: bold;">A</p:column>
+
+                        </p:row>    
+
+                        <p:row>
+
+                            <p:column style="font-weight: bold;">AUG</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="AUG_letraAminoacido" value="#{codonUsageController.selected.AUG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_AUG_letraAminoacido}" /> Met
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="AUG_probabilidad" value="#{codonUsageController.selected.AUG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_AUG_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">ACG</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="ACG_letraAminoacido" value="#{codonUsageController.selected.ACG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_ACG_letraAminoacido}" />
+                                Thr</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="ACG_probabilidad" value="#{codonUsageController.selected.ACG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_ACG_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">AAG</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="AAG_letraAminoacido" value="#{codonUsageController.selected.AAG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_AAG_letraAminoacido}" />
+                                Lys</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="AAG_probabilidad" value="#{codonUsageController.selected.AAG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_AAG_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">AGG</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="AGG_letraAminoacido" value="#{codonUsageController.selected.AGG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_AGG_letraAminoacido}" />
+                                Arg</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="AGG_probabilidad" value="#{codonUsageController.selected.AGG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_AGG_probabilidad}" />
+                            </p:column> 
+
+                            <p:column  style="font-weight: bold;">G</p:column>
+
+                        </p:row>
+
+
+
+
+
+                        <p:row>
+                            <p:column rowspan="4" style="font-weight: bold;">G</p:column>
+
+
+                            <p:column style="font-weight: bold;">GUU</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="GUU_letraAminoacido" value="#{codonUsageController.selected.GUU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GUU_letraAminoacido}" /> Val
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GUU_probabilidad" value="#{codonUsageController.selected.GUU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GUU_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">GCU</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="GCU_letraAminoacido" value="#{codonUsageController.selected.GCU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GCU_letraAminoacido}" />
+                                Ala</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GCU_probabilidad" value="#{codonUsageController.selected.GCU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GCU_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">GAU</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="GAU_letraAminoacido" value="#{codonUsageController.selected.GAU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GAU_letraAminoacido}" />
+                                Asp</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GAU_probabilidad" value="#{codonUsageController.selected.GAU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GAU_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">GGU</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="GGU_letraAminoacido" value="#{codonUsageController.selected.GGU_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GGU_letraAminoacido}" />
+                                Gly</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GGU_probabilidad" value="#{codonUsageController.selected.GGU_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GGU_probabilidad}" />
+                            </p:column> 
+
+                            <p:column style="font-weight: bold;">U</p:column>
+
+                        </p:row>      
+
+                        <p:row>
+
+                            <p:column style="font-weight: bold;">GUC</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="GUC_letraAminoacido" value="#{codonUsageController.selected.GUC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GUC_letraAminoacido}" /> Val
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GUC_probabilidad" value="#{codonUsageController.selected.GUC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GUC_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">GCC</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="GCC_letraAminoacido" value="#{codonUsageController.selected.GCC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GCC_letraAminoacido}" />
+                                Ala</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GCC_probabilidad" value="#{codonUsageController.selected.GCC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GCC_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">GAC</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="GAC_letraAminoacido" value="#{codonUsageController.selected.GAC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GAC_letraAminoacido}" />
+                                Asp</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GAC_probabilidad" value="#{codonUsageController.selected.GAC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GAC_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">GGC</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="GGC_letraAminoacido" value="#{codonUsageController.selected.GGC_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GGC_letraAminoacido}" />
+                                Gly</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GGC_probabilidad" value="#{codonUsageController.selected.GGC_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GGC_probabilidad}" />
+                            </p:column> 
+
+                            <p:column  style="font-weight: bold;">C</p:column>
+
+                        </p:row>     
+
+
+                        <p:row>
+
+                            <p:column style="font-weight: bold;">GUA</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="GUA_letraAminoacido" value="#{codonUsageController.selected.GUA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GUA_letraAminoacido}" /> Val
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GUA_probabilidad" value="#{codonUsageController.selected.GUA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GUA_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">GCA</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="GCA_letraAminoacido" value="#{codonUsageController.selected.GCA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GCA_letraAminoacido}" />
+                                Ala</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GCA_probabilidad" value="#{codonUsageController.selected.GCA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GCA_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">GAA</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="GAA_letraAminoacido" value="#{codonUsageController.selected.GAA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GAA_letraAminoacido}" />
+                                Glu</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GAA_probabilidad" value="#{codonUsageController.selected.GAA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GAA_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">GGA</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="GGA_letraAminoacido" value="#{codonUsageController.selected.GGA_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GGA_letraAminoacido}" />
+                                Gly</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GGA_probabilidad" value="#{codonUsageController.selected.GGA_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GGA_probabilidad}" />
+                            </p:column> 
+
+                            <p:column  style="font-weight: bold;">A</p:column>
+
+                        </p:row>    
+
+                        <p:row>
+
+                            <p:column style="font-weight: bold;">GUG</p:column>
+                            <p:column style="font-weight: bold;">
+                                <p:inputText style="width: 50px;" disabled="true" id="GUG_letraAminoacido" value="#{codonUsageController.selected.GUG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GUG_letraAminoacido}" /> Val
+                            </p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GUG_probabilidad" value="#{codonUsageController.selected.GUG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GUG_probabilidad}" />
+                            </p:column>
+
+                            <p:column style="font-weight: bold;">GCG</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="GCG_letraAminoacido" value="#{codonUsageController.selected.GCG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GCG_letraAminoacido}" />
+                                Ala</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GCG_probabilidad" value="#{codonUsageController.selected.GCG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GCG_probabilidad}" />
+                            </p:column>   
+
+
+                            <p:column style="font-weight: bold;">GAG</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText style="width: 50px;" disabled="true" id="GAG_letraAminoacido" value="#{codonUsageController.selected.GAG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GAG_letraAminoacido}" />
+                                Glu</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GAG_probabilidad" value="#{codonUsageController.selected.GAG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GAG_probabilidad}" />
+                            </p:column>   
+
+                            <p:column style="font-weight: bold;">GGG</p:column>
+                            <p:column style="font-weight: bold;"><p:inputText disabled="true" style="width: 50px;" id="GGG_letraAminoacido" value="#{codonUsageController.selected.GGG_letraAminoacido}" title="#{bundle.CreateCodonUsageTitle_GGG_letraAminoacido}" />
+                                Gly</p:column>
+                            <p:column >
+                                <p:inputText style="width: 50px;" id="GGG_probabilidad" value="#{codonUsageController.selected.GGG_probabilidad}" title="#{bundle.CreateCodonUsageTitle_GGG_probabilidad}" />
+                            </p:column> 
+
+                            <p:column  style="font-weight: bold;">G</p:column>
+
+                        </p:row>
+                    </p:panelGrid>
+
+                    <p:commandButton actionListener="#{codonUsageController.create}" value="Guardar" update="display,:CodonUsageListForm:datalist,:growl" oncomplete="handleSubmit(args,'CodonUsageCreateDialog');"/>
+                    <p:commandButton value="Cancelar" onclick="CodonUsageCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

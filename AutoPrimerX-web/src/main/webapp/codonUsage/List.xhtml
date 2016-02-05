@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      >
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="Uso de codones"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <b:container>
+            <h:form id="CodonUsageListForm">
+                <p:panel header="Lista de uso de codones">
+                    
+                    <p:dataTable id="datalist" value="#{codonUsageController.items}" var="item"
+                                 selectionMode="single" selection="#{codonUsageController.selected}"
+                                 paginator="true" paginatorPosition="bottom"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 reflow="true"
+                                 emptyMessage="Sin uso de codones registrado"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton"/>
+
+                        <p:column filterBy="#{item.nombreOrganismo}" headerText="nombreOrganismo" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="Nombre Organismo"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombreOrganismo}"/>
+                        </p:column>
+                        
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="Ingresar" actionListener="#{codonUsageController.prepareCreate}" update=":CodonUsageCreateForm" oncomplete="PF('CodonUsageCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="Ver" update=":CodonUsageViewForm" oncomplete="PF('CodonUsageViewDialog').show()" disabled="#{empty codonUsageController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":CodonUsageEditForm" oncomplete="PF('CodonUsageEditDialog').show()" disabled="#{empty codonUsageController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+            </b:container>
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>
