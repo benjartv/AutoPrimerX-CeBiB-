@@ -39,7 +39,7 @@
                                     <f:selectItems value="#{codonUsageController.itemsAvailableSelectOne}"
                                                    var="pacienteItem"
                                                    itemValue="#{codonUsageItem}"/>
-                                    <p:ajax  update="seleccionado" listener="#{selectCodon.cambiarUsoCodon(codonUsageController.selected)}" />
+                                    <p:ajax  update="seleccionado" listener="#{primerG3.cambiarUsoCodon(codonUsageController.selected)}" />
                                 </p:selectOneMenu>
                                 
                                     </div>
@@ -69,7 +69,7 @@
                                 <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" required="true" requiredMessage="Debe ingresar el tamaño de la región conservada"/>
                                 <br/>
                                 <br/>
-                                <p:commandButton value="Envíar" update="nucleotidos" actionListener="#{primerG3.submit()}" ajax="false"/>
+                                <p:commandButton value="Envíar" update="nucleotidos" actionListener="#{primerG3.submit(codonUsageController.selected)}" ajax="false"/>
                                 <!--h:commandButton value="Envíar" action="# {primerG3.submit()}" -->
                                     <!--f:ajax execute="@form" render="nucleotidos"  /-->
                                 <!--/h:commandButton-->
