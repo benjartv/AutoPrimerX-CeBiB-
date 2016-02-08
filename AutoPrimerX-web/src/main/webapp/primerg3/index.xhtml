@@ -30,6 +30,30 @@
                                 <p:inputTextarea rows="20" cols="50" id="sequences" value="#{primerG3.sequences}" required="true" requiredMessage="Debe ingresar por lo menos dos secuencias" onkeyup="javascript:this.value = this.value.toUpperCase();"/>
                             </div>
                             <div class="col-md-4" >
+                                <p:outputLabel value="Seleccione un organismo" for="usodecodon" /> 
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p:selectOneMenu id="usodecodon" value="#{codonUsageController.selected}" required="true" requiredMessage="Es necesario seleccionar un uso de condon" panelStyle="width:180px" 
+                                                 effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith"  >
+                                    <f:selectItem itemLabel="Ninguno" noSelectionOption="true" itemDisabled="true"/>
+                                    <f:selectItems value="#{codonUsageController.itemsAvailableSelectOne}"
+                                                   var="pacienteItem"
+                                                   itemValue="#{codonUsageItem}"/>
+                                    <p:ajax  update="seleccionado" listener="#{selectCodon.cambiarUsoCodon(codonUsageController.selected)}" />
+                                </p:selectOneMenu>
+                                
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <p:button outcome="/codonUsage/List" value="Agregar Organismo" icon="ui-icon-plus" ></p:button>
+                                
+                                    </div>
+                                </div>
+                                
+                                <br/><br/>
+                                <p:outputLabel value="Seleccionado: " /> 
+                                <p:outputLabel id ="seleccionado" value=" #{codonUsageController.selected.nombreOrganismo}" /> 
+                                <br/><br/>
                                 <!--h:outputLabel for="conservado" value="Ingrese tolerancia: " /-->
                                 <label>Ingrese la tolerancia para aminoácidos conservados:</label>
                                 <br/>

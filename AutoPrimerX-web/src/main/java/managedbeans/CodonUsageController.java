@@ -136,7 +136,7 @@ public class CodonUsageController implements Serializable {
        selected.setGGG_letraAminoacido("G");
         return selected;
     }
-
+    
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CodonUsageCreated"));
         if (!JsfUtil.isValidationFailed()) {

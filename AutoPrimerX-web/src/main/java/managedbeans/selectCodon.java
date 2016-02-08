@@ -5,6 +5,7 @@
  */
 package managedbeans;
 
+import entities.CodonUsage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
@@ -123,6 +124,94 @@ public class selectCodon implements Serializable {
         ArrayList <Codon> Q= new ArrayList<>();
             Q.add(new Codon("CAA",12.3));
             Q.add(new Codon("CAG ", 34.2));
+        codonusage = new CondonUsage(A, C, D, E, F, G, H, I, K, L, M, N , P, Q, R, S, T, V, W, Y);
+    }
+    
+    
+    public void cambiarUsoCodon(CodonUsage selected){
+        
+        System.out.println(selected.getNombreOrganismo());
+        ArrayList <Codon> G= new ArrayList<>();
+            G.add(new Codon("GGG", selected.getGGG_probabilidad()));
+            G.add(new Codon("GGA",selected.getGGA_probabilidad()));
+            G.add(new Codon("GGT",selected.getGGU_probabilidad()));
+            G.add(new Codon("GGC",selected.getGGC_probabilidad()));
+        ArrayList <Codon> A= new ArrayList<>();
+            A.add(new Codon("GCG",selected.getGCG_probabilidad()));
+            A.add(new Codon("GCA",selected.getGCA_probabilidad()));
+            A.add(new Codon("GCT",selected.getGCU_probabilidad()));
+            A.add(new Codon("GCC",selected.getGCC_probabilidad()));
+        ArrayList <Codon> L= new ArrayList<>();
+            L.add(new Codon("TTG",selected.getUUG_probabilidad()));
+            L.add(new Codon("TTA",selected.getUUA_probabilidad()));
+            L.add(new Codon("CTG",selected.getCUG_probabilidad()));
+            L.add(new Codon("CTA",selected.getCUA_probabilidad()));
+            L.add(new Codon("CTT",selected.getCUU_probabilidad()));
+            L.add(new Codon("CTC",selected.getCUC_probabilidad()));
+        ArrayList <Codon> M= new ArrayList<>();
+            M.add(new Codon("ATG",selected.getAUG_probabilidad()));
+        ArrayList <Codon> F= new ArrayList<>();
+            F.add(new Codon("TTT",selected.getUUU_probabilidad()));
+            F.add(new Codon("TTC",selected.getUUC_probabilidad()));
+        ArrayList <Codon> W= new ArrayList<>();
+            W.add(new Codon("TGG",selected.getUGG_probabilidad()));
+        ArrayList <Codon> K= new ArrayList<>();
+            K.add(new Codon("AAG",selected.getAAG_probabilidad()));
+            K.add(new Codon("AAA",selected.getAAA_probabilidad()));
+        ArrayList <Codon> E= new ArrayList<>();
+            E.add(new Codon("GAG",selected.getGAG_probabilidad()));
+            E.add(new Codon("GAA",selected.getGAA_probabilidad()));
+        ArrayList <Codon> S= new ArrayList<>();
+            S.add(new Codon("AGT",selected.getAGU_probabilidad()));
+            S.add(new Codon("AGC",selected.getAGC_probabilidad()));
+            S.add(new Codon("TCG",selected.getUCG_probabilidad()));
+            S.add(new Codon("TCA",selected.getUCA_probabilidad()));
+            S.add(new Codon("TCT",selected.getUCU_probabilidad()));
+            S.add(new Codon("TCC",selected.getUCC_probabilidad()));
+        ArrayList <Codon> V= new ArrayList<>();
+            V.add(new Codon("GTG",selected.getGUG_probabilidad()));
+            V.add(new Codon("GTA",selected.getGUA_probabilidad()));
+            V.add(new Codon("GTT",selected.getGUU_probabilidad()));
+            V.add(new Codon("GTC",selected.getGUC_probabilidad()));
+        ArrayList <Codon> I= new ArrayList<>();
+            I.add(new Codon("ATA",selected.getAUA_probabilidad()));
+            I.add(new Codon("ATT",selected.getAUU_probabilidad()));
+            I.add(new Codon("ATC",selected.getAUC_probabilidad()));
+        ArrayList <Codon> C= new ArrayList<>();
+            C.add(new Codon("TGT",selected.getUGU_probabilidad()));
+            C.add(new Codon("TGC",selected.getUGC_probabilidad()));
+        ArrayList <Codon> Y= new ArrayList<>();
+            Y.add(new Codon("TAT",selected.getUAU_probabilidad()));
+            Y.add(new Codon("TAC",selected.getUAC_probabilidad()));
+        ArrayList <Codon> H= new ArrayList<>();
+            H.add(new Codon("CAT",selected.getCAU_probabilidad()));
+            H.add(new Codon("CAC",selected.getCAC_probabilidad()));
+        ArrayList <Codon> R= new ArrayList<>();
+            R.add(new Codon("AGG",selected.getAGG_probabilidad()));
+            R.add(new Codon("AGA",selected.getAGA_probabilidad()));
+            R.add(new Codon("CGG",selected.getCGG_probabilidad()));
+            R.add(new Codon("CGA",selected.getCGA_probabilidad()));
+            R.add(new Codon("CGT",selected.getCGU_probabilidad()));
+            R.add(new Codon("CGC",selected.getCGC_probabilidad()));
+        ArrayList <Codon> N= new ArrayList<>();
+            N.add(new Codon("AAT",selected.getAAU_probabilidad()));
+            N.add(new Codon("AAC",selected.getAAC_probabilidad()));
+        ArrayList <Codon> D= new ArrayList<>();
+            D.add(new Codon("GAT",selected.getGAU_probabilidad()));
+            D.add(new Codon("GAC",selected.getGAC_probabilidad()));
+        ArrayList <Codon> T= new ArrayList<>();
+            T.add(new Codon("ACG",selected.getACG_probabilidad()));
+            T.add(new Codon("ACA",selected.getACA_probabilidad()));
+            T.add(new Codon("ACT",selected.getACU_probabilidad()));
+            T.add(new Codon("ACC",selected.getACC_probabilidad()));
+        ArrayList <Codon> P= new ArrayList<>();
+            P.add(new Codon("CCT",selected.getCCU_probabilidad()));
+            P.add(new Codon("CCC",selected.getCCC_probabilidad()));
+            P.add(new Codon("CCA",selected.getCCA_probabilidad()));
+            P.add(new Codon("CCG",selected.getCCG_probabilidad()));
+        ArrayList <Codon> Q= new ArrayList<>();
+            Q.add(new Codon("CAA",selected.getCAA_probabilidad()));
+            Q.add(new Codon("CAG ", selected.getCAG_probabilidad()));
         codonusage = new CondonUsage(A, C, D, E, F, G, H, I, K, L, M, N , P, Q, R, S, T, V, W, Y);
     }
 
