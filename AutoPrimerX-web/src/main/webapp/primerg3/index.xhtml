@@ -40,13 +40,16 @@
                                                    var="pacienteItem"
                                                    itemValue="#{codonUsageItem}"/>
                                     <p:ajax  update="seleccionado" listener="#{primerG3.cambiarUsoCodon(codonUsageController.selected)}" />
+                                    <p:ajax update="codonUsageBtn"/>
+                        
                                 </p:selectOneMenu>
                                 
                                     </div>
                                     
                                     <div class="col-md-6">
                                         <p:button outcome="/codonUsage/List" value="Agregar Organismo" icon="ui-icon-plus" ></p:button>
-                                
+                                        <p:commandButton action="#{primerG3.submitprob(codonUsageController.selected)}" id="codonUsageBtn" immediate="true" ajax="true"  icon="ui-icon-pencil" value="Probabilidades" update=":CodonUsageProbForm" oncomplete="PF('CodonUsageProbDlg').show()" disabled="#{empty codonUsageController.selected}"/>
+                        
                                     </div>
                                 </div>
                                 
@@ -94,6 +97,7 @@
 
 
             </h:body>
+            <ui:include src="codonUsage.xhtml"/>
         </ui:define>
 
     </ui:composition>

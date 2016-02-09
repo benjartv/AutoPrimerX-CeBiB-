@@ -10,6 +10,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
@@ -30,7 +32,7 @@ public class PrimerG3 {
     private Integer tamanoPrimer;
     public ArrayList <String> resultado=new ArrayList <String>();
     public ArrayList <String> consensos=new ArrayList <String>();
-    public selectCodon codons = new selectCodon();
+    private selectCodon codons = new selectCodon();
     public ArrayList <String> secuenciasNucleotidos = new ArrayList <String>();
     private Integer identico;
     private UploadedFile file;
@@ -41,6 +43,14 @@ public class PrimerG3 {
         return file;
     }
 
+    public selectCodon getCodons() {
+        return codons;
+    }
+
+    public void setCodons(selectCodon codons) {
+        this.codons = codons;
+    }
+    
     public void setFile(UploadedFile file) {
         this.file = file;
     }
@@ -92,7 +102,9 @@ public class PrimerG3 {
     public void setSequences(String sequences) {
         this.sequences = sequences;
     }
-    
+    public void submitprob(CodonUsage codon){
+        cambiarUsoCodon(codon);
+    }
     public void submit(CodonUsage codon) throws IOException{
         int sitioConservado = conservado;
         
@@ -653,11 +665,27 @@ public class PrimerG3 {
             G.add(new Codon("GGA",selected.getGGA_probabilidad()));
             G.add(new Codon("GGT",selected.getGGU_probabilidad()));
             G.add(new Codon("GGC",selected.getGGC_probabilidad()));
+        Collections.sort(G, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> A= new ArrayList<>();
             A.add(new Codon("GCG",selected.getGCG_probabilidad()));
             A.add(new Codon("GCA",selected.getGCA_probabilidad()));
             A.add(new Codon("GCT",selected.getGCU_probabilidad()));
             A.add(new Codon("GCC",selected.getGCC_probabilidad()));
+        Collections.sort(A, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> L= new ArrayList<>();
             L.add(new Codon("TTG",selected.getUUG_probabilidad()));
             L.add(new Codon("TTA",selected.getUUA_probabilidad()));
@@ -665,19 +693,51 @@ public class PrimerG3 {
             L.add(new Codon("CTA",selected.getCUA_probabilidad()));
             L.add(new Codon("CTT",selected.getCUU_probabilidad()));
             L.add(new Codon("CTC",selected.getCUC_probabilidad()));
+        Collections.sort(L, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> M= new ArrayList<>();
             M.add(new Codon("ATG",selected.getAUG_probabilidad()));
         ArrayList <Codon> F= new ArrayList<>();
             F.add(new Codon("TTT",selected.getUUU_probabilidad()));
             F.add(new Codon("TTC",selected.getUUC_probabilidad()));
+        Collections.sort(F, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> W= new ArrayList<>();
             W.add(new Codon("TGG",selected.getUGG_probabilidad()));
         ArrayList <Codon> K= new ArrayList<>();
             K.add(new Codon("AAG",selected.getAAG_probabilidad()));
             K.add(new Codon("AAA",selected.getAAA_probabilidad()));
+        Collections.sort(K, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> E= new ArrayList<>();
             E.add(new Codon("GAG",selected.getGAG_probabilidad()));
             E.add(new Codon("GAA",selected.getGAA_probabilidad()));
+        Collections.sort(E, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> S= new ArrayList<>();
             S.add(new Codon("AGT",selected.getAGU_probabilidad()));
             S.add(new Codon("AGC",selected.getAGC_probabilidad()));
@@ -685,24 +745,72 @@ public class PrimerG3 {
             S.add(new Codon("TCA",selected.getUCA_probabilidad()));
             S.add(new Codon("TCT",selected.getUCU_probabilidad()));
             S.add(new Codon("TCC",selected.getUCC_probabilidad()));
+        Collections.sort(S, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> V= new ArrayList<>();
             V.add(new Codon("GTG",selected.getGUG_probabilidad()));
             V.add(new Codon("GTA",selected.getGUA_probabilidad()));
             V.add(new Codon("GTT",selected.getGUU_probabilidad()));
             V.add(new Codon("GTC",selected.getGUC_probabilidad()));
+        Collections.sort(V, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> I= new ArrayList<>();
             I.add(new Codon("ATA",selected.getAUA_probabilidad()));
             I.add(new Codon("ATT",selected.getAUU_probabilidad()));
             I.add(new Codon("ATC",selected.getAUC_probabilidad()));
+        Collections.sort(I, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> C= new ArrayList<>();
             C.add(new Codon("TGT",selected.getUGU_probabilidad()));
             C.add(new Codon("TGC",selected.getUGC_probabilidad()));
+        Collections.sort(C, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> Y= new ArrayList<>();
             Y.add(new Codon("TAT",selected.getUAU_probabilidad()));
             Y.add(new Codon("TAC",selected.getUAC_probabilidad()));
+        Collections.sort(Y, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> H= new ArrayList<>();
             H.add(new Codon("CAT",selected.getCAU_probabilidad()));
             H.add(new Codon("CAC",selected.getCAC_probabilidad()));
+        Collections.sort(H, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> R= new ArrayList<>();
             R.add(new Codon("AGG",selected.getAGG_probabilidad()));
             R.add(new Codon("AGA",selected.getAGA_probabilidad()));
@@ -710,25 +818,73 @@ public class PrimerG3 {
             R.add(new Codon("CGA",selected.getCGA_probabilidad()));
             R.add(new Codon("CGT",selected.getCGU_probabilidad()));
             R.add(new Codon("CGC",selected.getCGC_probabilidad()));
+         Collections.sort(R, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> N= new ArrayList<>();
             N.add(new Codon("AAT",selected.getAAU_probabilidad()));
             N.add(new Codon("AAC",selected.getAAC_probabilidad()));
+        Collections.sort(N, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> D= new ArrayList<>();
             D.add(new Codon("GAT",selected.getGAU_probabilidad()));
             D.add(new Codon("GAC",selected.getGAC_probabilidad()));
+        Collections.sort(D, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> T= new ArrayList<>();
             T.add(new Codon("ACG",selected.getACG_probabilidad()));
             T.add(new Codon("ACA",selected.getACA_probabilidad()));
             T.add(new Codon("ACT",selected.getACU_probabilidad()));
             T.add(new Codon("ACC",selected.getACC_probabilidad()));
+        Collections.sort(T, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> P= new ArrayList<>();
             P.add(new Codon("CCT",selected.getCCU_probabilidad()));
             P.add(new Codon("CCC",selected.getCCC_probabilidad()));
             P.add(new Codon("CCA",selected.getCCA_probabilidad()));
             P.add(new Codon("CCG",selected.getCCG_probabilidad()));
+        Collections.sort(P, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         ArrayList <Codon> Q= new ArrayList<>();
             Q.add(new Codon("CAA",selected.getCAA_probabilidad()));
             Q.add(new Codon("CAG ", selected.getCAG_probabilidad()));
+        Collections.sort(Q, new Comparator<Codon>() {
+                @Override
+                public int compare(Codon c1,Codon c2)
+                {
+
+                    return Double.compare(c2.getProbabilidad(),c1.getProbabilidad());
+                }
+            });
         codons.setCodonusage(new CondonUsage(A, C, D, E, F, G, H, I, K, L, M, N , P, Q, R, S, T, V, W, Y));
     }
     
