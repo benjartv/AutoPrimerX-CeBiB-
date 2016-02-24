@@ -20,72 +20,80 @@
                     <h:form enctype="multipart/form-data">
                         <p:messages autoUpdate="true"/>
                         <p:growl id="growl" showDetail="true" sticky="true" /> 
-                        <div class="row form-group">
-                            <h1 class="col-md-offset-1">Microorganismos</h1>
-                            <div class="col-md-4 col-md-offset-1">
-                                <!--h:inputFile id="file" value="# {primerG3.file}" required="true" requiredMessage="Debe seleccionar un archivo">/-->
-                                 <p:fileUpload value="#{primerG3.file}" mode="simple" required="true" requiredMessage="Debe seleccionar un archivo"/>
-                                <!--h:outputLabel for="sequence" value="Secuencias:" /-->
-                                <label>Ingrese las secuencias alineadas para la búsqueda de consensos</label>
-                                <p:inputTextarea rows="20" cols="50" id="sequences" value="#{primerG3.sequences}" required="true" requiredMessage="Debe ingresar por lo menos dos secuencias" onkeyup="javascript:this.value = this.value.toUpperCase();"/>
-                            </div>
-                            <div class="col-md-4" >
-                                <p:outputLabel value="Seleccione un organismo" for="usodecodon" /> 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p:selectOneMenu id="usodecodon" value="#{codonUsageController.selected}" required="true" requiredMessage="Es necesario seleccionar un uso de condon" panelStyle="width:180px" 
-                                                 effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith"  >
-                                    <f:selectItem itemLabel="Ninguno" noSelectionOption="true" itemDisabled="true"/>
-                                    <f:selectItems value="#{codonUsageController.itemsAvailableSelectOne}"
-                                                   var="pacienteItem"
-                                                   itemValue="#{codonUsageItem}"/>
-                                    <p:ajax  update="seleccionado" listener="#{primerG3.cambiarUsoCodon(codonUsageController.selected)}" />
-                                    <p:ajax update="codonUsageBtn"/>
-                        
-                                </p:selectOneMenu>
-                                
-                                    </div>
-                                    
-                                    <div class="col-md-6">
-                                        <p:button outcome="/codonUsage/List" value="Agregar Organismo" icon="ui-icon-plus" ></p:button>
-                                        <p:commandButton action="#{primerG3.submitprob(codonUsageController.selected)}" id="codonUsageBtn" immediate="true" ajax="true"  icon="ui-icon-pencil" value="Probabilidades" update=":CodonUsageProbForm" oncomplete="PF('CodonUsageProbDlg').show()" disabled="#{empty codonUsageController.selected}"/>
-                        
-                                    </div>
+                        <p:panel id="pnl">
+                            <div class="row form-group">
+                                <h1 class="col-md-offset-1">Microorganismos</h1>
+                                <div class="col-md-4 col-md-offset-1">
+                                    <!--h:inputFile id="file" value="# {primerG3.file}" required="true" requiredMessage="Debe seleccionar un archivo">/-->
+                                     <p:fileUpload value="#{primerG3.file}" mode="simple" required="true" requiredMessage="Debe seleccionar un archivo"/>
+                                    <!--h:outputLabel for="sequence" value="Secuencias:" /-->
+                                    <label>Ingrese las secuencias alineadas para la búsqueda de consensos</label>
+                                    <p:inputTextarea rows="20" cols="50" id="sequences" value="#{primerG3.sequences}" required="false" requiredMessage="Debe ingresar por lo menos dos secuencias" onkeyup="javascript:this.value = this.value.toUpperCase();"/>
                                 </div>
-                                
-                                <br/><br/>
-                                <p:outputLabel value="Seleccionado: " /> 
-                                <p:outputLabel id ="seleccionado" value=" #{codonUsageController.selected.nombreOrganismo}" /> 
-                                <br/><br/>
-                                <!--h:outputLabel for="conservado" value="Ingrese tolerancia: " /-->
-                                <label>Ingrese la tolerancia para aminoácidos conservados:</label>
-                                <br/>
-                                <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="Debe ingresar la tolerancia para aminoácidos conservados"/>
-                                <br/>
-                                <label>Ingrese la tolerancia para aminoácidos idénticos</label>
-                                <br/>
-                                <p:inputText type="number" id="identico" value="#{primerG3.identico}" required="true" requiredMessage="Debe ingresar la tolerancia para aminoácidos idénticos" />
-                                <br/>
-                                <!--h:outputLabel for="tamanoPrimer" value="Ingrese tamaño partidor" /-->
-                                <label>Ingrese el tamaño de la región conservada:</label>
-                                <br/>
-                                <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" required="true" requiredMessage="Debe ingresar el tamaño de la región conservada"/>
-                                <br/>
-                                <br/>
-                                <p:commandButton value="Envíar" update="nucleotidos" actionListener="#{primerG3.submit(codonUsageController.selected)}" ajax="false"/>
-                                <!--h:commandButton value="Envíar" action="# {primerG3.submit()}" -->
-                                    <!--f:ajax execute="@form" render="nucleotidos"  /-->
-                                <!--/h:commandButton-->
-                                <br/>
-                                <br/>
-                                <label>Secuencias consenso:</label>
-                                <br/>
-                                <p:dataList id="nucleotidos" value="#{primerG3.secuenciasNucleotidos}" var="seq" emptyMessage="">
-                                    #{seq}
-                                </p:dataList>
+                                <div class="col-md-4" >
+                                    <p:outputLabel value="Seleccione un organismo" for="usodecodon" /> 
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p:selectOneMenu id="usodecodon" value="#{codonUsageController.selected}" required="true" requiredMessage="Es necesario seleccionar un uso de condon" panelStyle="width:180px" 
+                                                     effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith"  >
+                                        <f:selectItem itemLabel="Ninguno" noSelectionOption="true" itemDisabled="true"/>
+                                        <f:selectItems value="#{codonUsageController.itemsAvailableSelectOne}"
+                                                       var="pacienteItem"
+                                                       itemValue="#{codonUsageItem}"/>
+                                        <p:ajax  update="seleccionado" listener="#{primerG3.cambiarUsoCodon(codonUsageController.selected)}" />
+                                        <p:ajax update="codonUsageBtn"/>
+
+                                    </p:selectOneMenu>
+
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <p:button outcome="/codonUsage/List" value="Agregar Organismo" icon="ui-icon-plus" ></p:button>
+                                            <p:commandButton action="#{primerG3.submitprob(codonUsageController.selected)}" id="codonUsageBtn" immediate="true" ajax="true"  icon="ui-icon-pencil" value="Probabilidades" update=":CodonUsageProbForm" oncomplete="PF('CodonUsageProbDlg').show()" disabled="#{empty codonUsageController.selected}"/>
+
+                                        </div>
+                                    </div>
+
+                                    <br/><br/>
+                                    <p:outputLabel value="Seleccionado: " /> 
+                                    <p:outputLabel id ="seleccionado" value=" #{codonUsageController.selected.nombreOrganismo}" /> 
+                                    <br/><br/>
+                                    <!--h:outputLabel for="conservado" value="Ingrese tolerancia: " /-->
+                                    <label>Ingrese la tolerancia para aminoácidos conservados:</label>
+                                    <br/>
+                                    <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="Debe ingresar la tolerancia para aminoácidos conservados"/>
+                                    <br/>
+                                    <label>Ingrese la tolerancia para aminoácidos idénticos</label>
+                                    <br/>
+                                    <p:inputText type="number" id="identico" value="#{primerG3.identico}" required="true" requiredMessage="Debe ingresar la tolerancia para aminoácidos idénticos" />
+                                    <br/>
+                                    <!--h:outputLabel for="tamanoPrimer" value="Ingrese tamaño partidor" /-->
+                                    <label>Ingrese el tamaño de la región conservada:</label>
+                                    <br/>
+                                    <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" required="true" requiredMessage="Debe ingresar el tamaño de la región conservada"/>
+                                    <br/>
+                                    <br/>
+                                    <p:commandButton id="submit" value="Envíar" update="nucleotidos" actionListener="#{primerG3.submit(codonUsageController.selected)}" ajax="false" onclick="PF('block').show()" oncomplete="PF('block').hide()"/>
+                                    <!--h:commandButton value="Envíar" action="# {primerG3.submit()}" -->
+                                        <!--f:ajax execute="@form" render="nucleotidos"  /-->
+                                    <!--/h:commandButton-->
+                                    <br/>
+                                    <br/>
+                                    <label>Secuencias consenso:</label>
+                                    <br/>
+                                    <p:dataList id="nucleotidos" value="#{primerG3.secuenciasNucleotidos}" var="seq" emptyMessage="">
+                                        #{seq}
+                                    </p:dataList>
+                                </div>
                             </div>
-                        </div>
-                    </h:form>    
+
+                        </p:panel>
+                         
+                        <p:blockUI block="pnl" widgetVar="block">
+                            <p id="loading">Cargando</p>
+                            <p:graphicImage library="images" name="loader.gif"/>
+                        </p:blockUI>
+                    </h:form>   
                 </div>
 
                 <br />

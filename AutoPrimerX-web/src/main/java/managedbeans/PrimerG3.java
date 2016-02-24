@@ -12,11 +12,19 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import org.primefaces.model.UploadedFile;
+import org.biojava.nbio.alignment.Alignments;
+import org.biojava.nbio.alignment.template.AlignedSequence;
+import org.biojava.nbio.alignment.template.Profile;
+import org.biojava.nbio.core.sequence.ProteinSequence;
+import org.biojava.nbio.core.sequence.compound.AminoAcidCompound;
+import org.biojava.nbio.core.sequence.io.FastaReaderHelper;
+import org.biojava.nbio.core.util.ConcurrencyTools;
 import primerg3Domain.Codon;
 import primerg3Domain.CondonUsage;
 import primerg3Domain.NomenclaturaIUPAC;
@@ -105,7 +113,7 @@ public class PrimerG3 {
     public void submitprob(CodonUsage codon){
         cambiarUsoCodon(codon);
     }
-    public void submit(CodonUsage codon) throws IOException{
+    public void submit(CodonUsage codon) throws IOException, Exception{
         int sitioConservado = conservado;
         
         BufferedReader br=null;
@@ -160,11 +168,15 @@ public class PrimerG3 {
         // SE CARGA EL USO DE CODONES
         createCodonUsage();
         
+        String [] sequencesSplit = multipleSequenceAlignment(input.get(1));
+        
         //Cada línea de las secuencias de entrada se guarda de manera individual en un arreglo
+        /*
         String [] sequencesSplit = sequences.split("\n");
         for (int i = 0; i < sequencesSplit.length; i++) {
             sequencesSplit[i] = sequencesSplit[i].trim();
         }
+        */
         
         Integer largo = sequencesSplit[0].length();
         boolean validate = validateSequence(sequencesSplit[0]);
@@ -361,7 +373,7 @@ public class PrimerG3 {
         String [] consenso = seq.split("-");
         //codons.init();
         cambiarUsoCodon(codon);
-        System.out.println("Max codon F: "+codons.getProbabilidadMayor(codons.getCodonusage().getF()).getcodon());
+        //System.out.println("Max codon F: "+codons.getProbabilidadMayor(codons.getCodonusage().getF()).getcodon());
         for (String cons : consenso){
             if(cons.length() == 1){
                 String aux = getCodon(cons).getcodon();
@@ -455,13 +467,13 @@ public class PrimerG3 {
                             nucleotidoIupac = nucleotidoIupac.concat("H");
                             break;
                         case 1110:
-                            nucleotidoIupac = nucleotidoIupac.concat("v");
+                            nucleotidoIupac = nucleotidoIupac.concat("V");
                             break;
                         case 1111:
                             nucleotidoIupac = nucleotidoIupac.concat("N");
                             break;
                         default:
-                            System.out.println("DEFAULT");
+                            //System.out.println("DEFAULT");
                             break;
                     }
                 }
@@ -540,6 +552,28 @@ public class PrimerG3 {
         }
         
         return aux;
+    }
+    
+    private String [] multipleSequenceAlignment(ArrayList<String> seqs) throws Exception {
+        List<ProteinSequence> lst = new ArrayList<ProteinSequence>();
+        for (String seq : seqs) {
+            lst.add(new ProteinSequence(seq));
+        }
+        Profile<ProteinSequence, AminoAcidCompound> profile = Alignments.getMultipleSequenceAlignment(lst);
+        //System.out.printf("Clustalw:%n%s%n", profile);
+        ConcurrencyTools.shutdown();
+        //System.out.println("------------------------------------ Size: "+profile.getAlignedSequences().size());
+        
+        String [] secuencias = new String[profile.getAlignedSequences().size()];
+        
+        int i = 0;
+        for (AlignedSequence align : profile.getAlignedSequences()){
+            secuencias[i] = align.getSequenceAsString();
+            i++;
+        }
+        
+        return secuencias;
+        
     }
     
     public void createIUPAC(){

@@ -23,7 +23,8 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>5.2</version>
+            <version>5.0</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>net.bootsfaces</groupId>
@@ -48,6 +49,16 @@
             <artifactId>AutoPrimerX-ejb</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.biojava</groupId>
+            <artifactId>biojava-core</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.biojava</groupId>
+            <artifactId>biojava-alignment</artifactId>
+            <version>4.1.0</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>

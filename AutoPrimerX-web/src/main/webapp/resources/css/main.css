@@ -122,3 +122,8 @@ border: none;
 .panelGridCenter {
     margin: 0 auto;
 }
+
+#loading{
+    color: #5ba34a;
+    font-weight: bold;
+}
