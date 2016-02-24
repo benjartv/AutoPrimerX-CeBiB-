@@ -127,3 +127,15 @@ border: none;
     color: #5ba34a;
     font-weight: bold;
 }
+
+.no-border{
+    border: 0px;
+}
+
+.no-border .ui-datalist-content{
+    border: 0px;
+}
+
+.form-label{
+    margin-top: 20px;
+}
