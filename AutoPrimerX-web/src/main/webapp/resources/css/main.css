@@ -139,3 +139,7 @@ border: none;
 .form-label{
     margin-top: 20px;
 }
+
+.alert-danger p{
+    color: rgb(185, 74, 72);
+}

@@ -17,9 +17,9 @@
 
             <h:body>
                 <div>
-                    <h:form enctype="multipart/form-data">
+                    <h:form enctype="multipart/form-data" prependId="false">
                         <p:messages autoUpdate="true"/>
-                        <p:growl id="growl" showDetail="true" sticky="true" /> 
+                        <p:growl  showDetail="true" sticky="true" /> 
                         <p:panel id="pnl" styleClass="no-border">
                             <div class="row form-group">
                                 <h1 class="col-md-offset-1">Microorganismos</h1>
@@ -57,6 +57,11 @@
                                     <br/>
                                     <br/>
                                     <div class="row">
+                                        <div id="errorMsge" class="col-md-12 alert alert-danger hidden" role="alert">
+                                            <p>
+                                                La tolerancia para aminoácidos conservados debe ser mayor que la tolerancia para aminoácidos idénticos
+                                            </p>
+                                        </div>
                                         <div class="col-md-offset-9">
                                             <p:commandButton id="submit" value="Envíar" update="nucleotidos" actionListener="#{primerG3.submit(codonUsageController.selected)}" ajax="false" onclick="PF('block').show()" oncomplete="PF('block').hide()"/>                                                                                
                                         </div>
@@ -89,6 +94,7 @@
 
             </h:body>
             <ui:include src="codonUsage.xhtml"/>
+            
         </ui:define>
 
     </ui:composition>

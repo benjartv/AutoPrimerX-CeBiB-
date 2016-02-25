@@ -36,13 +36,13 @@ public class PrimerG3 {
     private String log;
     public ArrayList<NomenclaturaIUPAC> iupac;
     //private entities.CodonUsage codonusage;
-    private Integer conservado;
+    private Integer conservado = 0;
     private Integer tamanoPrimer;
     public ArrayList <String> resultado=new ArrayList <String>();
     public ArrayList <String> consensos=new ArrayList <String>();
     private selectCodon codons = new selectCodon();
     public ArrayList <String> secuenciasNucleotidos = new ArrayList <String>();
-    private Integer identico;
+    private Integer identico = 0;
     private UploadedFile file;
     public ArrayList<ArrayList<String>> input= new ArrayList<ArrayList<String>>();
     public ArrayList<Integer> posiciones= new ArrayList<Integer>();  
