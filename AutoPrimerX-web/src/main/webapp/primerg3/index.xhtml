@@ -14,8 +14,24 @@
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
         </h:head>
         <ui:define name="body">
+             <h:outputScript>
+             //<![CDATA[ 
+                function disableprob() {
+                    $("#codonUsageBtn").addClass("disabled");
 
+                }
+                
+                function enableprob() {
+                    $("#codonUsageBtn").removeClass("disabled");
+
+                }
+                
+        //]]>
+        </h:outputScript>
             <h:body>
+                <h:form id="probab-form" enctype="multipart/form-data" prependId="false">
+                    <p:commandButton action="#{primerG3.submitprob(codonUsageController.selected)}" id="codonUsageBtn" immediate="true" ajax="true"  icon="ui-icon-pencil" value="Probabilidades" update=":CodonUsageProbForm" oncomplete="PF('CodonUsageProbDlg').show()" disabled="#{empty codonUsageController.selected}"/>     
+                </h:form>
                 <div>
                     <h:form enctype="multipart/form-data" prependId="false">
                         <p:messages autoUpdate="true"/>
@@ -24,7 +40,7 @@
                             <div class="row form-group">
                                 <h1 class="col-md-offset-1">Microorganismos</h1>
                                 <div class="col-md-4 col-md-offset-1">
-                                    <p:outputLabel styleClass="form-label" value="Ingrese las secuencias alineadas para la búsqueda de consensos" for="input-file"/>
+                                    <p:outputLabel styleClass="form-label" value="Ingrese el archivo de secuencias homologas" for="input-file"/>
                                     <p:fileUpload id="input-file" value="#{primerG3.file}" mode="simple" required="true" requiredMessage="Debe seleccionar un archivo"/>
                                 
                                     <p:outputLabel styleClass="form-label" value="Seleccione un organismo" for="usodecodon" /> 
@@ -35,13 +51,12 @@
                                             <f:selectItems value="#{codonUsageController.itemsAvailableSelectOne}"
                                                            var="pacienteItem"
                                                            itemValue="#{codonUsageItem}"/>
-                                            <p:ajax update="codonUsageBtn"/>
+                                            <p:ajax event="change" listener="#{primerG3.cambiarUsoCodon(codonUsageController.selected)}" update=":probab-form:codonUsageBtn"/>
 
                                         </p:selectOneMenu>
                                     </div>
                                     <div>
                                         <p:button outcome="/codonUsage/List" value="Agregar Organismo" icon="ui-icon-plus" ></p:button>
-                                        <p:commandButton action="#{primerG3.submitprob(codonUsageController.selected)}" id="codonUsageBtn" immediate="true" ajax="true"  icon="ui-icon-pencil" value="Probabilidades" update=":CodonUsageProbForm" oncomplete="PF('CodonUsageProbDlg').show()" disabled="#{empty codonUsageController.selected}"/>
                                     </div>                                    
                                     
                                     <p:outputLabel styleClass="form-label" value="Ingrese la tolerancia para aminoácidos conservados" for="conservado" /> 
@@ -63,7 +78,8 @@
                                             </p>
                                         </div>
                                         <div class="col-md-offset-9">
-                                            <p:commandButton id="submit" value="Envíar" update="nucleotidos" actionListener="#{primerG3.submit(codonUsageController.selected)}" ajax="false" onclick="PF('block').show()" oncomplete="PF('block').hide()"/>                                                                                
+                                            <p:remoteCommand name="updateprob" update=":probab-form:codonUsageBtn" />
+                                            <p:commandButton id="submit" value="Envíar" update="nucleotidos" actionListener="#{primerG3.submit(codonUsageController.selected)}" ajax="false" onclick="PF('block').show();disableprob();" oncomplete="PF('block').hide();enableprob();"/>                                                                                
                                         </div>
                                     </div>
                                 </div>
@@ -82,7 +98,7 @@
                             <p id="loading">Cargando</p>
                             <p:graphicImage library="images" name="loader.gif"/>
                         </p:blockUI>
-                    </h:form>   
+                    </h:form>                                   
                 </div>
 
                 <br />

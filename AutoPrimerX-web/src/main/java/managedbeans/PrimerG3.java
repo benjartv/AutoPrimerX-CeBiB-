@@ -13,9 +13,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import org.primefaces.model.UploadedFile;
 import org.biojava.nbio.alignment.Alignments;
@@ -111,7 +114,7 @@ public class PrimerG3 {
         this.sequences = sequences;
     }
     public void submitprob(CodonUsage codon){
-        cambiarUsoCodon(codon);
+        //cambiarUsoCodon(codon);
     }
     public void submit(CodonUsage codon) throws IOException, Exception{
         int sitioConservado = conservado;
