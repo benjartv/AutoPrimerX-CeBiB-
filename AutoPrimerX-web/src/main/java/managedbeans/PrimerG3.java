@@ -9,11 +9,13 @@ import entities.CodonUsage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
@@ -33,23 +35,23 @@ import primerg3Domain.CondonUsage;
 import primerg3Domain.NomenclaturaIUPAC;
 
 @Named(value = "primerG3")
-@ManagedBean
-public class PrimerG3 {
+@SessionScoped
+public class PrimerG3  implements Serializable{
     private String sequences;
     private String log;
-    public ArrayList<NomenclaturaIUPAC> iupac;
+    private ArrayList<NomenclaturaIUPAC> iupac;
     //private entities.CodonUsage codonusage;
     private Integer conservado = 0;
     private Integer tamanoPrimer;
-    public ArrayList <String> resultado=new ArrayList <String>();
-    public ArrayList <String> consensos=new ArrayList <String>();
+    private ArrayList <String> resultado=new ArrayList <String>();
+    private ArrayList <String> consensos=new ArrayList <String>();
     private selectCodon codons = new selectCodon();
-    public ArrayList <String> secuenciasNucleotidos = new ArrayList <String>();
+    private ArrayList <String> secuenciasNucleotidos = new ArrayList <String>();
     private Integer identico = 0;
     private UploadedFile file;
-    public ArrayList<ArrayList<String>> input= new ArrayList<ArrayList<String>>();
-    public ArrayList<Integer> posiciones= new ArrayList<Integer>();  
-
+    private ArrayList<ArrayList<String>> input= new ArrayList<ArrayList<String>>();
+    private ArrayList<Integer> posiciones= new ArrayList<Integer>();  
+    
     public UploadedFile getFile() {
         return file;
     }
@@ -118,6 +120,208 @@ public class PrimerG3 {
     }
     public void submit(CodonUsage codon) throws IOException, Exception{
         int sitioConservado = conservado;
+        
+        if(codons.getAglobal() != null){
+            String temp = codons.getAglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getA().size();i++) {
+                if(codons.getCodonusage().getA().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getA().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getCglobal() != null){
+            String temp = codons.getCglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getC().size();i++) {
+                if(codons.getCodonusage().getC().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getC().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getDglobal() != null){
+            String temp = codons.getDglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getD().size();i++) {
+                if(codons.getCodonusage().getD().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getD().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getEglobal() != null){
+            String temp = codons.getEglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getE().size();i++) {
+                if(codons.getCodonusage().getE().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getE().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getFglobal() != null){
+            String temp = codons.getFglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getF().size();i++) {
+                if(codons.getCodonusage().getF().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getF().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getGglobal() != null){
+            String temp = codons.getGglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getG().size();i++) {
+                if(codons.getCodonusage().getG().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getG().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getHglobal() != null){
+            String temp = codons.getHglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getH().size();i++) {
+                if(codons.getCodonusage().getH().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getH().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getIglobal() != null){
+            String temp = codons.getIglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getI().size();i++) {
+                if(codons.getCodonusage().getI().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getI().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getKglobal() != null){
+            String temp = codons.getKglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getK().size();i++) {
+                if(codons.getCodonusage().getK().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getK().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getLglobal() != null){
+            String temp = codons.getLglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getL().size();i++) {
+                if(codons.getCodonusage().getL().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getL().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getMglobal() != null){
+            String temp = codons.getMglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getM().size();i++) {
+                if(codons.getCodonusage().getM().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getM().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getNglobal() != null){
+            String temp = codons.getNglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getN().size();i++) {
+                if(codons.getCodonusage().getN().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getN().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getPglobal() != null){
+            String temp = codons.getPglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getP().size();i++) {
+                if(codons.getCodonusage().getP().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getP().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getQglobal() != null){
+            String temp = codons.getQglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getQ().size();i++) {
+                if(codons.getCodonusage().getQ().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getQ().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getRglobal() != null){
+            String temp = codons.getRglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getR().size();i++) {
+                if(codons.getCodonusage().getR().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getR().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getSglobal() != null){
+            String temp = codons.getSglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getS().size();i++) {
+                if(codons.getCodonusage().getS().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getS().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getTglobal() != null){
+            String temp = codons.getTglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getT().size();i++) {
+                if(codons.getCodonusage().getT().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getT().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getVglobal() != null){
+            String temp = codons.getVglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getV().size();i++) {
+                if(codons.getCodonusage().getV().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getV().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getWglobal() != null){
+            String temp = codons.getWglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getW().size();i++) {
+                if(codons.getCodonusage().getW().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getW().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        if(codons.getYglobal() != null){
+            String temp = codons.getYglobal();
+            String [] cdn = temp.split(" : ");
+            String tripleta = cdn[0];
+            for (int i =0;i< codons.getCodonusage().getY().size();i++) {
+                if(codons.getCodonusage().getY().get(i).getcodon().compareToIgnoreCase(tripleta)!=0){
+                    codons.getCodonusage().getY().get(i).setProbabilidad(0.0);    
+                }
+            }
+        }
+        
         
         BufferedReader br=null;
         try{
@@ -375,7 +579,7 @@ public class PrimerG3 {
         String nucleotidSeq = "";
         String [] consenso = seq.split("-");
         //codons.init();
-        cambiarUsoCodon(codon);
+        //cambiarUsoCodon(codon);
         //System.out.println("Max codon F: "+codons.getProbabilidadMayor(codons.getCodonusage().getF()).getcodon());
         for (String cons : consenso){
             if(cons.length() == 1){

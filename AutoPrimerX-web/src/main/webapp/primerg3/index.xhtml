@@ -40,10 +40,8 @@
                             <div class="row form-group">
                                 <h1 class="col-md-offset-1">Microorganismos</h1>
                                 <div class="col-md-4 col-md-offset-1">
-                                    <p:outputLabel styleClass="form-label" value="Ingrese el archivo de secuencias homologas" for="input-file"/>
-                                    <p:fileUpload id="input-file" value="#{primerG3.file}" mode="simple" required="true" requiredMessage="Debe seleccionar un archivo"/>
-                                
-                                    <p:outputLabel styleClass="form-label" value="Seleccione un organismo" for="usodecodon" /> 
+                                    
+                                    <p:outputLabel styleClass="form-label" value="Seleccione un organismo (si las probabilidades aparecen en 0, vuelva a seleccionar)" for="usodecodon" /> 
                                     <div>
                                         <p:selectOneMenu id="usodecodon" value="#{codonUsageController.selected}" required="true" requiredMessage="Es necesario seleccionar un uso de condon" panelStyle="width:180px" 
                                                      effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith"  >
@@ -57,7 +55,12 @@
                                     </div>
                                     <div>
                                         <p:button outcome="/codonUsage/List" value="Agregar Organismo" icon="ui-icon-plus" ></p:button>
-                                    </div>                                    
+                                    </div>    
+                                    
+                                    <p:outputLabel styleClass="form-label" value="Ingrese el archivo de secuencias homologas" for="input-file"/>
+                                    <p:fileUpload id="input-file" value="#{primerG3.file}" mode="simple" required="true" requiredMessage="Debe seleccionar un archivo"/>
+                                
+                                                                    
                                     
                                     <p:outputLabel styleClass="form-label" value="Ingrese la tolerancia para aminoácidos conservados" for="conservado" /> 
                                     <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="Debe ingresar la tolerancia para aminoácidos conservados" />

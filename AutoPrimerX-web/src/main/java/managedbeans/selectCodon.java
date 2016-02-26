@@ -20,27 +20,27 @@ import primerg3Domain.CondonUsage;
 @ViewScoped
 public class selectCodon implements Serializable {
      
-    private static CondonUsage codonusage;
-    private static String Aglobal;
-    private static String Cglobal;
-    private static String Dglobal;
-    private static String Eglobal;
-    private static String Fglobal;
-    private static String Gglobal;
-    private static String Hglobal;
-    private static String Iglobal;
-    private static String Kglobal;
-    private static String Lglobal;
-    private static String Mglobal;
-    private static String Nglobal;
-    private static String Pglobal;
-    private static String Qglobal;
-    private static String Rglobal;
-    private static String Sglobal;
-    private static String Tglobal;
-    private static String Vglobal;
-    private static String Wglobal;
-    private static String Yglobal;
+    private  CondonUsage codonusage;
+    private  String Aglobal;
+    private  String Cglobal;
+    private  String Dglobal;
+    private  String Eglobal;
+    private  String Fglobal;
+    private  String Gglobal;
+    private  String Hglobal;
+    private  String Iglobal;
+    private  String Kglobal;
+    private  String Lglobal;
+    private  String Mglobal;
+    private  String Nglobal;
+    private  String Pglobal;
+    private  String Qglobal;
+    private  String Rglobal;
+    private  String Sglobal;
+    private  String Tglobal;
+    private  String Vglobal;
+    private  String Wglobal;
+    private  String Yglobal;
     
     /*
     @PostConstruct
@@ -272,22 +272,6 @@ public class selectCodon implements Serializable {
             });
         codonusage = new CondonUsage(A, C, D, E, F, G, H, I, K, L, M, N , P, Q, R, S, T, V, W, Y);
     }*/
-    
-    public CondonUsage getCodonusage() {
-        return codonusage;
-    }
-
-    public void setCodonusage(CondonUsage codonusage) {
-        this.codonusage = codonusage;
-    }
-
-    public String getA() {
-        return Aglobal;
-    }
-
-    public void setA(String A) {
-        this.Aglobal = A;
-    }
 
     public String getAglobal() {
         return Aglobal;
@@ -448,6 +432,17 @@ public class selectCodon implements Serializable {
     public void setYglobal(String Yglobal) {
         this.Yglobal = Yglobal;
     }
+
+ 
+    
+    public CondonUsage getCodonusage() {
+        return codonusage;
+    }
+
+    public void setCodonusage(CondonUsage codonusage) {
+        this.codonusage = codonusage;
+    }
+
     
     public Codon getProbabilidadMayor(ArrayList amino){
         Codon max = (Codon) amino.get(0);
