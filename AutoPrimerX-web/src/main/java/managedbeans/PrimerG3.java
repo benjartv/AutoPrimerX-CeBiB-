@@ -48,9 +48,27 @@ public class PrimerG3  implements Serializable{
     private selectCodon codons = new selectCodon();
     private ArrayList <String> secuenciasNucleotidos = new ArrayList <String>();
     private Integer identico = 0;
-    private UploadedFile file;
+    private UploadedFile file = null;
     private ArrayList<ArrayList<String>> input= new ArrayList<ArrayList<String>>();
     private ArrayList<Integer> posiciones= new ArrayList<Integer>();  
+    private String [] sequencesSplit;
+    private String [][] sequencesShow;
+
+    public String[][] getSequencesShow() {
+        return sequencesShow;
+    }
+
+    public void setSequencesShow(String[][] sequencesShow) {
+        this.sequencesShow = sequencesShow;
+    }
+
+    public String[] getSequencesSplit() {
+        return sequencesSplit;
+    }
+
+    public void setSequencesSplit(String[] sequencesSplit) {
+        this.sequencesSplit = sequencesSplit;
+    }
     
     public UploadedFile getFile() {
         return file;
@@ -325,7 +343,15 @@ public class PrimerG3  implements Serializable{
         
         BufferedReader br=null;
         try{
+            if(file.getFileName().isEmpty()){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar un archivo", null));
+                return;
+            }
             br = new BufferedReader(new InputStreamReader(file.getInputstream()));
+            if(br == null){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar un archivo", null));
+                return;
+            }
             String linea;
             ArrayList<String> identificador= new ArrayList<String>();;
             ArrayList<String> secuencia= new ArrayList<String>();;
@@ -342,17 +368,14 @@ public class PrimerG3  implements Serializable{
                         identificador.add(linea);
                         contador++;
                         primero = true;
-                        //System.out.println(linea);
                     }
                     else{
                         if (primero == true) {
                             secuencia.add(linea);
                             primero = false;
                         } else {
-                            //System.out.println("concat");
                             linea = secuencia.get(contador).concat(linea);
                             secuencia.set(contador, linea);
-                            //System.out.println(linea);
                         }
 
                     }
@@ -366,7 +389,9 @@ public class PrimerG3  implements Serializable{
             System.out.println(e);
         } finally {
             try {
-                br.close(); 
+                if(br != null){
+                    br.close(); 
+                }
             } catch (IOException e) {
             }
         }
@@ -375,15 +400,7 @@ public class PrimerG3  implements Serializable{
         // SE CARGA EL USO DE CODONES
         createCodonUsage();
         
-        String [] sequencesSplit = multipleSequenceAlignment(input.get(1));
-        
-        //Cada línea de las secuencias de entrada se guarda de manera individual en un arreglo
-        /*
-        String [] sequencesSplit = sequences.split("\n");
-        for (int i = 0; i < sequencesSplit.length; i++) {
-            sequencesSplit[i] = sequencesSplit[i].trim();
-        }
-        */
+        sequencesSplit = multipleSequenceAlignment(input.get(1));
         
         Integer largo = sequencesSplit[0].length();
         boolean validate = validateSequence(sequencesSplit[0]);
@@ -766,21 +783,40 @@ public class PrimerG3  implements Serializable{
         for (String seq : seqs) {
             lst.add(new ProteinSequence(seq));
         }
-        Profile<ProteinSequence, AminoAcidCompound> profile = Alignments.getMultipleSequenceAlignment(lst);
-        //System.out.printf("Clustalw:%n%s%n", profile);
-        ConcurrencyTools.shutdown();
-        //System.out.println("------------------------------------ Size: "+profile.getAlignedSequences().size());
-        
-        String [] secuencias = new String[profile.getAlignedSequences().size()];
-        
-        int i = 0;
-        for (AlignedSequence align : profile.getAlignedSequences()){
-            secuencias[i] = align.getSequenceAsString();
-            i++;
+        try{
+            Profile<ProteinSequence, AminoAcidCompound> profile = Alignments.getMultipleSequenceAlignment(lst);
+                    //System.out.printf("Clustalw:%n%s%n", profile);
+            ConcurrencyTools.shutdown();
+
+            String [] secuencias = new String[profile.getAlignedSequences().size()];
+            sequencesShow = new String[profile.getAlignedSequences().size()][];
+
+            int i = 0;
+            for (AlignedSequence align : profile.getAlignedSequences()){
+                secuencias[i] = align.getSequenceAsString();
+                sequencesShow[i] = new String[secuencias[i].length()];
+                for(int j=0; j<secuencias[i].length(); j++){
+                    sequencesShow[i][j] = secuencias[i].substring(j, j+1);
+                }
+                i++;
+            }
+
+            return secuencias;
         }
+        catch(Exception e){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", null));
+            return null;
+        }
+
         
-        return secuencias;
-        
+    }
+    
+    public void cleanAnswer(){
+        secuenciasNucleotidos = new ArrayList<>();
+        sequencesSplit = new String[1]; 
+        sequencesShow = new String[1][1];
+        input= new ArrayList<ArrayList<String>>();
+        file = null;
     }
     
     public void createIUPAC(){

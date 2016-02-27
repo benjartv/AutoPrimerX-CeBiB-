@@ -18,14 +18,11 @@
              //<![CDATA[ 
                 function disableprob() {
                     $("#codonUsageBtn").addClass("disabled");
-
                 }
                 
                 function enableprob() {
                     $("#codonUsageBtn").removeClass("disabled");
-
                 }
-                
         //]]>
         </h:outputScript>
             <h:body>
@@ -60,8 +57,6 @@
                                     <p:outputLabel styleClass="form-label" value="Ingrese el archivo de secuencias homologas" for="input-file"/>
                                     <p:fileUpload id="input-file" value="#{primerG3.file}" mode="simple" required="true" requiredMessage="Debe seleccionar un archivo"/>
                                 
-                                                                    
-                                    
                                     <p:outputLabel styleClass="form-label" value="Ingrese la tolerancia para aminoácidos conservados" for="conservado" /> 
                                     <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="Debe ingresar la tolerancia para aminoácidos conservados" />
                                     
@@ -80,8 +75,9 @@
                                                 La tolerancia para aminoácidos conservados debe ser mayor que la tolerancia para aminoácidos idénticos
                                             </p>
                                         </div>
-                                        <div class="col-md-offset-9">
+                                        <div class="col-md-offset-7">
                                             <p:remoteCommand name="updateprob" update=":probab-form:codonUsageBtn" />
+                                            <p:commandButton id="clean" value="Limpiar" actionListener="#{primerG3.cleanAnswer()}" update="nucleotidos alineados" ajax="false" />
                                             <p:commandButton id="submit" value="Envíar" update="nucleotidos" actionListener="#{primerG3.submit(codonUsageController.selected)}" ajax="false" onclick="PF('block').show();disableprob();" oncomplete="PF('block').hide();enableprob();"/>                                                                                
                                         </div>
                                     </div>
@@ -89,10 +85,25 @@
                                 <div class="col-md-4" >
                                     <p:outputLabel styleClass="form-label" value="Sitios conservados" />
                                     <hr/>
-                                    <p:dataList id="nucleotidos" styleClass="no-border" value="#{primerG3.secuenciasNucleotidos}" var="seq" emptyMessage="" type="ordered">
-                                        #{seq}
-                                    </p:dataList>
+                                    <p:accordionPanel styleClass="sitios-conservados" multiple="true" value="#{primerG3.secuenciasNucleotidos}" var="seq">
+                                        <p:tab title="#{seq}">
+                                                
+                                        </p:tab>    
+                                    </p:accordionPanel>
+                                    
                                 </div>
+                            </div>
+                            <div class="overflow">
+                                <p:outputLabel styleClass="form-label" value="Secuencias alineadas" />
+                                <table class="table table-hover">
+                                    <ui:repeat value="#{primerG3.sequencesShow}" var="seq">
+                                        <tr>
+                                            <ui:repeat value="#{seq}" var="amino">
+                                                <td>#{amino}</td>
+                                            </ui:repeat>
+                                        </tr>
+                                    </ui:repeat>
+                                </table>                                
                             </div>
 
                         </p:panel>
@@ -105,12 +116,7 @@
                 </div>
 
                 <br />
-                <h:panelGrid columns="2" cellpadding="5">
-                    <br/>
-                    <h:outputText id="answer" value="#{primerG3.log}" />
-                </h:panelGrid>
-
-
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
             </h:body>
             <ui:include src="codonUsage.xhtml"/>
             

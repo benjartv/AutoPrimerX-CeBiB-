@@ -136,6 +136,18 @@ border: none;
     border: 0px;
 }
 
+.no-border .ui-widget-content {
+    border: none !important;
+}
+
+.no-border{
+    border: none;
+}
+
+.ui-panelgrid-cell{
+    border: none !important;
+}
+
 .form-label{
     margin-top: 20px;
 }
@@ -158,4 +170,20 @@ border: none;
    pointer-events: none;
    cursor: default;
    color: gray;
+}
+
+.overflow{
+    width: inherit;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.table>tbody>tr>td{
+    padding: 0px 8px;
+    border-top: none;
+}
+
+.sitios-conservados{
+    overflow-y: auto;
+    max-height: 30em;
 }
