@@ -157,8 +157,8 @@ border: none;
 }
 
 #probab-form{
-    margin-top: 145px;
-    margin-left: 350px;
+    margin-top: 60px;
+    margin-left: 1050px;
     position:absolute;
     z-index:100;
 }
@@ -186,4 +186,25 @@ border: none;
 .sitios-conservados{
     overflow-y: auto;
     max-height: 30em;
+}
+
+
+#ayudabtn{
+    margin-left: 1050px;
+    position:absolute;
+    z-index:100;
+    background-image: none;
+    color:#ffffff;
+    font-weight: normal;
+    background-color: #4a9d7a;
+}
+
+#modalayuda{
+    overflow: auto;
+}
+#parrafo {
+	line-height: 320px;
+}
+.bl1{
+    width: 600px;
 }

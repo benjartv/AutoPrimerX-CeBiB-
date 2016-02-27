@@ -10,38 +10,81 @@
             <h:outputText value="Microorganismos"></h:outputText>
         </ui:define>
         <h:head>
- 
+
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
         </h:head>
         <ui:define name="body">
-             <h:outputScript>
-             //<![CDATA[ 
+            <h:outputScript>
+                //<![CDATA[ 
                 function disableprob() {
-                    $("#codonUsageBtn").addClass("disabled");
+                $("#codonUsageBtn").addClass("disabled");
                 }
-                
+
                 function enableprob() {
-                    $("#codonUsageBtn").removeClass("disabled");
+                $("#codonUsageBtn").removeClass("disabled");
                 }
-        //]]>
-        </h:outputScript>
+                //]]>
+            </h:outputScript>
             <h:body>
+                <p:dialog id="modalayuda" header="Ayuda con archivo de BLAST" widgetVar="dlg3" showEffect="fade" modal="true" hideEffect="fade" height="520" width="1250">
+                    <h:outputText value="En primera instancia debe ingresar a la página oficila de la NCBI, " />
+                    <p:button target="_blank" href="http://blast.ncbi.nlm.nih.gov/Blast.cgi" value="BLAST" />
+                    <div class="row">
+                        <div class="row">
+                            <div class="col col-md-5">
+                                <h:graphicImage  class="bl1"  value="/resources/images/blast1.JPG" />    
+                            </div>
+                            <div class="col col-md-7">
+                                <p id="parrafo">Una vez en la página se debe ir a la sección de <strong>Basic BLAST</strong> y seleccionar "protein blast"</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-7">
+                                <h:graphicImage  class="bl1"  value="/resources/images/blast2.JPG" />    
+                            </div>
+                            <div class="col col-md-5">
+                                <p>Ingresar el nombre de la proteína o su secuencia. Luego parametrizar BLAST a su preferencia.</p>
+                                <p>Una vez finaizado el proceso, presionar el boton que se aprecia en la siguiente figura:</p>
+                                <h:graphicImage value="/resources/images/btnblast.JPG" />    
+                                <p>Esperar resultados...</p>
+                            </div>
+                        </div>
+                        <br/><br/>
+                        <div class="row">
+                            <div class="col col-md-7">
+                                <h:graphicImage  class="bl1"  value="/resources/images/blast3.JPG" />    
+                            </div>
+                            <div class="col col-md-5">
+                                <p>Una vez tengamos los resultados, descender hasta "Descriptions" y presionar el link "All", esto para que ingresen todas las proteinas al archivo.</p>
+                                <p>Luego, en el menu desplegable "Download", seleccionar "FASTA (complete sequence)" y presionar el boton continuar.</p>
+                                <p>Finalmente, obtendrá un archivo como el que se muestra en la siguiente imagen:</p>
+                                <h:graphicImage value="/resources/images/blast4.JPG" />
+                                <p>Que es el archivo de secuencias homólogas.</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </p:dialog>
                 <h:form id="probab-form" enctype="multipart/form-data" prependId="false">
-                    <p:commandButton action="#{primerG3.submitprob(codonUsageController.selected)}" id="codonUsageBtn" immediate="true" ajax="true"  icon="ui-icon-pencil" value="Probabilidades" update=":CodonUsageProbForm" oncomplete="PF('CodonUsageProbDlg').show()" disabled="#{empty codonUsageController.selected}"/>     
+                    <p:commandButton action="#{primerG3.submitprob(codonUsageController.selected)}" id="codonUsageBtn" immediate="true" ajax="true"  icon="ui-icon-pencil" value="Elegir Probabilidades del Uso de Codon" update=":CodonUsageProbForm" oncomplete="PF('CodonUsageProbDlg').show()" disabled="#{empty codonUsageController.selected}"/>     
                 </h:form>
                 <div>
                     <h:form enctype="multipart/form-data" prependId="false">
+                        <h:panelGrid columns="1" cellpadding="5">
+                            <p:commandButton id="ayudabtn" value="¿Como obtengo el archivo de secuencias homologas?" type="button" onclick="PF('dlg3').show();" /> 
+                        </h:panelGrid>
                         <p:messages autoUpdate="true"/>
                         <p:growl  showDetail="true" sticky="true" /> 
                         <p:panel id="pnl" styleClass="no-border">
                             <div class="row form-group">
                                 <h1 class="col-md-offset-1">Microorganismos</h1>
                                 <div class="col-md-4 col-md-offset-1">
-                                    
+
                                     <p:outputLabel styleClass="form-label" value="Seleccione un organismo (si las probabilidades aparecen en 0, vuelva a seleccionar)" for="usodecodon" /> 
                                     <div>
                                         <p:selectOneMenu id="usodecodon" value="#{codonUsageController.selected}" required="true" requiredMessage="Es necesario seleccionar un uso de condon" panelStyle="width:180px" 
-                                                     effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith"  >
+                                                         effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith"  >
                                             <f:selectItem itemLabel="Ninguno" noSelectionOption="true" itemDisabled="true"/>
                                             <f:selectItems value="#{codonUsageController.itemsAvailableSelectOne}"
                                                            var="pacienteItem"
@@ -53,20 +96,20 @@
                                     <div>
                                         <p:button outcome="/codonUsage/List" value="Agregar Organismo" icon="ui-icon-plus" ></p:button>
                                     </div>    
-                                    
+
                                     <p:outputLabel styleClass="form-label" value="Ingrese el archivo de secuencias homologas" for="input-file"/>
                                     <p:fileUpload id="input-file" value="#{primerG3.file}" mode="simple" required="true" requiredMessage="Debe seleccionar un archivo"/>
-                                
+
                                     <p:outputLabel styleClass="form-label" value="Ingrese la tolerancia para aminoácidos conservados" for="conservado" /> 
                                     <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="Debe ingresar la tolerancia para aminoácidos conservados" />
-                                    
+
                                     <p:outputLabel styleClass="form-label" value="Ingrese la tolerancia para aminoácidos idénticos" for="identico" />
                                     <p:inputText type="number" id="identico" value="#{primerG3.identico}" required="true" requiredMessage="Debe ingresar la tolerancia para aminoácidos idénticos" />
                                     <br/>
-                                    
+
                                     <p:outputLabel styleClass="form-label" value="Ingrese el tamaño de la región conservada" for="tamanoPrimer" />
                                     <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" required="true" requiredMessage="Debe ingresar el tamaño de la región conservada"/>
-                                    
+
                                     <br/>
                                     <br/>
                                     <div class="row">
@@ -78,7 +121,8 @@
                                         <div class="col-md-offset-7">
                                             <p:remoteCommand name="updateprob" update=":probab-form:codonUsageBtn" />
                                             <p:commandButton id="clean" value="Limpiar" actionListener="#{primerG3.cleanAnswer()}" update="nucleotidos alineados" ajax="false" />
-                                            <p:commandButton id="submit" value="Envíar" update="nucleotidos" actionListener="#{primerG3.submit(codonUsageController.selected)}" ajax="false" onclick="PF('block').show();disableprob();" oncomplete="PF('block').hide();enableprob();"/>                                                                                
+                                            <p:commandButton id="submit" value="Envíar" update="nucleotidos" actionListener="#{primerG3.submit(codonUsageController.selected)}" ajax="false" onclick="PF('block').show();
+                                                    disableprob();" oncomplete="PF('block').hide();enableprob();"/>                                                                                
                                         </div>
                                     </div>
                                 </div>
@@ -87,10 +131,10 @@
                                     <hr/>
                                     <p:accordionPanel styleClass="sitios-conservados" multiple="true" value="#{primerG3.secuenciasNucleotidos}" var="seq">
                                         <p:tab title="#{seq}">
-                                                
+
                                         </p:tab>    
                                     </p:accordionPanel>
-                                    
+
                                 </div>
                             </div>
                             <div class="overflow">
@@ -107,7 +151,7 @@
                             </div>
 
                         </p:panel>
-                         
+
                         <p:blockUI block="pnl" widgetVar="block">
                             <p id="loading">Cargando</p>
                             <p:graphicImage library="images" name="loader.gif"/>
@@ -119,7 +163,7 @@
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
             </h:body>
             <ui:include src="codonUsage.xhtml"/>
-            
+
         </ui:define>
 
     </ui:composition>
