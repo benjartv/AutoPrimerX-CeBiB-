@@ -204,6 +204,8 @@ border: none;
 
 #modalayuda{
     overflow: auto;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 #parrafo {
 	line-height: 320px;

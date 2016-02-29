@@ -28,9 +28,10 @@
             </h:outputScript>
             <h:body>
                 <p:dialog id="modalayuda" header="Ayuda con archivo de BLAST" widgetVar="dlg3" showEffect="fade" modal="true" hideEffect="fade" height="520" width="1250">
+                    <h3>PASO 1:</h3>
                     <h:outputText value="En primera instancia debe ingresar a la página oficila de la NCBI, " />
                     <p:button target="_blank" href="http://blast.ncbi.nlm.nih.gov/Blast.cgi" value="BLAST" />
-                    <div class="row">
+                    
                         <div class="row">
                             <div class="col col-md-5">
                                 <h:graphicImage  class="bl1"  value="/resources/images/blast1.JPG" />    
@@ -39,6 +40,7 @@
                                 <p id="parrafo">Una vez en la página se debe ir a la sección de <strong>Basic BLAST</strong> y seleccionar "protein blast"</p>
                             </div>
                         </div>
+                        <h3>PASO 2:</h3>
                         <div class="row">
                             <div class="col col-md-7">
                                 <h:graphicImage  class="bl1"  value="/resources/images/blast2.JPG" />    
@@ -51,6 +53,7 @@
                             </div>
                         </div>
                         <br/><br/>
+                        <h3>PASO 3:</h3>
                         <div class="row">
                             <div class="col col-md-7">
                                 <h:graphicImage  class="bl1"  value="/resources/images/blast3.JPG" />    
@@ -63,7 +66,7 @@
                                 <p>Que es el archivo de secuencias homólogas.</p>
                             </div>
                         </div>
-                    </div>
+                    
 
 
                 </p:dialog>
