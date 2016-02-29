@@ -19,10 +19,18 @@
     </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            21600
         </session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/faces/error.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/faces/exception.xhtml</location>
+    </error-page>
 </web-app>
