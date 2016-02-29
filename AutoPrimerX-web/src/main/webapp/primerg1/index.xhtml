@@ -15,7 +15,6 @@
             <h:body>
                 <b:container>
                 <h3>Diseño de Primer's para clonación</h3>
-                <p:growl id="growl" life="5000" />
                 <br />
                 <h:form>
                     <h:panelGrid columns="3" cellpadding="4">
@@ -24,13 +23,21 @@
                             <f:validator validatorId="custom.seqValidator" />
                         </p:inputTextarea>
                         <br/>
-                        <h:outputText id="displayRange" value="Largo del Primer entre #{primerG1.largo1} y #{primerG1.largo2}" />
+                        <h:outputLabel id="displayRange" value="Largo del Primer entre #{primerG1.largo1} y #{primerG1.largo2}" />
                         <p:slider for="largo1,largo2" display="displayRange" style="width: 400px" range="true" displayTemplate="Largo del Primer entre {min} y {max}" />
-                        <h:inputHidden id="largo1" value="#{primerG1.largo1}" />
-                        <h:inputHidden id="largo2" value="#{primerG1.largo2}" />
-                        <br/>
-
-                        <p:commandButton value="Generar" update="answer, length, tabla, tabla2, :growl" action="#{primerG1.submit}" />
+                        <h:panelGroup>
+                            <h:inputHidden id="largo1" value="#{primerG1.largo1}" />
+                            <h:inputHidden id="largo2" value="#{primerG1.largo2}" />
+                        </h:panelGroup>
+                        <h:outputLabel for="enzyme" value="Seleccione la enzima de restricción" />
+                        <h:panelGroup >
+                            <p:selectOneMenu id="enzyme" value="#{enzyme}" >
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItems value="#{enzymeController.items}" />
+                            </p:selectOneMenu> 
+                        </h:panelGroup>
+                        <p:button outcome="/enzyme/List" value="Agregar Enzimas" icon="ui-icon-plus" /> 
+                        <p:commandButton value="Generar" update="answer, length, tabla, tabla2, tabla3, :growl" action="#{primerG1.submit}" />
                     </h:panelGrid>
                     <p:separator />
                     <br/>
@@ -100,6 +107,31 @@
                                 <h:outputText value="#{dato.maxAF}" />
                             </p:column>
                         </p:dataTable>
+                        <p:dataTable id="tabla3" var="dato" resizableColumns="true" value="#{primerG1.primersMatch}" >
+                            <f:facet name="header">
+                                Best Cloning Primer's 
+                            </f:facet>
+                            <p:column headerText="Primer fwd">
+                                <h:outputText value="#{dato.pri_seq_fw}" />
+                            </p:column>
+                            
+                            <p:column headerText="Primer rev">
+                                <h:outputText value="#{dato.pri_seq_rv}" />
+                            </p:column>
+
+                            <p:column headerText="Tm difference">
+                                <h:outputText value="#{dato.tmD}" />
+                            </p:column>
+
+                            <p:column headerText="Primer fwd size">
+                                <h:outputText value="#{dato.length_fw}" />
+                            </p:column>
+
+                            <p:column headerText="Primer rev size">
+                                <h:outputText value="#{dato.length_rv}" />
+                            </p:column>
+                        </p:dataTable>
+                        
                     </h:panelGrid>
                 </h:form>
             </b:container>

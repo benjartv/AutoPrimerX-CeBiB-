@@ -12,6 +12,7 @@ import java.util.List;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import primerg1Domain.Primer;
+import primerg1Domain.PrimerRF;
 
 /**
  *
@@ -32,8 +33,10 @@ public class PrimerG1{
     
     private List<Primer> primers_rev;
     private List<Primer> primers_fwd;
+    private List<PrimerRF> primersMatch;
     
     private Primer service = new Primer();
+    private PrimerRF serviceMatch = new PrimerRF();
     
     public PrimerG1() {
     }
@@ -94,6 +97,14 @@ public class PrimerG1{
         this.primers_fwd = primers_fwd;
     }
 
+    public List<PrimerRF> getPrimersMatch() {
+        return primersMatch;
+    }
+
+    public void setPrimersMatch(List<PrimerRF> primersMatch) {
+        this.primersMatch = primersMatch;
+    }
+
 
     public void submit(){
         sequence = sequence.replaceAll("\\s+","");
@@ -102,6 +113,7 @@ public class PrimerG1{
         String sequence_back = new StringBuilder(sequence).reverse().toString();
         primers_rev = service.createPrimer(sequence_back, com_sequence, largo1, largo2);
         primers_fwd = service.createPrimer(com_sequence, sequence_back, largo1, largo2);
+        primersMatch = serviceMatch.findbestPrimers(primers_fwd, primers_rev);
     }
     
     

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EnzymeCreateDlg" widgetVar="EnzymeCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Ingresar nueva enzima">
+            <h:form id="EnzymeCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{enzymeController.selected != null}">
+                        <p:outputLabel value="Enzyme name" for="nameEnzyme" />
+                        <p:inputText id="nameEnzyme" value="#{enzymeController.selected.nameEnzyme}" title="#{bundle.CreateEnzymeTitle_nameEnzyme}" />
+                        <p:outputLabel value="DNA Target" for="dnaTarget" />
+                        <p:inputText id="dnaTarget" value="#{enzymeController.selected.dnaTarget}" title="#{bundle.CreateEnzymeTitle_dnaTarget}" />
+                        <p:outputLabel value="Alt. DNA Target" for="alt_dnaTarget" />
+                        <p:inputText id="alt_dnaTarget" value="#{enzymeController.selected.alt_dnaTarget}" title="#{bundle.CreateEnzymeTitle_alt_dnaTarget}" />
+                        <p:outputLabel value="Number of base pairs" for="numBasePair" />
+                        <p:inputText id="numBasePair" value="#{enzymeController.selected.numBasePair}" title="#{bundle.CreateEnzymeTitle_numBasePair}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{enzymeController.create}" value="Crear" update="display,:EnzymeListForm:datalist,:growl" oncomplete="handleSubmit(args,'EnzymeCreateDialog');"/>
+                    <p:commandButton value="Cancel" onclick="EnzymeCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

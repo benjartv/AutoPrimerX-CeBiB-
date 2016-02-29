@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EnzymeEditDlg" widgetVar="EnzymeEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditEnzymeTitle}">
+            <h:form id="EnzymeEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{enzymeController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditEnzymeLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{enzymeController.selected.id}" title="#{bundle.EditEnzymeTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditEnzymeLabel_nameEnzyme}" for="nameEnzyme" />
+                        <p:inputText id="nameEnzyme" value="#{enzymeController.selected.nameEnzyme}" title="#{bundle.EditEnzymeTitle_nameEnzyme}" />
+                        <p:outputLabel value="#{bundle.EditEnzymeLabel_dnaTarget}" for="dnaTarget" />
+                        <p:inputText id="dnaTarget" value="#{enzymeController.selected.dnaTarget}" title="#{bundle.EditEnzymeTitle_dnaTarget}" />
+                        <p:outputLabel value="#{bundle.EditEnzymeLabel_alt_dnaTarget}" for="alt_dnaTarget" />
+                        <p:inputText id="alt_dnaTarget" value="#{enzymeController.selected.alt_dnaTarget}" title="#{bundle.EditEnzymeTitle_alt_dnaTarget}" />
+                        <p:outputLabel value="#{bundle.EditEnzymeLabel_numBasePair}" for="numBasePair" />
+                        <p:inputText id="numBasePair" value="#{enzymeController.selected.numBasePair}" title="#{bundle.EditEnzymeTitle_numBasePair}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{enzymeController.update}" value="#{bundle.Save}" update="display,:EnzymeListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EnzymeEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EnzymeEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
