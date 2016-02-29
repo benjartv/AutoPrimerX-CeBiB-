@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -52,13 +53,13 @@ public class PrimerG3  implements Serializable{
     private ArrayList<ArrayList<String>> input= new ArrayList<ArrayList<String>>();
     private ArrayList<Integer> posiciones= new ArrayList<Integer>();  
     private String [] sequencesSplit;
-    private String [][] sequencesShow;
+    private ArrayList<ArrayList<SequenceShow>> sequencesShow = new ArrayList<ArrayList<SequenceShow>>();
 
-    public String[][] getSequencesShow() {
+    public ArrayList<ArrayList<SequenceShow>> getSequencesShow() {
         return sequencesShow;
     }
 
-    public void setSequencesShow(String[][] sequencesShow) {
+    public void setSequencesShow(ArrayList<ArrayList<SequenceShow>> sequencesShow) {
         this.sequencesShow = sequencesShow;
     }
 
@@ -429,10 +430,7 @@ public class PrimerG3  implements Serializable{
         resultado = resultado=determinarConservado(sequencesSplit);
         consensos = determinarConsenso(resultado, conservado, tamanoPrimer);
         
-        /*for (int i = 0; i < input.size(); i++) {
-            System.out.println(i + " " + input.get(i));
-
-        }*/
+        marcaSitiosConservados();
         
         for (int h = 0; h < consensos.size(); h++) {
             secuenciasNucleotidos.add(nucleotidSequence(consensos.get(h), codon));
@@ -785,22 +783,23 @@ public class PrimerG3  implements Serializable{
         }
         try{
             Profile<ProteinSequence, AminoAcidCompound> profile = Alignments.getMultipleSequenceAlignment(lst);
-                    //System.out.printf("Clustalw:%n%s%n", profile);
+            //System.out.printf("Clustalw:%n%s%n", profile);
             ConcurrencyTools.shutdown();
 
             String [] secuencias = new String[profile.getAlignedSequences().size()];
-            sequencesShow = new String[profile.getAlignedSequences().size()][];
-
+         
             int i = 0;
-            for (AlignedSequence align : profile.getAlignedSequences()){
+            for (AlignedSequence align : profile.getAlignedSequences()){ 
+                ArrayList<SequenceShow> aux = new ArrayList<>();
                 secuencias[i] = align.getSequenceAsString();
-                sequencesShow[i] = new String[secuencias[i].length()];
                 for(int j=0; j<secuencias[i].length(); j++){
-                    sequencesShow[i][j] = secuencias[i].substring(j, j+1);
+                    aux.add(new SequenceShow(secuencias[i].substring(j, j+1)));
                 }
+                
+                sequencesShow.add(aux);
                 i++;
             }
-
+            
             return secuencias;
         }
         catch(Exception e){
@@ -811,10 +810,40 @@ public class PrimerG3  implements Serializable{
         
     }
     
+    public void marcaSitiosConservados(){        
+        int k;
+        int inicio = 0;
+        int fin = 0;
+        
+        System.out.println("largo de posiciones: "+posiciones.size());
+        
+        for(int i = 0; i < sequencesShow.size(); i++){
+            k = 0;
+            for(int j = 0; j < sequencesShow.get(i).size(); j++){
+                if (2*k < posiciones.size()){
+                    inicio = posiciones.get(2*k);
+                }
+                if(2*k+1 < posiciones.size()){
+                    fin = posiciones.get(2*k+1);
+                }
+
+                if(j >= inicio && j < fin){
+                    sequencesShow.get(i).get(j).setSitioConservado(true);
+                    System.out.println("se marca un sitio conservado en "+j);
+                }
+                else if(j == fin){
+                    sequencesShow.get(i).get(j).setSitioConservado(true);
+                    System.out.println("fin. se marca un sitio conservado en "+j);
+                    k++;
+                }
+            }
+        }     
+    }
+    
     public void cleanAnswer(){
         secuenciasNucleotidos = new ArrayList<>();
         sequencesSplit = new String[1]; 
-        sequencesShow = new String[1][1];
+        sequencesShow = new ArrayList<>();
         input= new ArrayList<ArrayList<String>>();
         file = null;
     }

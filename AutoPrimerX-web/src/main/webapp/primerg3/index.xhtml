@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
             <h:outputText value="Microorganismos"></h:outputText>
@@ -101,8 +102,8 @@
                                     <p:fileUpload id="input-file" value="#{primerG3.file}" mode="simple" required="true" requiredMessage="Debe seleccionar un archivo"/>
 
                                     <p:outputLabel styleClass="form-label" value="Ingrese la tolerancia para aminoácidos conservados" for="conservado" /> 
-                                    <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="Debe ingresar la tolerancia para aminoácidos conservados" />
-
+                                    <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="Debe ingresar la tolerancia para aminoácidos conservados" />                                   
+                                    
                                     <p:outputLabel styleClass="form-label" value="Ingrese la tolerancia para aminoácidos idénticos" for="identico" />
                                     <p:inputText type="number" id="identico" value="#{primerG3.identico}" required="true" requiredMessage="Debe ingresar la tolerancia para aminoácidos idénticos" />
                                     <br/>
@@ -137,17 +138,20 @@
 
                                 </div>
                             </div>
-                            <div class="overflow">
+                            <div>
                                 <p:outputLabel styleClass="form-label" value="Secuencias alineadas" />
-                                <table class="table table-hover">
-                                    <ui:repeat value="#{primerG3.sequencesShow}" var="seq">
-                                        <tr>
-                                            <ui:repeat value="#{seq}" var="amino">
-                                                <td>#{amino}</td>
-                                            </ui:repeat>
-                                        </tr>
-                                    </ui:repeat>
-                                </table>                                
+                                <span> <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Sitios conservados</span>
+                                <div class="overflow">
+                                    <table class="table table-hover">
+                                        <ui:repeat value="#{primerG3.sequencesShow}" var="sequence">
+                                            <tr>
+                                                <ui:repeat value="#{sequence}" var="amino">
+                                                    <td class="#{amino.sitioConservado ? 'sitio-conservado' : ''}">#{amino.seq}</td>
+                                                </ui:repeat>
+                                            </tr>
+                                        </ui:repeat>
+                                    </table>             
+                                </div>                   
                             </div>
 
                         </p:panel>

@@ -188,6 +188,9 @@ border: none;
     max-height: 30em;
 }
 
+.sitio-conservado{
+    background-color: #0f0;
+}
 
 #ayudabtn{
     margin-left: 1050px;
@@ -207,4 +210,8 @@ border: none;
 }
 .bl1{
     width: 600px;
+}
+
+.glyphicon-stop{
+    color: #0f0;
 }
