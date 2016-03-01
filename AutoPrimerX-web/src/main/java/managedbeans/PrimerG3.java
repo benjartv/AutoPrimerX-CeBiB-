@@ -848,6 +848,230 @@ public class PrimerG3  implements Serializable{
         file = null;
     }
     
+    public ArrayList<String> convertIUPACtoNormal(String secuencia){
+        ArrayList<String> secuencias = new ArrayList<>();
+        String aux;
+        secuencias.add("");
+        int j, largo;
+        for(int i = 0; i < secuencia.length()-1; i++){
+            aux = secuencia.substring(i, i+1);
+            switch (aux) {
+                case "A":
+                    for(String str : secuencias){
+                        str = str.concat("A");
+                    }
+                    break;
+                case "C":
+                    for(String str : secuencias){
+                        str = str.concat("C");
+                    }
+                    break;
+                case "G":
+                    for(String str : secuencias){
+                        str = str.concat("G");
+                    }
+                    break;
+                case "T":
+                    for(String str : secuencias){
+                        str = str.concat("T");
+                    }
+                    break;
+                case "R":
+                    for(String str : secuencias){
+                        secuencias.add(str);
+                    }
+                    j = 0;
+                    for(String str : secuencias){
+                        if(j < secuencias.size()/2){
+                            str = str.concat("A");
+                        }
+                        else{
+                            str = str.concat("G");
+                        }
+                        j++;
+                    }
+                    break;
+                case "Y":
+                    for(String str : secuencias){
+                        secuencias.add(str);
+                    }
+                    j = 0;
+                    for(String str : secuencias){
+                        if(j < secuencias.size()/2){
+                            str = str.concat("C");
+                        }
+                        else{
+                            str = str.concat("T");
+                        }
+                        j++;
+                    }
+                    break;
+                case "S":
+                    for(String str : secuencias){
+                        secuencias.add(str);
+                    }
+                    j = 0;
+                    for(String str : secuencias){
+                        if(j < secuencias.size()/2){
+                            str = str.concat("G");
+                        }
+                        else{
+                            str = str.concat("C");
+                        }
+                        j++;
+                    }
+                    break;
+                case "W":
+                    for(String str : secuencias){
+                        secuencias.add(str);
+                    }
+                    j = 0;
+                    for(String str : secuencias){
+                        if(j < secuencias.size()/2){
+                            str = str.concat("A");
+                        }
+                        else{
+                            str = str.concat("T");
+                        }
+                        j++;
+                    }
+                    break;
+                case "K":
+                    for(String str : secuencias){
+                        secuencias.add(str);
+                    }
+                    j = 0;
+                    for(String str : secuencias){
+                        if(j < secuencias.size()/2){
+                            str = str.concat("G");
+                        }
+                        else{
+                            str = str.concat("T");
+                        }
+                        j++;
+                    }
+                    break;
+                case "M":
+                    for(String str : secuencias){
+                        secuencias.add(str);
+                    }
+                    j = 0;
+                    for(String str : secuencias){
+                        if(j < secuencias.size()/2){
+                            str = str.concat("A");
+                        }
+                        else{
+                            str = str.concat("C");
+                        }
+                        j++;
+                    }
+                    break;
+                case "B":
+                    largo = secuencias.size();
+                    for(int k = 0; k < largo*2; i++){
+                        secuencias.add(secuencias.get(k%largo));
+                    }
+                    i = 0;
+                    for(String str : secuencias){
+                        if(i < largo){
+                            str = str.concat("C");
+                        }
+                        else if (i < largo * 2){
+                            str = str.concat("G");
+                        }
+                        else{
+                            str = str.concat("T");
+                        }
+                        i++;
+                    }
+                    break;
+                case "D":
+                    largo = secuencias.size();
+                    for(int k = 0; k < largo*2; i++){
+                        secuencias.add(secuencias.get(k%largo));
+                    }
+                    i = 0;
+                    for(String str : secuencias){
+                        if(i < largo){
+                            str = str.concat("A");
+                        }
+                        else if (i < largo * 2){
+                            str = str.concat("G");
+                        }
+                        else{
+                            str = str.concat("T");
+                        }
+                        i++;
+                    }
+                    break;
+                case "H":
+                    largo = secuencias.size();
+                    for(int k = 0; k < largo*2; i++){
+                        secuencias.add(secuencias.get(k%largo));
+                    }
+                    i = 0;
+                    for(String str : secuencias){
+                        if(i < largo){
+                            str = str.concat("A");
+                        }
+                        else if (i < largo * 2){
+                            str = str.concat("C");
+                        }
+                        else{
+                            str = str.concat("T");
+                        }
+                        i++;
+                    }
+                    break;
+                case "V":
+                    largo = secuencias.size();
+                    for(int k = 0; k < largo*2; i++){
+                        secuencias.add(secuencias.get(k%largo));
+                    }
+                    i = 0;
+                    for(String str : secuencias){
+                        if(i < largo){
+                            str = str.concat("C");
+                        }
+                        else if (i < largo * 2){
+                            str = str.concat("G");
+                        }
+                        else{
+                            str = str.concat("A");
+                        }
+                        i++;
+                    }
+                    break;
+                case "N":
+                    largo = secuencias.size();
+                    for(int k = 0; k < largo*3; i++){
+                        secuencias.add(secuencias.get(k%largo));
+                    }
+                    i = 0;
+                    for(String str : secuencias){
+                        if(i < largo){
+                            str = str.concat("C");
+                        }
+                        else if (i < largo * 2){
+                            str = str.concat("G");
+                        }
+                        else if (i < largo * 3){
+                            str = str.concat("T");
+                        }
+                        else{
+                            str = str.concat("A");
+                        }
+                        i++;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        return secuencias;
+    }
+    
     public void createIUPAC(){
             iupac = new ArrayList();
                 /*
