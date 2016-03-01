@@ -16,6 +16,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
@@ -27,6 +29,7 @@ import org.primefaces.model.UploadedFile;
 import org.biojava.nbio.alignment.Alignments;
 import org.biojava.nbio.alignment.template.AlignedSequence;
 import org.biojava.nbio.alignment.template.Profile;
+import org.biojava.nbio.core.exceptions.CompoundNotFoundException;
 import org.biojava.nbio.core.sequence.ProteinSequence;
 import org.biojava.nbio.core.sequence.compound.AminoAcidCompound;
 import org.biojava.nbio.core.sequence.io.FastaReaderHelper;
@@ -55,6 +58,14 @@ public class PrimerG3  implements Serializable{
     private String [] sequencesSplit;
     private ArrayList<ArrayList<SequenceShow>> sequencesShow = new ArrayList<ArrayList<SequenceShow>>();
 
+    public ArrayList<String> getConsensos() {
+        return consensos;
+    }
+
+    public void setConsensos(ArrayList<String> consensos) {
+        this.consensos = consensos;
+    }
+    
     public ArrayList<ArrayList<SequenceShow>> getSequencesShow() {
         return sequencesShow;
     }
@@ -593,9 +604,7 @@ public class PrimerG3  implements Serializable{
     public String nucleotidSequence(String seq, CodonUsage codon){
         String nucleotidSeq = "";
         String [] consenso = seq.split("-");
-        //codons.init();
-        //cambiarUsoCodon(codon);
-        //System.out.println("Max codon F: "+codons.getProbabilidadMayor(codons.getCodonusage().getF()).getcodon());
+     
         for (String cons : consenso){
             if(cons.length() == 1){
                 String aux = getCodon(cons).getcodon();
@@ -829,11 +838,9 @@ public class PrimerG3  implements Serializable{
 
                 if(j >= inicio && j < fin){
                     sequencesShow.get(i).get(j).setSitioConservado(true);
-                    System.out.println("se marca un sitio conservado en "+j);
                 }
                 else if(j == fin){
                     sequencesShow.get(i).get(j).setSitioConservado(true);
-                    System.out.println("fin. se marca un sitio conservado en "+j);
                     k++;
                 }
             }
@@ -846,6 +853,22 @@ public class PrimerG3  implements Serializable{
         sequencesShow = new ArrayList<>();
         input= new ArrayList<ArrayList<String>>();
         file = null;
+    }
+    
+    public ArrayList<String> convertNucleotideSequence(String seq){
+        ArrayList<String> secuencias = new ArrayList<>();
+        
+        try {
+            ProteinSequence amino = new ProteinSequence(seq);
+            for(AminoAcidCompound cs : amino.getCompoundSet().getAllCompounds()){
+                secuencias.add(cs.getShortName());
+            }
+            
+        } catch (CompoundNotFoundException ex) {
+            Logger.getLogger(PrimerG3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return secuencias;
     }
     
     public ArrayList<String> convertIUPACtoNormal(String secuencia){
@@ -877,8 +900,9 @@ public class PrimerG3  implements Serializable{
                     }
                     break;
                 case "R":
-                    for(String str : secuencias){
-                        secuencias.add(str);
+                    largo = secuencias.size();
+                    for(int k = 0; k < largo; i++){
+                        secuencias.add(secuencias.get(k));
                     }
                     j = 0;
                     for(String str : secuencias){
@@ -892,8 +916,9 @@ public class PrimerG3  implements Serializable{
                     }
                     break;
                 case "Y":
-                    for(String str : secuencias){
-                        secuencias.add(str);
+                    largo = secuencias.size();
+                    for(int k = 0; k < largo; i++){
+                        secuencias.add(secuencias.get(k));
                     }
                     j = 0;
                     for(String str : secuencias){
@@ -907,8 +932,9 @@ public class PrimerG3  implements Serializable{
                     }
                     break;
                 case "S":
-                    for(String str : secuencias){
-                        secuencias.add(str);
+                    largo = secuencias.size();
+                    for(int k = 0; k < largo; i++){
+                        secuencias.add(secuencias.get(k));
                     }
                     j = 0;
                     for(String str : secuencias){
@@ -922,8 +948,9 @@ public class PrimerG3  implements Serializable{
                     }
                     break;
                 case "W":
-                    for(String str : secuencias){
-                        secuencias.add(str);
+                    largo = secuencias.size();
+                    for(int k = 0; k < largo; i++){
+                        secuencias.add(secuencias.get(k));
                     }
                     j = 0;
                     for(String str : secuencias){
@@ -937,8 +964,9 @@ public class PrimerG3  implements Serializable{
                     }
                     break;
                 case "K":
-                    for(String str : secuencias){
-                        secuencias.add(str);
+                    largo = secuencias.size();
+                    for(int k = 0; k < largo; i++){
+                        secuencias.add(secuencias.get(k));
                     }
                     j = 0;
                     for(String str : secuencias){
@@ -952,8 +980,9 @@ public class PrimerG3  implements Serializable{
                     }
                     break;
                 case "M":
-                    for(String str : secuencias){
-                        secuencias.add(str);
+                    largo = secuencias.size();
+                    for(int k = 0; k < largo; i++){
+                        secuencias.add(secuencias.get(k));
                     }
                     j = 0;
                     for(String str : secuencias){

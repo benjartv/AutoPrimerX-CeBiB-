@@ -135,8 +135,8 @@
                                     <hr/>
                                     <p:accordionPanel styleClass="sitios-conservados" multiple="true" value="#{primerG3.secuenciasNucleotidos}" var="seq">
                                         <p:tab title="#{seq}">
-                                            <p:dataList value="#{primerG3.convertIUPACtoNormal(seq)}" var="secuencia">
-                                                #{secuencia}
+                                            <p:dataList value="#{primerG3.convertIUPACtoNormal(seq)}" var="protein">
+                                                #{protein}
                                             </p:dataList>
                                         </p:tab>    
                                     </p:accordionPanel>
