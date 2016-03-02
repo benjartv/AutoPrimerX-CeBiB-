@@ -22,8 +22,17 @@
                 }
 
                 function enableprob() {
-                $("#codonUsageBtn").removeClass("disabled");
+                    console.log("Entra en el enableprob");
+                    $("#codonUsageBtn").removeClass("disabled");
+                    var links = document.getElementsByClassName("link-seq");
+                    for(i = 0; i < links.length; i++){
+                        links[i].onclick = function(){
+                            console.log(links[i]);
+                            getNucleotideSeq(links[i]);
+                        };
+                    }
                 }
+                
                 //]]>
             </h:outputScript>
             <h:body>
@@ -126,21 +135,55 @@
                                             <p:remoteCommand name="updateprob" update=":probab-form:codonUsageBtn" />
                                             <p:commandButton id="clean" value="Limpiar" actionListener="#{primerG3.cleanAnswer()}" update="nucleotidos alineados" ajax="false" />
                                             <p:commandButton id="submit" value="Envíar" update="nucleotidos" actionListener="#{primerG3.submit(codonUsageController.selected)}" ajax="false" onclick="PF('block').show();
-                                                    disableprob();" oncomplete="PF('block').hide();enableprob();"/>                                                                                
+                                                    disableprob();" oncomplete="PF('block').hide();enableprob();" />                                                                                
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4" >
+                                <div class="col-md-7" >
                                     <p:outputLabel styleClass="form-label" value="Sitios conservados" />
                                     <hr/>
-                                    <p:accordionPanel styleClass="sitios-conservados" multiple="true" value="#{primerG3.secuenciasNucleotidos}" var="seq">
-                                        <p:tab title="#{seq}">
-                                            <p:dataList value="#{primerG3.convertIUPACtoNormal(seq)}" var="protein">
-                                                #{protein}
-                                            </p:dataList>
+                                    <!--div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                        <span class="hidden">#{count = 0}</span>
+                                        <ui:repeat value="#{primerG3.consensos}" var="seq">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="heading#{count}">
+                                                    <h5 class="panel-title">
+                                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse#{count}" aria-expanded="false" aria-controls="collapse#{count}">
+                                                            <span class="link-seq" id="link#{count}">
+                                                                #{seq}
+                                                            </span>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse#{count}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading#{count}">
+                                                    <div class="panel-body" id="body#{count}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="hidden">#{count = count + 1}</span>
+                                        </ui:repeat>
+                                    </div-->
+                                    <span class="hidden">#{i = 0}</span>
+                                    <p:accordionPanel styleClass="sitios-conservados" multiple="true" value="#{primerG3.consensos}" var="seq">
+                                        <p:tab title="#{primerG3.nucleotidSequence(seq)}">
+                                            <span class="hidden">#{j = 0}</span>
+                                            <p:outputLabel value="Choose nucleotide consensus: "/>
+                                            <br/>
+                                            <ui:repeat value="#{primerG3.getConsensosSeqs(seq)}" var="aminoSeq">
+                                                <!--p:selectOneButton value="#{primerG3.nucleotidSeq[i][j]}"-->
+                                                <p:selectOneButton>
+                                                    <f:selectItems value="#{aminoSeq}" var="amino" itemLabel="#{amino}" itemValue="#{amino}"/>
+                                                </p:selectOneButton>
+                                                <span class="hidden">#{j = j + 1}</span>
+                                            </ui:repeat>
+                                            <h:form id="result-form" prependId="false">
+                                                <p:commandButton value="Generate" actionListener="#{primerG3.getCodonSeq(primerG3.nucleotidSeq[i], i)}"/>
+                                                <p:outputLabel id="resultNucleotid#{i}as" value="#{primerG3.resultNucleotidSeq[i]}"/>
+                                            </h:form>
+                                            <span class="hidden">#{i = i + 1}</span>
                                         </p:tab>    
                                     </p:accordionPanel>
-
+                                    
                                 </div>
                             </div>
                             <div>

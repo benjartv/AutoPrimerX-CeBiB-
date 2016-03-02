@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
@@ -34,9 +35,14 @@ import org.biojava.nbio.core.sequence.ProteinSequence;
 import org.biojava.nbio.core.sequence.compound.AminoAcidCompound;
 import org.biojava.nbio.core.sequence.io.FastaReaderHelper;
 import org.biojava.nbio.core.util.ConcurrencyTools;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.GraphPath; 
 import primerg3Domain.Codon;
 import primerg3Domain.CondonUsage;
 import primerg3Domain.NomenclaturaIUPAC;
+
 
 @Named(value = "primerG3")
 @SessionScoped
@@ -57,7 +63,25 @@ public class PrimerG3  implements Serializable{
     private ArrayList<Integer> posiciones= new ArrayList<Integer>();  
     private String [] sequencesSplit;
     private ArrayList<ArrayList<SequenceShow>> sequencesShow = new ArrayList<ArrayList<SequenceShow>>();
+    private String [][] nucleotidSeq;
+    private String [] resultNucleotidSeq;
 
+    public String[] getResultNucleotidSeq() {
+        return resultNucleotidSeq;
+    }
+
+    public void setResultNucleotidSeq(String[] resultNucleotidSeq) {
+        this.resultNucleotidSeq = resultNucleotidSeq;
+    }
+
+    public String[][] getNucleotidSeq() {
+        return nucleotidSeq;
+    }
+
+    public void setNucleotidSeq(String[][] nucleotidSeq) {
+        this.nucleotidSeq = nucleotidSeq;
+    }
+    
     public ArrayList<String> getConsensos() {
         return consensos;
     }
@@ -444,7 +468,7 @@ public class PrimerG3  implements Serializable{
         marcaSitiosConservados();
         
         for (int h = 0; h < consensos.size(); h++) {
-            secuenciasNucleotidos.add(nucleotidSequence(consensos.get(h), codon));
+            secuenciasNucleotidos.add(nucleotidSequence(consensos.get(h)));
         }
     
     }
@@ -601,7 +625,7 @@ public class PrimerG3  implements Serializable{
     }
     
     //Recibe Strings separados por un guión '-'
-    public String nucleotidSequence(String seq, CodonUsage codon){
+    public String nucleotidSequence(String seq){
         String nucleotidSeq = "";
         String [] consenso = seq.split("-");
      
@@ -714,6 +738,86 @@ public class PrimerG3  implements Serializable{
         return nucleotidSeq;
     }
     
+    public String [][] getConsensosSeqs(String consenso){
+        String [] allConsensos = consenso.split("-");
+        String [][] aminos = new String[allConsensos.length][];
+        
+        nucleotidSeq = new String[allConsensos.length][];
+        resultNucleotidSeq = new String[allConsensos.length];
+        
+        for(int i = 0; i < allConsensos.length; i++){
+            if(allConsensos[i].length() != 0){
+                if(allConsensos[i].length() == 1){
+                    if(!allConsensos[i].equals(" ")){
+                        aminos[i] = new String[1];
+                        nucleotidSeq[i] = new String[1];
+                        aminos[i][0] = allConsensos[i];
+                    }
+                }
+                else{
+                    aminos[i] = new String[allConsensos[i].length()];
+                    nucleotidSeq[i] = new String[allConsensos[i].length()];
+                    for(int j = 0; j < allConsensos[i].length(); j++){
+                        aminos[i][j] = allConsensos[i].substring(j, j+1);
+                    }
+                }
+            } 
+        }
+                
+        
+        return aminos;
+    }
+    
+    public String aminoAcidToNucleotidSeq(String aminoSeq){
+        String nucleotidSeq = "";
+        String [] consenso = aminoSeq.split("-");
+        String seqAux = Arrays.toString(consenso);
+        
+        DirectedGraph<String, DefaultEdge> dGraph = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+        for(int i = 0; i < seqAux.length(); i++){
+            dGraph.addVertex(seqAux.substring(i, i+1));
+        }
+        
+        //Se agregan las aristas
+        for(int i = 0; i < consenso.length-1; i++){
+            if(consenso[i].length() == 1){
+                if(consenso[i+1].length() == 1){
+                    dGraph.addEdge(consenso[i], consenso[i+1]);
+                }
+                else{
+                    for(int j = 0; j < consenso[i+1].length(); j++){
+                        dGraph.addEdge(consenso[i], consenso[i+1].substring(j, j+1));
+                    }
+                }
+            }
+            else {
+                if(consenso[i+1].length() == 1){
+                    for(int j = 0; j < consenso[i].length(); j++){
+                        dGraph.addEdge(consenso[i].substring(j, j+1), consenso[i+1]);
+                    }
+                }
+                else{
+                    for(int j = 0; j < consenso[i].length(); j++){
+                        for(int k = 0; k < consenso[i+1].length(); k++){
+                            dGraph.addEdge(consenso[i].substring(j, j+1), consenso[i+1].substring(k, k+1));
+                        }
+                    }
+                }
+            }
+        }
+           
+        return nucleotidSeq;
+    }
+    
+    public void getCodonSeq(String [] aminoSeq, int i){
+        String sequence= "";
+        for(String amino : aminoSeq){
+            sequence = sequence.concat(getCodon(amino).getcodon());
+        }
+    
+        resultNucleotidSeq[i] = sequence;
+    }
+    
     public Codon getCodon(String amino){
         Codon aux = new Codon();
         
@@ -823,8 +927,6 @@ public class PrimerG3  implements Serializable{
         int k;
         int inicio = 0;
         int fin = 0;
-        
-        System.out.println("largo de posiciones: "+posiciones.size());
         
         for(int i = 0; i < sequencesShow.size(); i++){
             k = 0;
@@ -1218,7 +1320,6 @@ public class PrimerG3  implements Serializable{
         
     
     public void cambiarUsoCodon(CodonUsage selected){
-        //System.out.println(selected.getNombreOrganismo());
         ArrayList <Codon> G= new ArrayList<>();
             G.add(new Codon("GGG", selected.getGGG_probabilidad()));
             G.add(new Codon("GGA",selected.getGGA_probabilidad()));
