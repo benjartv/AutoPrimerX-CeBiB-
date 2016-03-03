@@ -101,8 +101,8 @@ border: none;
     outline-style: none;
     border: #4a9d7a;
     padding-bottom: 10px;
-    padding-left: 119px;
-    padding-right: 120px;
+    padding-left: 100px;
+    padding-right: 100px;
 }
 .ui-state-active{
     background-color: #418f6e!important;

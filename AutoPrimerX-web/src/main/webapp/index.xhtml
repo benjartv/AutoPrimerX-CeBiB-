@@ -15,23 +15,30 @@
         <ui:define name="body">
             <b:container>
                 <p:tabView orientation="top" id="tab_principal" dynamic="true" cache="true" effect ="fade" effectDuration ="normal">
-                    <p:tab title="Diseño de Primer's" id="tab_secundario">
+                    <p:tab title="Molecular Cloning" id="tab_secundario">
                         <h:panelGrid columns="2" cellpadding="10">
                             <h:graphicImage  id="img1" value="/resources/images/lab.jpg" />
                             <h:outputText
-                                value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fermentum ornare magna, eu ullamcorper dolor cursus non. Nulla eleifend volutpat orci id cursus. In mattis accumsan faucibus. In a orci sed tortor ornare porta vel ut leo. Nunc quam diam, elementum et nunc quis, finibus commodo lacus. Vivamus vel eros aliquam, blandit justo sed, volutpat massa. Phasellus eu laoreet lorem. Vestibulum sem dui, dictum ut massa nec, suscipit congue nisi. Phasellus ullamcorper commodo lacus, a consectetur sapien vulputate maximus. Integer in quam id elit ullamcorper malesuada sed sed nunc. Maecenas imperdiet in augue non laoreet. Ut vel fermentum mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque pharetra massa non pretium laoreet. Nullam felis risus, vestibulum non velit tincidunt, lobortis malesuada urna." />
+                                value="Molecular cloning consists of a set of experimental methods used for inserting a foreign DNA segment within a DNA vector that allows its replication or expression in a specific host organism. The most common technology used to amplify the DNA to be cloned is the Polymerase Chain Reaction (PCR).  Even though this technology is highly standard, one of the problems encountered is the design of primers, because it must take into account several variables like size of the annealing sequence, percentage of cytosine and guanine nucleotides, melting temperature. It is also necessary to avoid the formation of dimers or secondary structures. It is at this point that computer science can help to find a  solution to this problem.  It is possible to design an algorithm that analyzes all the constraints involved and compute the best primers pair for the target sequences. Additionally, it must allowed the control of these parameters in order to obtain primers that best suit the biotechnologist needs.
+An interesting approach would be to design a primer with extension, this would allow that the biologist can skip the cloning vector and go directly into the expression vector.
+" />
                         </h:panelGrid>
                     </p:tab>
-                    <p:tab title="Primer 2">
+                    <p:tab title="Primers design">
                         <h:panelGrid columns="2" cellpadding="10">
                             <h:graphicImage id="img2"  value="/resources/images/lab2.jpg" />
-                            <h:outputText value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fermentum ornare magna, eu ullamcorper dolor cursus non. Nulla eleifend volutpat orci id cursus. In mattis accumsan faucibus. In a orci sed tortor ornare porta vel ut leo. Nunc quam diam, elementum et nunc quis, finibus commodo lacus. Vivamus vel eros aliquam, blandit justo sed, volutpat massa. Phasellus eu laoreet lorem. Vestibulum sem dui, dictum ut massa nec, suscipit congue nisi. Phasellus ullamcorper commodo lacus, a consectetur sapien vulputate maximus. Integer in quam id elit ullamcorper malesuada sed sed nunc. Maecenas imperdiet in augue non laoreet. Ut vel fermentum mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque pharetra massa non pretium laoreet. Nullam felis risus, vestibulum non velit tincidunt, lobortis malesuada urna." />
+                            <h:outputText value="Several biology applications, such as cloning, requires to assembly DNA fragments, which is a very difficult task due to the cost and time it requires. This creates the need for new methods for DNA assembliying, such as the Gibson Assembly Master Mix, which is a rapid and reliable method for the assembly of DNA fragments.  This technique involves the design of primers to align the fragments involved. However, the design of primers is not an easy task, due to restrictions related to the design, such as melting temperature, PCR temperature, assembly temperature, lenght of the primer, minimise dimer properties, among others.
+This project aims at the automatic design of extension primers considering all the restrictions asociated with the sequence to assembly, and to add some advanced properties related to the primer such as the creation of homodimers or heterodimers during the process. The project will help to reduce the time and cost of the operation. 
+" />
                         </h:panelGrid>
                     </p:tab>
-                    <p:tab title="Microorganismos">
+                    <p:tab title="Microorganisms">
                         <h:panelGrid columns="2" cellpadding="10">
                             <h:graphicImage  id="img3"  value="/resources/images/lab3.jpg" />
-                            <h:outputText value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fermentum ornare magna, eu ullamcorper dolor cursus non. Nulla eleifend volutpat orci id cursus. In mattis accumsan faucibus. In a orci sed tortor ornare porta vel ut leo. Nunc quam diam, elementum et nunc quis, finibus commodo lacus. Vivamus vel eros aliquam, blandit justo sed, volutpat massa. Phasellus eu laoreet lorem. Vestibulum sem dui, dictum ut massa nec, suscipit congue nisi. Phasellus ullamcorper commodo lacus, a consectetur sapien vulputate maximus. Integer in quam id elit ullamcorper malesuada sed sed nunc. Maecenas imperdiet in augue non laoreet. Ut vel fermentum mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque pharetra massa non pretium laoreet. Nullam felis risus, vestibulum non velit tincidunt, lobortis malesuada urna." />
+                            <h:outputText value="The search for unknown organisms is a very complex task, this can be done through the analysis of the proteins that the organism is able to synthesize. These proteins can perform functions that may be of interest to understand a biological process. The problem arises when one wants to know the presence of the sequence that generates the protein, since the genome sequence of the organism is unknown.
+To achieve the above, we can follow the next steps: (1) search in other microorganisms a sequence that generate the same protein and its homologous; (2) perform an alignment of all candidate sequences, in order to determine the conserved regions, called domains, and then define a consensus sequence of them; and (3) generate primers based on the consensus sequence. 
+The main problem is the determination of  the most conserved sites of the sequences found, in order to minimize the number of variations, avoiding the generation of unnecessary primers. 
+" />
                         </h:panelGrid>
                     </p:tab>
                 </p:tabView>

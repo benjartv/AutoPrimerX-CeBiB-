@@ -12,6 +12,7 @@
         <h:outputScript library="js" name="main.js"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
+    <ui:insert name="metadata"/> 
     <h:body>
     <b:container id="headerContainer">
             <b:row id="headerTop" styleClass="show-grid">
@@ -34,10 +35,10 @@
 
         <b:navBar brand="AUTOPRIMERX - CEBIB" brandHref="/AutoPrimerX-web/faces/index.xhtml">
             <b:navbarLinks>
-                <b:navLink href="/faces/index.xhtml" value="INICIO" ></b:navLink>
-                    <b:navLink href="/faces/primerg1/index.xhtml" value="DISEÑO DE PRIMER"></b:navLink>
-                    <b:navLink href="/faces/primerg2/index.xhtml" value="PRIMER 2"></b:navLink>
-                    <b:navLink href="/faces/primerg3/index.xhtml" value="MICROORGANISMOS"></b:navLink>
+                <b:navLink href="/faces/index.xhtml" value="HOME" ></b:navLink>
+                    <b:navLink href="/faces/primerg1/index.xhtml" value="MOLECULAR CLONING"></b:navLink>
+                    <b:navLink href="/faces/primerg2/index.xhtml" value="PRIMERS DESIGN"></b:navLink>
+                    <b:navLink href="/faces/primerg3/index.xhtml" value="MICROORGANISMS"></b:navLink>
             </b:navbarLinks>
         </b:navBar>
             <p:growl id="growl" life="2000" />

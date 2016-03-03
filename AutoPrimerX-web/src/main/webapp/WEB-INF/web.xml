@@ -17,6 +17,11 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
+        
+    <mime-mapping>  
+        <extension>woff2</extension>  
+        <mime-type>application/x-font-woff2</mime-type>  
+    </mime-mapping>
     <session-config>
         <session-timeout>
             21600
@@ -29,8 +34,8 @@
         <error-code>404</error-code>
         <location>/faces/error.xhtml</location>
     </error-page>
-    <!--error-page>
+    <error-page>
         <exception-type>java.lang.Exception</exception-type>
         <location>/faces/exception.xhtml</location>
-    </error-page-->
+    </error-page>
 </web-app>

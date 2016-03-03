@@ -134,7 +134,7 @@
                                             <p:remoteCommand name="updateprob" update=":probab-form:codonUsageBtn" />
                                             <p:commandButton id="clean" value="Limpiar" actionListener="#{primerG3.cleanAnswer()}" update="nucleotidos alineados" ajax="false" />
                                             <p:commandButton id="submit" value="Envíar" update="nucleotidos" actionListener="#{primerG3.submit(codonUsageController.selected)}" ajax="false" onclick="PF('block').show();
-                                                    disableprob();" oncomplete="PF('block').hide();enableprob();" />                                                                                
+                                                disableprob();" oncomplete="PF('block').hide();enableprob();" disabled="#{primerG3.file != null}"/>                                                                                
                                         </div>
                                     </div>
                                 </div>
@@ -171,7 +171,7 @@
                                                         <p:outputLabel value="#{primerG3.nucleotidSequence(seq)}"/> 
                                                     </td>
                                                     <td>
-                                                        <p:link class="btn btn-success link-button" outcome="choose_nucleotide_seq" value="Choose nucleotide sequence">
+                                                        <p:link styleClass="btn btn-success link-button" outcome="choose_nucleotide_seq" value="Choose nucleotide sequence">
                                                             <f:param name="sequences" value="#{seq}"/>
                                                         </p:link>
                                                     </td>
