@@ -64,13 +64,31 @@ public class PrimerG3  implements Serializable{
     private String [] sequencesSplit;
     private ArrayList<ArrayList<SequenceShow>> sequencesShow = new ArrayList<ArrayList<SequenceShow>>();
     private String [][] nucleotidSeq;
-    private String [] resultNucleotidSeq;
+    private String resultNucleotidSeq;
+    private String [] aminoSeqs;
+    private int count;
 
-    public String[] getResultNucleotidSeq() {
+    public int getCount() {
+        return count++;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public String[] getAminoSeqs() {
+        return aminoSeqs;
+    }
+
+    public void setAminoSeqs(String[] aminoSeqs) {
+        this.aminoSeqs = aminoSeqs;
+    }
+    
+    public String getResultNucleotidSeq() {
         return resultNucleotidSeq;
     }
 
-    public void setResultNucleotidSeq(String[] resultNucleotidSeq) {
+    public void setResultNucleotidSeq(String resultNucleotidSeq) {
         this.resultNucleotidSeq = resultNucleotidSeq;
     }
 
@@ -171,7 +189,7 @@ public class PrimerG3  implements Serializable{
     }
     public void submitprob(CodonUsage codon){
         //cambiarUsoCodon(codon);
-    }
+    }    
     public void submit(CodonUsage codon) throws IOException, Exception{
         int sitioConservado = conservado;
         
@@ -738,12 +756,30 @@ public class PrimerG3  implements Serializable{
         return nucleotidSeq;
     }
     
+    public int getLengthAminoSeq(String consenso){
+        return consenso.split("-").length;
+    }
+    
+    public void setLengthAminoSeq(int largo){
+        this.aminoSeqs = new String[largo];
+        for(String str : this.aminoSeqs){
+            str = new String();
+        }
+    }
+    
+    /*
+    public void initializer(String seq){
+        setCount(0);
+        setAminoSeqs(getLengthAminoSeq(seq));
+    }
+    */
+    
     public String [][] getConsensosSeqs(String consenso){
         String [] allConsensos = consenso.split("-");
         String [][] aminos = new String[allConsensos.length][];
         
         nucleotidSeq = new String[allConsensos.length][];
-        resultNucleotidSeq = new String[allConsensos.length];
+        //aminoSeqs = new String[largo];
         
         for(int i = 0; i < allConsensos.length; i++){
             if(allConsensos[i].length() != 0){
@@ -809,13 +845,14 @@ public class PrimerG3  implements Serializable{
         return nucleotidSeq;
     }
     
-    public void getCodonSeq(String [] aminoSeq, int i){
+    public void getCodonSeq(String [] aminoSeq){
         String sequence= "";
         for(String amino : aminoSeq){
             sequence = sequence.concat(getCodon(amino).getcodon());
         }
     
-        resultNucleotidSeq[i] = sequence;
+        resultNucleotidSeq = sequence;
+        System.out.println("Result nucleotid seq: "+sequence);
     }
     
     public Codon getCodon(String amino){
@@ -1536,7 +1573,7 @@ public class PrimerG3  implements Serializable{
             });
         ArrayList <Codon> Q= new ArrayList<>();
             Q.add(new Codon("CAA",selected.getCAA_probabilidad()));
-            Q.add(new Codon("CAG ", selected.getCAG_probabilidad()));
+            Q.add(new Codon("CAG", selected.getCAG_probabilidad()));
         Collections.sort(Q, new Comparator<Codon>() {
                 @Override
                 public int compare(Codon c1,Codon c2)

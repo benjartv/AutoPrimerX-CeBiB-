@@ -30,19 +30,51 @@ document.addEventListener("DOMContentLoaded", function(event) {
             button.className = "ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only";
         }
     };
-    
-    
-    document.getElementById('accordion').onresize = function(){
-        console.log("Entra en el onchange de accordion");
-        var links = document.getElementsByClassName("link-seq");
-        for(i = 0; i < links.length; i++){
-            links[i].onclick = function(){
-                console.log(links[i]);
-                getNucleotideSeq(links[i]);
-            };
-        }
-    };
+       
 });
+
+document.addEventListener("DOMContentLoaded", function(event) {
+    var codons = document.getElementsByClassName("codons");
+    if(codons !== null){
+        var resultado = document.getElementById("result");
+        for(i = 0; i < codons.length; i++){
+            var node = document.createElement('span');
+            var text = document.createTextNode(codons[i].innerHTML);
+            node.appendChild(text);
+            node.setAttribute('id', 'result'+i);
+            node.setAttribute('class', 'hidden');
+            resultado.appendChild(node);                      
+        }
+    }
+});
+
+function showSeq(obj){
+    var parent = obj.parentNode.parentNode;
+    console.log(obj);
+    var child = parent.childNodes;
+    var spans = [];
+    for(i=0; i<child.length; i++){ 
+        if(child[i].nodeType !== 3 && child[i].getAttribute('id') !== null && child[i].getAttribute('id') !== obj.getAttribute('id') && child[i].getAttribute('id').substring(0,6).localeCompare('codon')){ 
+            spans.push(child[i]);
+        }
+    }
+    var id = obj.getAttribute('id');
+    id = id.substring(6, id.length);
+    var hiddenIds = [];
+    for(i=0; i<spans.length; i++){
+        if(spans[i].getAttribute('id').localeCompare("codon"+id)){
+            var aux = spans[i].getAttribute('id');
+            //aux = aux.substring(5, aux.length);
+            hiddenIds.push(aux.substring(5, aux.length));
+        }
+    }
+    
+    document.getElementById('result'+id).className = "";
+    
+    for(i=0; i<hiddenIds.length; i++){
+        document.getElementById('result'+hiddenIds[i]).className = "hidden";
+    }
+}
 
 function getNucleotideSeq(element){
     var aminoacidSeq = element.innerHTML.replace(/\s+/g, '');

@@ -11,7 +11,6 @@
             <h:outputText value="Microorganismos"></h:outputText>
         </ui:define>
         <h:head>
-
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
         </h:head>
         <ui:define name="body">
@@ -164,25 +163,23 @@
                                         </ui:repeat>
                                     </div-->
                                     <span class="hidden">#{i = 0}</span>
-                                    <p:accordionPanel styleClass="sitios-conservados" multiple="true" value="#{primerG3.consensos}" var="seq">
-                                        <p:tab title="#{primerG3.nucleotidSequence(seq)}">
-                                            <span class="hidden">#{j = 0}</span>
-                                            <p:outputLabel value="Choose nucleotide consensus: "/>
-                                            <br/>
-                                            <ui:repeat value="#{primerG3.getConsensosSeqs(seq)}" var="aminoSeq">
-                                                <!--p:selectOneButton value="#{primerG3.nucleotidSeq[i][j]}"-->
-                                                <p:selectOneButton>
-                                                    <f:selectItems value="#{aminoSeq}" var="amino" itemLabel="#{amino}" itemValue="#{amino}"/>
-                                                </p:selectOneButton>
-                                                <span class="hidden">#{j = j + 1}</span>
+                                    <p:panelGrid columns="1">
+                                        <table class="table table-condensed">
+                                            <ui:repeat value="#{primerG3.consensos}" var="seq">
+                                                <tr>
+                                                    <td>
+                                                        <p:outputLabel value="#{primerG3.nucleotidSequence(seq)}"/> 
+                                                    </td>
+                                                    <td>
+                                                        <p:link class="btn btn-success link-button" outcome="choose_nucleotide_seq" value="Choose nucleotide sequence">
+                                                            <f:param name="sequences" value="#{seq}"/>
+                                                        </p:link>
+                                                    </td>
+                                                </tr>
                                             </ui:repeat>
-                                            <h:form id="result-form" prependId="false">
-                                                <p:commandButton value="Generate" actionListener="#{primerG3.getCodonSeq(primerG3.nucleotidSeq[i], i)}"/>
-                                                <p:outputLabel id="resultNucleotid#{i}as" value="#{primerG3.resultNucleotidSeq[i]}"/>
-                                            </h:form>
-                                            <span class="hidden">#{i = i + 1}</span>
-                                        </p:tab>    
-                                    </p:accordionPanel>
+                                        </table>
+                                    </p:panelGrid>
+                                        
                                     
                                 </div>
                             </div>

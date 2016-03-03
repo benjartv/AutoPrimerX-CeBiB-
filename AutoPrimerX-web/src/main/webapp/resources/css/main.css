@@ -179,7 +179,7 @@ border: none;
 }
 
 .table>tbody>tr>td{
-    padding: 0px 8px;
+    padding: 0px 2px;
     border-top: none;
 }
 
@@ -189,7 +189,8 @@ border: none;
 }
 
 .sitio-conservado{
-    background-color: #0f0;
+    background-color: #5cb85c ;
+    color: #fff;
 }
 
 #ayudabtn{
@@ -215,5 +216,15 @@ border: none;
 }
 
 .glyphicon-stop{
-    color: #0f0;
+    color: #5cb85c;
+}
+
+.select-amino{
+    background-image: linear-gradient(to bottom,#5ba34a 0,#4a9d7a 100%);
+    border-color: #4a9d7a;
+}
+
+.link-button{
+    color: #fff !important;
+    padding: 0;
 }
