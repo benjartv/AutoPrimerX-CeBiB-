@@ -229,7 +229,7 @@ border: none;
     padding: 0;
 }
 #body {
-    height: 100%;
+     height: 324px;
     /* The html and body elements cannot have any padding or margin. */
 }
 
@@ -246,15 +246,24 @@ border: none;
 /* Set the fixed height of the footer here */
 #push,
 #footer {
-    height: 30px;
+    height: 75px;
 }
-
+#contenido{
+  clear: both;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin-bottom: -72px;
+}
 #footer {
     height: 120px;
     border-width: 1px 0 0;
     background-color: #4a9d7a;
     background-image: none;
     color: #ffffff;
+    clear: both;
+    position: relative;
+
 }
 .footer-content{
     padding: 40px;

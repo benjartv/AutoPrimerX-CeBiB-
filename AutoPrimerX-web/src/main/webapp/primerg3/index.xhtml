@@ -35,9 +35,9 @@
                 //]]>
             </h:outputScript>
             <h:body>
-                <p:dialog id="modalayuda" header="Ayuda con archivo de BLAST" widgetVar="dlg3" showEffect="fade" modal="true" hideEffect="fade" height="520" width="1250">
-                    <h3>PASO 1:</h3>
-                    <h:outputText value="En primera instancia debe ingresar a la página oficila de la NCBI, " />
+                <p:dialog id="modalayuda" header="Help with BLAST file" widgetVar="dlg3" showEffect="fade" modal="true" hideEffect="fade" height="520" width="1250">
+                    <h3>STEP 1:</h3>
+                    <h:outputText value="First, you must enter the official website of the NCBI, " />
                     <p:button target="_blank" href="http://blast.ncbi.nlm.nih.gov/Blast.cgi" value="BLAST" />
                     
                         <div class="row">
@@ -45,33 +45,33 @@
                                 <h:graphicImage  class="bl1"  value="/resources/images/blast1.JPG" />    
                             </div>
                             <div class="col col-md-7">
-                                <p id="parrafo">Una vez en la página se debe ir a la sección de <strong>Basic BLAST</strong> y seleccionar "protein blast"</p>
+                                <p id="parrafo">Once on the page, you should go to the section <strong>Basic BLAST</strong> and select " protein blast"</p>
                             </div>
                         </div>
-                        <h3>PASO 2:</h3>
+                        <h3>STEP 2:</h3>
                         <div class="row">
                             <div class="col col-md-7">
                                 <h:graphicImage  class="bl1"  value="/resources/images/blast2.JPG" />    
                             </div>
                             <div class="col col-md-5">
-                                <p>Ingresar el nombre de la proteína o su secuencia. Luego parametrizar BLAST a su preferencia.</p>
-                                <p>Una vez finaizado el proceso, presionar el boton que se aprecia en la siguiente figura:</p>
+                                <p>Enter the name of the protein or its sequence. Then parameterize BLAST to your preference.</p>
+                                <p>Once complete, press the button shown in the following figure:</p>
                                 <h:graphicImage value="/resources/images/btnblast.JPG" />    
-                                <p>Esperar resultados...</p>
+                                <p>Expect Results...</p>
                             </div>
                         </div>
                         <br/><br/>
-                        <h3>PASO 3:</h3>
+                        <h3>STEP 3:</h3>
                         <div class="row">
                             <div class="col col-md-7">
                                 <h:graphicImage  class="bl1"  value="/resources/images/blast3.JPG" />    
                             </div>
                             <div class="col col-md-5">
-                                <p>Una vez tengamos los resultados, descender hasta "Descriptions" y presionar el link "All", esto para que ingresen todas las proteinas al archivo.</p>
-                                <p>Luego, en el menu desplegable "Download", seleccionar "FASTA (complete sequence)" y presionar el boton continuar.</p>
-                                <p>Finalmente, obtendrá un archivo como el que se muestra en la siguiente imagen:</p>
+                                <p>Once we have the results , down to " Descriptions" and click on the link "All" , this for all proteins that enter the file.</p>
+                                <p>Then in the "Download" dropdown menu , select " FASTA (complete sequence) " and press the Continue button.</p>
+                                <p>Finally , you will get a file like the one shown in the following image:</p>
                                 <h:graphicImage value="/resources/images/blast4.JPG" />
-                                <p>Que es el archivo de secuencias homólogas.</p>
+                                <p>Which is the homologous sequences file.</p>
                             </div>
                         </div>
                     
@@ -109,17 +109,17 @@
                                         <p:button outcome="/codonUsage/List" value="Enter Organism" icon="ui-icon-plus" ></p:button>
                                     </div>    
 
-                                    <p:outputLabel styleClass="form-label" value="Enter the file of homologous sequences" for="input-file"/>
-                                    <p:fileUpload id="input-file" value="#{primerG3.file}" mode="simple" required="true" requiredMessage="You must select a file"/>
+                                    <p:outputLabel styleClass="form-label" value="Enter homologous sequences file" for="input-file"/>
+                                    <p:fileUpload id="input-file" value="#{primerG3.file}" mode="simple" required="true" requiredMessage="You must select a file" />
 
-                                    <p:outputLabel styleClass="form-label" value="Enter size of the tolerance for conserved aminoácids" for="conservado" /> 
+                                    <p:outputLabel styleClass="form-label" value="Enter tolerance's size for conserved aminoácids" for="conservado" /> 
                                     <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="You must enter size of the tolerance for You must enter size of the tolerance for preserved aminoácids aminoácids" />                                   
                                     
-                                    <p:outputLabel styleClass="form-label" value="Enter size of the tolerance for identical aminoácids" for="identico" />
+                                    <p:outputLabel styleClass="form-label" value="Enter tolerance's size for identical aminoácids" for="identico" />
                                     <p:inputText type="number" id="identico" value="#{primerG3.identico}" required="true" requiredMessage="You must enter size of the tolerance for identical aminoácids" />
                                     <br/>
 
-                                    <p:outputLabel styleClass="form-label" value="Enter size for conserved region" for="tamanoPrimer" />
+                                    <p:outputLabel styleClass="form-label" value="Enter conserved region's size" for="tamanoPrimer" />
                                     <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" required="true" requiredMessage="You must enter size for You must enter size of the tolerance for preserved aminoácids region"/>
 
                                     <br/>
