@@ -8,7 +8,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="Microorganismos"></h:outputText>
+            <h:outputText value="Microorganisms"></h:outputText>
         </ui:define>
         <h:head>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
@@ -79,25 +79,25 @@
 
                 </p:dialog>
                 <h:form id="probab-form" enctype="multipart/form-data" prependId="false">
-                    <p:commandButton action="#{primerG3.submitprob(codonUsageController.selected)}" id="codonUsageBtn" immediate="true" ajax="true"  icon="ui-icon-pencil" value="Elegir Probabilidades del Uso de Codon" update=":CodonUsageProbForm" oncomplete="PF('CodonUsageProbDlg').show()" disabled="#{empty codonUsageController.selected}"/>     
+                    <p:commandButton action="#{primerG3.submitprob(codonUsageController.selected)}" id="codonUsageBtn" immediate="true" ajax="true"  icon="ui-icon-pencil" value="Choose odds for the codon usage" update=":CodonUsageProbForm" oncomplete="PF('CodonUsageProbDlg').show()" disabled="#{empty codonUsageController.selected}"/>     
                 </h:form>
                 <div>
                     <h:form enctype="multipart/form-data" prependId="false">
                         <h:panelGrid columns="1" cellpadding="5">
-                            <p:commandButton id="ayudabtn" value="¿Como obtengo el archivo de secuencias homologas?" type="button" onclick="PF('dlg3').show();" /> 
+                            <p:commandButton id="ayudabtn" value="How do I get homologous sequences file?" type="button" onclick="PF('dlg3').show();" /> 
                         </h:panelGrid>
                         <p:messages autoUpdate="true"/>
                         <p:growl  showDetail="true" sticky="true" /> 
                         <p:panel id="pnl" styleClass="no-border">
                             <div class="row form-group">
-                                <h1 class="col-md-offset-1">Microorganismos</h1>
+                                <h1 class="col-md-offset-1">Microorganisms</h1>
                                 <div class="col-md-4 col-md-offset-1">
 
-                                    <p:outputLabel styleClass="form-label" value="Seleccione un organismo (si las probabilidades aparecen en 0, vuelva a seleccionar)" for="usodecodon" /> 
+                                    <p:outputLabel styleClass="form-label" value="Select organism (if the odds are lower than zero , choose again)" for="usodecodon" /> 
                                     <div>
-                                        <p:selectOneMenu id="usodecodon" value="#{codonUsageController.selected}" required="true" requiredMessage="Es necesario seleccionar un uso de condon" panelStyle="width:180px" 
+                                        <p:selectOneMenu id="usodecodon" value="#{codonUsageController.selected}" required="true" requiredMessage="You must selecet codon usage" panelStyle="width:180px" 
                                                          effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith"  >
-                                            <f:selectItem itemLabel="Ninguno" noSelectionOption="true" itemDisabled="true"/>
+                                            <f:selectItem itemLabel="None" noSelectionOption="true" itemDisabled="true"/>
                                             <f:selectItems value="#{codonUsageController.itemsAvailableSelectOne}"
                                                            var="pacienteItem"
                                                            itemValue="#{codonUsageItem}"/>
@@ -106,40 +106,40 @@
                                         </p:selectOneMenu>
                                     </div>
                                     <div>
-                                        <p:button outcome="/codonUsage/List" value="Agregar Organismo" icon="ui-icon-plus" ></p:button>
+                                        <p:button outcome="/codonUsage/List" value="Enter Organism" icon="ui-icon-plus" ></p:button>
                                     </div>    
 
-                                    <p:outputLabel styleClass="form-label" value="Ingrese el archivo de secuencias homologas" for="input-file"/>
-                                    <p:fileUpload id="input-file" value="#{primerG3.file}" mode="simple" required="true" requiredMessage="Debe seleccionar un archivo"/>
+                                    <p:outputLabel styleClass="form-label" value="Enter the file of homologous sequences" for="input-file"/>
+                                    <p:fileUpload id="input-file" value="#{primerG3.file}" mode="simple" required="true" requiredMessage="You must select a file"/>
 
-                                    <p:outputLabel styleClass="form-label" value="Ingrese la tolerancia para aminoácidos conservados" for="conservado" /> 
-                                    <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="Debe ingresar la tolerancia para aminoácidos conservados" />                                   
+                                    <p:outputLabel styleClass="form-label" value="Enter size of the tolerance for conserved aminoácids" for="conservado" /> 
+                                    <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="You must enter size of the tolerance for You must enter size of the tolerance for preserved aminoácids aminoácids" />                                   
                                     
-                                    <p:outputLabel styleClass="form-label" value="Ingrese la tolerancia para aminoácidos idénticos" for="identico" />
-                                    <p:inputText type="number" id="identico" value="#{primerG3.identico}" required="true" requiredMessage="Debe ingresar la tolerancia para aminoácidos idénticos" />
+                                    <p:outputLabel styleClass="form-label" value="Enter size of the tolerance for identical aminoácids" for="identico" />
+                                    <p:inputText type="number" id="identico" value="#{primerG3.identico}" required="true" requiredMessage="You must enter size of the tolerance for identical aminoácids" />
                                     <br/>
 
-                                    <p:outputLabel styleClass="form-label" value="Ingrese el tamaño de la región conservada" for="tamanoPrimer" />
-                                    <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" required="true" requiredMessage="Debe ingresar el tamaño de la región conservada"/>
+                                    <p:outputLabel styleClass="form-label" value="Enter size for conserved region" for="tamanoPrimer" />
+                                    <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" required="true" requiredMessage="You must enter size for You must enter size of the tolerance for preserved aminoácids region"/>
 
                                     <br/>
                                     <br/>
                                     <div class="row">
                                         <div id="errorMsge" class="col-md-12 alert alert-danger hidden" role="alert">
                                             <p>
-                                                La tolerancia para aminoácidos conservados debe ser mayor que la tolerancia para aminoácidos idénticos
+                                                Tolerance for preserved aminoácids must be higher that the tolerance for identical aminoácids
                                             </p>
                                         </div>
                                         <div class="col-md-offset-7">
                                             <p:remoteCommand name="updateprob" update=":probab-form:codonUsageBtn" />
-                                            <p:commandButton id="clean" value="Limpiar" actionListener="#{primerG3.cleanAnswer()}" update="nucleotidos alineados" ajax="false" />
-                                            <p:commandButton id="submit" value="Envíar" update="nucleotidos" actionListener="#{primerG3.submit(codonUsageController.selected)}" ajax="false" onclick="PF('block').show();
+                                            <p:commandButton id="clean" value="Clean" actionListener="#{primerG3.cleanAnswer()}" update="nucleotidos alineados" ajax="false" />
+                                            <p:commandButton id="submit" value="Send" update="nucleotidos" actionListener="#{primerG3.submit(codonUsageController.selected)}" ajax="false" onclick="PF('block').show();
                                                 disableprob();" oncomplete="PF('block').hide();enableprob();" disabled="#{primerG3.file != null}"/>                                                                                
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-7" >
-                                    <p:outputLabel styleClass="form-label" value="Sitios conservados" />
+                                    <p:outputLabel styleClass="form-label" value="Conserved DNA Sites" />
                                     <hr/>
                                     <!--div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                         <span class="hidden">#{count = 0}</span>
@@ -184,8 +184,8 @@
                                 </div>
                             </div>
                             <div>
-                                <p:outputLabel styleClass="form-label" value="Secuencias alineadas" />
-                                <span> <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Sitios conservados</span>
+                                <p:outputLabel styleClass="form-label" value="Aligned sequences" />
+                                <span> <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Conserved DNA Sites</span>
                                 <div class="overflow">
                                     <table class="table table-hover">
                                         <ui:repeat value="#{primerG3.sequencesShow}" var="sequence">
@@ -202,7 +202,7 @@
                         </p:panel>
 
                         <p:blockUI block="pnl" widgetVar="block">
-                            <p id="loading">Cargando</p>
+                            <p id="loading">Loading</p>
                             <p:graphicImage library="images" name="loader.gif"/>
                         </p:blockUI>
                     </h:form>                                   
