@@ -13,7 +13,7 @@
         <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
     <ui:insert name="metadata"/> 
-    <h:body>
+    <h:body id="body">
     <b:container id="headerContainer">
             <b:row id="headerTop" styleClass="show-grid">
                 <b:column span="4">
@@ -44,5 +44,12 @@
             <p:growl id="growl" life="2000" />
             <ui:insert name="body"/> 
        </h:body>
+    <div id="push"></div>
+    <div id="footer">
+          <h:graphicImage id="prbe" value="/resources/images/probe.png"/>
+          <p ><h4 class="footer-content"><i class="fa fa-shield fa-rotate-270"></i> Project Developed by Course of Bioinformatics USACH</h4></p>
+         
+      </div>
+    
 
 </html>
