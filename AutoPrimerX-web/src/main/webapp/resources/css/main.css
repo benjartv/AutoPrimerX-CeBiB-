@@ -285,3 +285,39 @@ border: none;
     position:absolute;
     z-index:100
 }
+#fileupload{
+    padding-right: 5px;
+}
+.ui-fileupload span{
+    background-image: none;
+    color:#ffffff;
+    background-color: #4a9d7a;
+}
+.btn_micro span{
+    background-image: none;
+    color:#ffffff;
+    background-color: #4a9d7a;
+}
+.btn_micro{
+    background-image: none;
+    background-color: #c7cbc9;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}

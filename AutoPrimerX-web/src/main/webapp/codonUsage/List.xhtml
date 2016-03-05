@@ -12,13 +12,13 @@
 
 
         <ui:define name="title">
-            <h:outputText value="Uso de codones"></h:outputText>
+            <h:outputText value="Codon Usage"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
             <b:container>
             <h:form id="CodonUsageListForm">
-                <p:panel header="Lista de uso de codones">
+                <p:panel header="Codon usage list">
                     
                     <p:dataTable id="datalist" value="#{codonUsageController.items}" var="item"
                                  selectionMode="single" selection="#{codonUsageController.selected}"
@@ -26,7 +26,7 @@
                                  rowKey="#{item.id}"
                                  rows="10"
                                  reflow="true"
-                                 emptyMessage="Sin uso de codones registrado"
+                                 emptyMessage="Without codon usage found"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
@@ -35,15 +35,15 @@
 
                         <p:column filterBy="#{item.nombreOrganismo}" headerText="nombreOrganismo" filterMatchMode="contains">
                             <f:facet name="header">
-                                <h:outputText value="Nombre Organismo"/>
+                                <h:outputText value="Organims name"/>
                             </f:facet>
                             <h:outputText value="#{item.nombreOrganismo}"/>
                         </p:column>
                         
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="Ingresar" actionListener="#{codonUsageController.prepareCreate}" update=":CodonUsageCreateForm" oncomplete="PF('CodonUsageCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="Ver" update=":CodonUsageViewForm" oncomplete="PF('CodonUsageViewDialog').show()" disabled="#{empty codonUsageController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":CodonUsageEditForm" oncomplete="PF('CodonUsageEditDialog').show()" disabled="#{empty codonUsageController.selected}"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="Create" actionListener="#{codonUsageController.prepareCreate}" update=":CodonUsageCreateForm" oncomplete="PF('CodonUsageCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="View" update=":CodonUsageViewForm" oncomplete="PF('CodonUsageViewDialog').show()" disabled="#{empty codonUsageController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Edit" update=":CodonUsageEditForm" oncomplete="PF('CodonUsageEditDialog').show()" disabled="#{empty codonUsageController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

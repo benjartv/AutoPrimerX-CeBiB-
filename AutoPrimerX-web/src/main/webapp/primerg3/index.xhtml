@@ -15,7 +15,29 @@
         </h:head>
         <ui:define name="body">
             <h:outputScript>
-                //<![CDATA[ 
+                //<![CDATA[
+                
+                $(document).on('change', '.btn-file :file', function() {
+                    var input = $(this),
+                        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                  });
+
+                  $(document).ready( function() {
+                      $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+
+                          var input = $(this).parents('.input-group').find(':text'),
+                              log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+                          if( input.length ) {
+                              input.val(log);
+                          } else {
+                              if( log ) alert(log);
+                          }
+
+                      });
+                  });
                 function disableprob() {
                 $("#codonUsageBtn").addClass("disabled");
                 }
@@ -108,10 +130,18 @@
                                     <div>
                                         <p:button outcome="/codonUsage/List" value="Enter Organism" icon="ui-icon-plus" ></p:button>
                                     </div>    
-
-                                    <p:outputLabel styleClass="form-label" value="Enter homologous sequences file" for="input-file"/>
-                                    <p:fileUpload id="input-file" value="#{primerG3.file}" mode="simple" required="true" requiredMessage="You must select a file" />
-
+                                    
+                                    <p:outputLabel id="fileupload" styleClass="form-label" value="Homologous sequences file: "/>                                    
+                                    <div >
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <span class="btn btn_micro btn-file">
+                                                    <i class="fa fa-folder-open"></i> Browse&hellip; <p:fileUpload id="input-file" value="#{primerG3.file}" mode="simple" required="true" requiredMessage="You must select a file" fileLimit="1" />                   
+                                                </span>
+                                            </span>
+                                            <input type="text" class="form-control" readonly="true" />
+                                        </div>
+                                    </div>
                                     <p:outputLabel styleClass="form-label" value="Enter tolerance's size for conserved aminoácids" for="conservado" /> 
                                     <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="You must enter size of the tolerance for You must enter size of the tolerance for preserved aminoácids aminoácids" />                                   
                                     
