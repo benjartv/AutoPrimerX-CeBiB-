@@ -11,7 +11,6 @@ import javax.inject.Named;
 import primerg2Domain.Sequence;
 import primerg2Domain.G2Utils;
 import primerg2Domain.Ligamiento;
-import primerg2Domain.Seq;
 
 
 @Named
@@ -19,19 +18,9 @@ import primerg2Domain.Seq;
 public class PrimerG2 implements Serializable{
 	
 	private String name;
+	
+	private String sequence;
 		
-	//private List<Seq> inputs; 
-	
-	private Sequence sequence1;
-	
-	private Sequence sequence2;
-	
-	private Sequence sequence3;
-	
-	private Sequence sequence4;
-	
-	private Sequence sequence5;
-	
 	private List<Sequence> sequences; 
 	
 	private List<Ligamiento> primers_fwd;
@@ -48,27 +37,7 @@ public class PrimerG2 implements Serializable{
 	public void init(){
 		TM = 45;
 		sodio = 50;
-		
-		sequence1 = new Sequence("secuencia1", "GTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTA", TM);
-		sequence2 = new Sequence("secuencia2", "ATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCC", TM);
-		sequence3 = new Sequence("secuencia3", "CTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTGCTTG", TM);
-		sequence4 = new Sequence("secuencia4", "AGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGT", TM);
-		sequence5 = new Sequence("secuencia5", "CCGGTTCCGGTTCCGGTTCCGGTTCCGGTTCCGGTTCCGGTTCCGGTTCCGGTTCCGGTTCCGGTTCCGGTTCCGGTTCCGGTTCCGGTTCCGGTTCCGGTT", TM);
-		
-	/*	sequence3.setName(null);
-		sequence4.setName(null);
-		sequence5.setName(null);
-		
-		sequence3.setSequence(null);
-		sequence4.setSequence(null);
-		sequence5.setSequence(null); */
-	
-	/*	sequence1.setName("secuencia1");
-		sequence2.setName("secuencia2");
-		sequence1.setSequence("GTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTAGTA");
-		sequence2.setSequence("ATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCCATCC");
-		*/	
-		
+
 		sequences = new ArrayList<>();
 		
 		primers_fwd = new ArrayList<>();
@@ -76,56 +45,9 @@ public class PrimerG2 implements Serializable{
 		primers_rev = new ArrayList<>();
 		
 		homologys = new ArrayList<>();
-		
-		sequences.add(sequence1);	
-		sequences.add(sequence2);
-		sequences.add(sequence3);
-		sequences.add(sequence4);
-		sequences.add(sequence5);
-		
-//		inputs = new ArrayList<>();
+
 	}
 	
-	public Sequence getSequence1() {
-		return sequence1;
-	}
-
-	public void setSequence1(Sequence sequence1) {
-		this.sequence1 = sequence1;
-	}
-
-	public Sequence getSequence2() {
-		return sequence2;
-	}
-
-	public void setSequence2(Sequence sequence2) {
-		this.sequence2 = sequence2;
-	}
-
-	public Sequence getSequence3() {
-		return sequence3;
-	}
-
-	public void setSequence3(Sequence sequence3) {
-		this.sequence3 = sequence3;
-	}
-
-	public Sequence getSequence4() {
-		return sequence4;
-	}
-
-	public void setSequence4(Sequence sequence4) {
-		this.sequence4 = sequence4;
-	}
-	
-	public Sequence getSequence5() {
-		return sequence5;
-	}
-
-	public void setSequence5(Sequence sequence5) {
-		this.sequence5 = sequence5;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -182,23 +104,15 @@ public class PrimerG2 implements Serializable{
 		TM = tM;
 	}
 	
-	
+	public String getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(String sequence) {
+		this.sequence = sequence;
+	}
+
 	public void lineal(){
-		/*
-		if(sequence3.getName() != null && sequence3.getSequence() != null){
-			sequence3 = new Sequence(sequence3.getName(), sequence3.getSequence(), TM);
-			sequences.add(sequence3);
-		}
-		if(sequence4.getName() != null && sequence4.getSequence() != null){
-			sequence4 = new Sequence(sequence4.getName(), sequence4.getSequence(), TM);
-			sequences.add(sequence4);
-		}
-		if(sequence5.getName() != null && sequence5.getSequence() != null){
-			sequence5 = new Sequence(sequence5.getName(), sequence5.getSequence(), TM);
-			sequences.add(sequence5);
-		}
-		
-		*/
 		
 		primers_fwd = G2Utils.forwards_lineal(sequences);
 		primers_rev = G2Utils.revs_lineal(sequences);
@@ -216,38 +130,22 @@ public class PrimerG2 implements Serializable{
 	
 	public void download(){
 		
+		//Hacer código para generar PDF
 		
-		
 	}
 	
-	
-	
-	/*	
-	public List<Seq> getInputs() {
-		return inputs;
-	}
-
-	public void setInputs(List<Seq> inputs) {
-		this.inputs = inputs;
-	}
-
 	public void add(){
-		inputs.add(new Seq());
 		
-		System.out.println();
-		sequences.add(new Sequence(inputs.get(inputs.size()-1).getName(), inputs.get(inputs.size()-1).getSequence(), TM));
+		Sequence sequence = new Sequence(this.name, this.sequence, TM);
+		sequences.add(sequence);
+		this.name = "";
+		this.sequence = "";
 		
 	}
 	
-	public void remove(Seq seq) {
-        inputs.remove(seq);
+	public void remove(Sequence sequence) {
+        sequences.remove(sequence);
        
     }
-    */
-	
-	
-	
-	
-
 	
 }

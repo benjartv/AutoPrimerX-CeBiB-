@@ -17,7 +17,7 @@ public class Sequence {
 	private String rev_ext;
 	
 	private double tmParam;
-
+	
 	public Sequence(String name, String sequence, double tmParam) {
 		this.name = name;
 		this.sequence = sequence;

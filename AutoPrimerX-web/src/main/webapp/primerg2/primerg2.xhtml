@@ -17,77 +17,76 @@
 				<h3>Diseño de Primer's para ligamiento</h3>
 
 				<h:form>
+					<h:panelGrid columns="4" cellpadding="4">
+						<h:outputLabel for="tm" value="Ingrese TM:" style="width:150px" />
+						<p:inputText id="tm" value="#{primerG2.TM}" style="width:150px" ></p:inputText>
 
+						<h:outputLabel for="sodio" value="Ingrese Concentración de Na:" style="width:150px" />
+						<p:inputText id="sodio" value="#{primerG2.sodio}" style="width:150px"  ></p:inputText>
+					</h:panelGrid>
+					<h:panelGrid columns="5" cellpadding="4">
+						<h:outputLabel for="input1"
+							value="Ingrese el nombre de la secuencia:" style="width:150px" />
+						<p:inputText id="input1" value="#{primerG2.name}" style="width:150px"  ></p:inputText>
+
+						<h:outputLabel for="input2"
+							value="Ingrese la secuencia de entrada:" style="width:150px" />
+						<p:inputTextarea id="input2" value="#{primerG2.sequence}"
+							autoResize="false" rows="3" cols="35"
+							onkeyup="javascript:this.value = this.value.toUpperCase();" style="width:150px" >
+							<f:validator validatorId="custom.seqValidator" />
+						</p:inputTextarea>
+
+
+						<h:commandButton value="add" update="inputs"
+							action="#{primerG2.add()}" />
+
+					</h:panelGrid>
+					<h:panelGrid cellpadding="2">
+
+						<p:dataTable id="inputs" value="#{primerG2.sequences}" var="dato"
+							resizableColumns="true" >
+							<f:facet name="header">
+                                Sequences
+                            </f:facet>
+							<p:column headerText="Sequence name" >
+								<h:outputText value="#{dato.name}" style="float:left;overflow-y: auto;width: 100%;" />
+							</p:column>
+
+							<p:column headerText="Sequence" >
+								<h:outputText value="#{dato.sequence}" style="float:left;overflow-y: auto;width: 100%;" />
+							</p:column>
+
+							<p:column headerText="Complement" >
+								<h:outputText value="#{dato.comp}" style="float:left;overflow-y: auto;width: 100%;" />
+							</p:column>
+
+							<p:column headerText="Forward" >
+								<h:outputText value="#{dato.fwd}"  style="float:left;overflow-y: auto;width: 100%;" />
+							</p:column>
+
+							<p:column headerText="Reverse" >
+								<h:outputText value="#{dato.rev}" style="float:left;overflow-y: auto;width: 100%;" />
+							</p:column>
+
+							<p:column headerText="Forward ext" >
+								<h:outputText value="#{dato.fwd_ext}" style="float:left;overflow-y: auto;width: 100%;" />
+							</p:column>
+
+							<p:column headerText="Reverse ext" >
+								<h:outputText value="#{dato.rev_ext}" style="float:left;overflow-y: auto;width: 100%;" />
+							</p:column>
+
+							<p:column headerText="Action">
+								<h:commandButton value="remove"
+									action="#{primerG2.remove(dato)}" />
+							</p:column>
+
+						</p:dataTable>
+
+					</h:panelGrid>
 
 					<h:panelGrid columns="4" cellpadding="4">
-
-						<h:outputLabel for="name1"
-							value="Ingrese el nombre de la secuencia:" />
-						<p:inputText id="name1" value="#{primerG2.sequence1.name}"  ></p:inputText>
-						<h:outputLabel for="sequence1"
-							value="Ingrese la secuencia de entrada:" />
-						<p:inputTextarea id="sequence1"
-							value="#{primerG2.sequence1.sequence}" autoResize="false"
-							rows="3" cols="35"
-							onkeyup="javascript:this.value = this.value.toUpperCase();">
-							<f:validator validatorId="custom.seqValidator" />
-						</p:inputTextarea>
-
-
-						<h:outputLabel for="name2"
-							value="Ingrese el nombre de la secuencia:" />
-						<p:inputText id="name2" value="#{primerG2.sequence2.name}" ></p:inputText>
-						<h:outputLabel for="sequence2"
-							value="Ingrese la secuencia de entrada:" />
-						<p:inputTextarea id="sequence2"
-							value="#{primerG2.sequence2.sequence}" autoResize="false"
-							rows="3" cols="35"
-							onkeyup="javascript:this.value = this.value.toUpperCase();">
-							<f:validator validatorId="custom.seqValidator" />
-						</p:inputTextarea>
-
-						<h:outputLabel for="name3"
-							value="Ingrese el nombre de la secuencia:" />
-						<p:inputText id="name3" value="#{primerG2.sequence3.name}" ></p:inputText>
-						<h:outputLabel for="sequence3"
-							value="Ingrese la secuencia de entrada:" />
-						<p:inputTextarea id="sequence3"
-							value="#{primerG2.sequence3.sequence}" autoResize="false"
-							rows="3" cols="35"
-							onkeyup="javascript:this.value = this.value.toUpperCase();">
-							<f:validator validatorId="custom.seqValidator" />
-						</p:inputTextarea>
-
-						<h:outputLabel for="name4"
-							value="Ingrese el nombre de la secuencia:" />
-						<p:inputText id="name4" value="#{primerG2.sequence4.name}" ></p:inputText>
-						<h:outputLabel for="sequence4"
-							value="Ingrese la secuencia de entrada:" />
-						<p:inputTextarea id="sequence4"
-							value="#{primerG2.sequence4.sequence}" autoResize="false"
-							rows="3" cols="35"
-							onkeyup="javascript:this.value = this.value.toUpperCase();">
-							<f:validator validatorId="custom.seqValidator" />
-						</p:inputTextarea>
-
-						<h:outputLabel for="name5"
-							value="Ingrese el nombre de la secuencia:" />
-						<p:inputText id="name5" value="#{primerG2.sequence5.name}" ></p:inputText>
-						<h:outputLabel for="sequence5"
-							value="Ingrese la secuencia de entrada:" />
-						<p:inputTextarea id="sequence5"
-							value="#{primerG2.sequence5.sequence}" autoResize="false"
-							rows="3" cols="35"
-							onkeyup="javascript:this.value = this.value.toUpperCase();">
-							<f:validator validatorId="custom.seqValidator" />
-						</p:inputTextarea>
-
-						<h:outputLabel for="tm" value="Ingrese TM:" />
-						<p:inputText id="tm" value="#{primerG2.TM}" ></p:inputText>
-
-						<h:outputLabel for="sodio" value="Ingrese Concentración de Na:" />
-						<p:inputText id="sodio" value="#{primerG2.sodio}" ></p:inputText>
-
 
 						<p:commandButton value="Lineal Aligment"
 							update="tabla, tabla2, tabla3, :growl"
@@ -100,9 +99,10 @@
 
 					<h2>Click button to download PDF file</h2>
 					<br />
-					<h:commandButton id="button" value="Download PDF" action="#{primerG2.download}" />
+					<h:commandButton id="button" value="Download PDF"
+						action="#{primerG2.download}" />
 
-					
+
 					<h:panelGrid cellpadding="2">
 						<p:dataTable id="tabla" var="dato" resizableColumns="true"
 							value="#{primerG2.primers_fwd}">
