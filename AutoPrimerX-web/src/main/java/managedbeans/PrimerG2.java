@@ -212,6 +212,11 @@ public class PrimerG2 implements Serializable{
 		primers_rev = G2Utils.revs_circular(sequences);
 		homologys = G2Utils.homologys_circular(sequences);
 		
+	}
+	
+	public void download(){
+		
+		
 		
 	}
 	

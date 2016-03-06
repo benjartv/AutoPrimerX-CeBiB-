@@ -17,12 +17,13 @@
 				<h3>Diseño de Primer's para ligamiento</h3>
 
 				<h:form>
+
+
 					<h:panelGrid columns="4" cellpadding="4">
 
 						<h:outputLabel for="name1"
 							value="Ingrese el nombre de la secuencia:" />
-						<p:inputText id="name1" value="#{primerG2.sequence1.name}"
-							rows="1" cols="35" autoResize="false"></p:inputText>
+						<p:inputText id="name1" value="#{primerG2.sequence1.name}"  ></p:inputText>
 						<h:outputLabel for="sequence1"
 							value="Ingrese la secuencia de entrada:" />
 						<p:inputTextarea id="sequence1"
@@ -35,8 +36,7 @@
 
 						<h:outputLabel for="name2"
 							value="Ingrese el nombre de la secuencia:" />
-						<p:inputText id="name2" value="#{primerG2.sequence2.name}"
-							rows="1" cols="35" autoResize="false"></p:inputText>
+						<p:inputText id="name2" value="#{primerG2.sequence2.name}" ></p:inputText>
 						<h:outputLabel for="sequence2"
 							value="Ingrese la secuencia de entrada:" />
 						<p:inputTextarea id="sequence2"
@@ -45,11 +45,10 @@
 							onkeyup="javascript:this.value = this.value.toUpperCase();">
 							<f:validator validatorId="custom.seqValidator" />
 						</p:inputTextarea>
-						
+
 						<h:outputLabel for="name3"
 							value="Ingrese el nombre de la secuencia:" />
-						<p:inputText id="name3" value="#{primerG2.sequence3.name}"
-							rows="1" cols="35" autoResize="false"></p:inputText>
+						<p:inputText id="name3" value="#{primerG2.sequence3.name}" ></p:inputText>
 						<h:outputLabel for="sequence3"
 							value="Ingrese la secuencia de entrada:" />
 						<p:inputTextarea id="sequence3"
@@ -58,11 +57,10 @@
 							onkeyup="javascript:this.value = this.value.toUpperCase();">
 							<f:validator validatorId="custom.seqValidator" />
 						</p:inputTextarea>
-						
+
 						<h:outputLabel for="name4"
 							value="Ingrese el nombre de la secuencia:" />
-						<p:inputText id="name4" value="#{primerG2.sequence4.name}"
-							rows="1" cols="35" autoResize="false"></p:inputText>
+						<p:inputText id="name4" value="#{primerG2.sequence4.name}" ></p:inputText>
 						<h:outputLabel for="sequence4"
 							value="Ingrese la secuencia de entrada:" />
 						<p:inputTextarea id="sequence4"
@@ -71,11 +69,10 @@
 							onkeyup="javascript:this.value = this.value.toUpperCase();">
 							<f:validator validatorId="custom.seqValidator" />
 						</p:inputTextarea>
-						
+
 						<h:outputLabel for="name5"
 							value="Ingrese el nombre de la secuencia:" />
-						<p:inputText id="name5" value="#{primerG2.sequence5.name}"
-							rows="1" cols="35" autoResize="false"></p:inputText>
+						<p:inputText id="name5" value="#{primerG2.sequence5.name}" ></p:inputText>
 						<h:outputLabel for="sequence5"
 							value="Ingrese la secuencia de entrada:" />
 						<p:inputTextarea id="sequence5"
@@ -85,12 +82,28 @@
 							<f:validator validatorId="custom.seqValidator" />
 						</p:inputTextarea>
 
+						<h:outputLabel for="tm" value="Ingrese TM:" />
+						<p:inputText id="tm" value="#{primerG2.TM}" autoResize="false"></p:inputText>
+
+						<h:outputLabel for="sodio" value="Ingrese Concentración de Na:" />
+						<p:inputText id="sodio" value="#{primerG2.sodio}"
+							autoResize="false"></p:inputText>
 
 
-						<p:commandButton value="Lineal Aligment" update="tabla, tabla2, tabla3, :growl" action="#{primerG2.lineal}" />
-						<p:commandButton value="Circular Aligment" update="tabla, tabla2, tabla3, :growl" action="#{primerG2.circular}" />
+						<p:commandButton value="Lineal Aligment"
+							update="tabla, tabla2, tabla3, :growl"
+							action="#{primerG2.lineal}" />
+						<p:commandButton value="Circular Aligment"
+							update="tabla, tabla2, tabla3, :growl"
+							action="#{primerG2.circular}" />
 
 					</h:panelGrid>
+
+					<h2>Click button to download PDF file</h2>
+					<br />
+					<h:commandButton id="button" value="Download PDF" action="#{primerG2.download}" />
+
+					
 					<h:panelGrid cellpadding="2">
 						<p:dataTable id="tabla" var="dato" resizableColumns="true"
 							value="#{primerG2.primers_fwd}">
@@ -102,7 +115,8 @@
 							</p:column>
 
 							<p:column headerText="Primer">
-								<h:outputText value="#{dato.primer}" style="float:left;overflow-y: auto;width: 100%;" />
+								<h:outputText value="#{dato.primer}"
+									style="float:left;overflow-y: auto;width: 100%;" />
 							</p:column>
 
 							<p:column headerText="Length">
@@ -120,24 +134,25 @@
 							<p:column headerText="Tm adjust">
 								<h:outputText value="#{dato.tmAdjust}" />
 							</p:column>
-							
+
 							<p:column headerText="Molecular weight">
 								<h:outputText value="#{dato.molWeight}" />
 							</p:column>
 						</p:dataTable>
 						<br />
-						
+
 						<p:dataTable id="tabla2" var="dato" resizableColumns="true"
 							value="#{primerG2.primers_rev}">
 							<f:facet name="header">
                                 Rev Sequence Primer's
                             </f:facet>
 							<p:column headerText="Secuencia">
-								<h:outputText value="#{dato.nameSequence}"  />
+								<h:outputText value="#{dato.nameSequence}" />
 							</p:column>
 
 							<p:column headerText="Primer">
-								<h:outputText value="#{dato.primer}" style="float:left;overflow-y: auto;width: 100%;" />
+								<h:outputText value="#{dato.primer}"
+									style="float:left;overflow-y: auto;width: 100%;" />
 							</p:column>
 
 							<p:column headerText="Length">
@@ -155,13 +170,13 @@
 							<p:column headerText="Tm adjust">
 								<h:outputText value="#{dato.tmAdjust}" />
 							</p:column>
-							
+
 							<p:column headerText="Molecular weight">
 								<h:outputText value="#{dato.molWeight}" />
 							</p:column>
 						</p:dataTable>
 						<br />
-						
+
 						<p:dataTable id="tabla3" var="dato" resizableColumns="true"
 							value="#{primerG2.homologys}">
 							<f:facet name="header">
@@ -172,7 +187,8 @@
 							</p:column>
 
 							<p:column headerText="Primer">
-								<h:outputText value="#{dato.primer}" style="float:left;overflow-y: auto;width: 100%;" />
+								<h:outputText value="#{dato.primer}"
+									style="float:left;overflow-y: auto;width: 100%;" />
 							</p:column>
 
 							<p:column headerText="Length">
@@ -190,7 +206,7 @@
 							<p:column headerText="Tm adjust">
 								<h:outputText value="#{dato.tmAdjust}" />
 							</p:column>
-							
+
 							<p:column headerText="Molecular weight">
 								<h:outputText value="#{dato.molWeight}" />
 							</p:column>
