@@ -18,22 +18,26 @@
 
 				<h:form>
 					<h:panelGrid columns="4" cellpadding="4">
-						<h:outputLabel for="tm" value="Ingrese TM:" style="width:150px" />
-						<p:inputText id="tm" value="#{primerG2.TM}" style="width:150px" ></p:inputText>
+						<h:outputLabel for="tm" value="Ingrese TM:" style="width:150px"  />
+						<p:inputText id="tm" value="#{primerG2.TM}" style="width:150px" required="true" requiredMessage="Ingrese valor TM" ></p:inputText>
 
-						<h:outputLabel for="sodio" value="Ingrese Concentración de Na:" style="width:150px" />
-						<p:inputText id="sodio" value="#{primerG2.sodio}" style="width:150px"  ></p:inputText>
+						<h:outputLabel for="sodio" value="Ingrese Concentración de Na:"
+							style="width:150px" />
+						<p:inputText id="sodio" value="#{primerG2.sodio}"
+							style="width:150px" required="true" requiredMessage="Ingrese valor sodio"></p:inputText>
 					</h:panelGrid>
 					<h:panelGrid columns="5" cellpadding="4">
 						<h:outputLabel for="input1"
 							value="Ingrese el nombre de la secuencia:" style="width:150px" />
-						<p:inputText id="input1" value="#{primerG2.name}" style="width:150px"  ></p:inputText>
+						<p:inputText id="input1" value="#{primerG2.name}"
+							style="width:150px" required="true" requiredMessage="Ingrese nombre de la secuencia" ></p:inputText>
 
 						<h:outputLabel for="input2"
 							value="Ingrese la secuencia de entrada:" style="width:150px" />
 						<p:inputTextarea id="input2" value="#{primerG2.sequence}"
 							autoResize="false" rows="3" cols="35"
-							onkeyup="javascript:this.value = this.value.toUpperCase();" style="width:150px" >
+							onkeyup="javascript:this.value = this.value.toUpperCase();"
+							style="width:150px" required="true" requiredMessage="Ingrese secuencia" >
 							<f:validator validatorId="custom.seqValidator" />
 						</p:inputTextarea>
 
@@ -45,36 +49,43 @@
 					<h:panelGrid cellpadding="2">
 
 						<p:dataTable id="inputs" value="#{primerG2.sequences}" var="dato"
-							resizableColumns="true" >
+							resizableColumns="true">
 							<f:facet name="header">
                                 Sequences
                             </f:facet>
-							<p:column headerText="Sequence name" >
-								<h:outputText value="#{dato.name}" style="float:left;overflow-y: auto;width: 100%;" />
+							<p:column headerText="Sequence name">
+								<h:outputText value="#{dato.name}"
+									style="float:left;overflow-y: auto;width: 100%;" />
 							</p:column>
 
-							<p:column headerText="Sequence" >
-								<h:outputText value="#{dato.sequence}" style="float:left;overflow-y: auto;width: 100%;" />
+							<p:column headerText="Sequence">
+								<h:outputText value="#{dato.sequence}"
+									style="float:left;overflow-y: auto;width: 100%;" />
 							</p:column>
 
-							<p:column headerText="Complement" >
-								<h:outputText value="#{dato.comp}" style="float:left;overflow-y: auto;width: 100%;" />
+							<p:column headerText="Complement">
+								<h:outputText value="#{dato.comp}"
+									style="float:left;overflow-y: auto;width: 100%;" />
 							</p:column>
 
-							<p:column headerText="Forward" >
-								<h:outputText value="#{dato.fwd}"  style="float:left;overflow-y: auto;width: 100%;" />
+							<p:column headerText="Forward">
+								<h:outputText value="#{dato.fwd}"
+									style="float:left;overflow-y: auto;width: 100%;" />
 							</p:column>
 
-							<p:column headerText="Reverse" >
-								<h:outputText value="#{dato.rev}" style="float:left;overflow-y: auto;width: 100%;" />
+							<p:column headerText="Reverse">
+								<h:outputText value="#{dato.rev}"
+									style="float:left;overflow-y: auto;width: 100%;" />
 							</p:column>
 
-							<p:column headerText="Forward ext" >
-								<h:outputText value="#{dato.fwd_ext}" style="float:left;overflow-y: auto;width: 100%;" />
+							<p:column headerText="Forward ext">
+								<h:outputText value="#{dato.fwd_ext}"
+									style="float:left;overflow-y: auto;width: 100%;" />
 							</p:column>
 
-							<p:column headerText="Reverse ext" >
-								<h:outputText value="#{dato.rev_ext}" style="float:left;overflow-y: auto;width: 100%;" />
+							<p:column headerText="Reverse ext">
+								<h:outputText value="#{dato.rev_ext}"
+									style="float:left;overflow-y: auto;width: 100%;" />
 							</p:column>
 
 							<p:column headerText="Action">
@@ -85,6 +96,8 @@
 						</p:dataTable>
 
 					</h:panelGrid>
+				</h:form>
+				<h:form>
 
 					<h:panelGrid columns="4" cellpadding="4">
 
