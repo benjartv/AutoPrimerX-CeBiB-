@@ -14,30 +14,33 @@
 	<ui:define name="body">
 		<h:body>
 			<b:container>
-				<h3>Diseño de Primer's para ligamiento</h3>
+				<h3>Primer's design for assembly dna fragments</h3>
 
 				<h:form>
 					<h:panelGrid columns="4" cellpadding="4">
-						<h:outputLabel for="tm" value="Ingrese TM:" style="width:150px"  />
-						<p:inputText id="tm" value="#{primerG2.TM}" style="width:150px" required="true" requiredMessage="Ingrese valor TM" ></p:inputText>
+						<h:outputLabel for="tm" value="TM value:" style="width:150px" />
+						<p:inputText id="tm" value="#{primerG2.TM}" style="width:150px"
+							required="true" requiredMessage="Ingrese valor TM"></p:inputText>
 
-						<h:outputLabel for="sodio" value="Ingrese Concentración de Na:"
+						<h:outputLabel for="sodio" value="Na concentration:"
 							style="width:150px" />
 						<p:inputText id="sodio" value="#{primerG2.sodio}"
-							style="width:150px" required="true" requiredMessage="Ingrese valor sodio"></p:inputText>
+							style="width:150px" required="true"
+							requiredMessage="Ingrese valor sodio"></p:inputText>
 					</h:panelGrid>
 					<h:panelGrid columns="5" cellpadding="4">
-						<h:outputLabel for="input1"
-							value="Ingrese el nombre de la secuencia:" style="width:150px" />
+						<h:outputLabel for="input1" value="Sequence name:"
+							style="width:150px" />
 						<p:inputText id="input1" value="#{primerG2.name}"
-							style="width:150px" required="true" requiredMessage="Ingrese nombre de la secuencia" ></p:inputText>
+							style="width:150px" required="true"
+							requiredMessage="Ingrese nombre de la secuencia"></p:inputText>
 
-						<h:outputLabel for="input2"
-							value="Ingrese la secuencia de entrada:" style="width:150px" />
+						<h:outputLabel for="input2" value="Sequence:" style="width:150px" />
 						<p:inputTextarea id="input2" value="#{primerG2.sequence}"
 							autoResize="false" rows="3" cols="35"
 							onkeyup="javascript:this.value = this.value.toUpperCase();"
-							style="width:150px" required="true" requiredMessage="Ingrese secuencia" >
+							style="width:150px" required="true"
+							requiredMessage="Ingrese secuencia">
 							<f:validator validatorId="custom.seqValidator" />
 						</p:inputTextarea>
 
@@ -46,10 +49,13 @@
 							action="#{primerG2.add()}" />
 
 					</h:panelGrid>
+				</h:form>
+				<h:form>
 					<h:panelGrid cellpadding="2">
 
 						<p:dataTable id="inputs" value="#{primerG2.sequences}" var="dato"
-							resizableColumns="true">
+							resizableColumns="true" paginator="true" rows="5"
+							style="margin-bottom:20px">
 							<f:facet name="header">
                                 Sequences
                             </f:facet>
@@ -96,6 +102,11 @@
 						</p:dataTable>
 
 					</h:panelGrid>
+					<h:commandLink value="Download as xls">
+
+						<p:dataExporter type="xls" target="inputs" fileName="Sequences"
+							pageOnly="true" />
+					</h:commandLink>
 				</h:form>
 				<h:form>
 
@@ -110,19 +121,14 @@
 
 					</h:panelGrid>
 
-					<h2>Click button to download PDF file</h2>
-					<br />
-					<h:commandButton id="button" value="Download PDF"
-						action="#{primerG2.download}" />
-
-
 					<h:panelGrid cellpadding="2">
 						<p:dataTable id="tabla" var="dato" resizableColumns="true"
-							value="#{primerG2.primers_fwd}">
+							value="#{primerG2.primers_fwd}" paginator="true" rows="10"
+							style="margin-bottom:20px">
 							<f:facet name="header">
                                 Fwd Sequence Primer's
                             </f:facet>
-							<p:column headerText="Secuencia">
+							<p:column headerText="Sequence name">
 								<h:outputText value="#{dato.nameSequence}" />
 							</p:column>
 
@@ -151,14 +157,20 @@
 								<h:outputText value="#{dato.molWeight}" />
 							</p:column>
 						</p:dataTable>
+						<h:commandLink value="Download as xls">
+
+							<p:dataExporter type="xls" target="tabla" fileName="Primers_fwd"
+								pageOnly="true" />
+						</h:commandLink>
 						<br />
 
 						<p:dataTable id="tabla2" var="dato" resizableColumns="true"
-							value="#{primerG2.primers_rev}">
+							value="#{primerG2.primers_rev}" paginator="true" rows="10"
+							style="margin-bottom:20px">
 							<f:facet name="header">
                                 Rev Sequence Primer's
                             </f:facet>
-							<p:column headerText="Secuencia">
+							<p:column headerText="Sequence name">
 								<h:outputText value="#{dato.nameSequence}" />
 							</p:column>
 
@@ -187,18 +199,24 @@
 								<h:outputText value="#{dato.molWeight}" />
 							</p:column>
 						</p:dataTable>
+						<h:commandLink value="Download as xls">
+
+							<p:dataExporter type="xls" target="tabla2" fileName="Primers_rev"
+								pageOnly="true" />
+						</h:commandLink>
 						<br />
 
 						<p:dataTable id="tabla3" var="dato" resizableColumns="true"
-							value="#{primerG2.homologys}">
+							value="#{primerG2.homologys}" paginator="true" rows="10"
+							style="margin-bottom:20px">
 							<f:facet name="header">
                                 Homology regions
                             </f:facet>
-							<p:column headerText="Secuencia">
+							<p:column headerText="Sequence name">
 								<h:outputText value="#{dato.nameSequence}" />
 							</p:column>
 
-							<p:column headerText="Primer">
+							<p:column headerText="Homology">
 								<h:outputText value="#{dato.primer}"
 									style="float:left;overflow-y: auto;width: 100%;" />
 							</p:column>
@@ -223,6 +241,11 @@
 								<h:outputText value="#{dato.molWeight}" />
 							</p:column>
 						</p:dataTable>
+						<h:commandLink value="Download as xls">
+
+							<p:dataExporter type="xls" target="tabla2" fileName="Homology_regions"
+								pageOnly="true" />
+						</h:commandLink>
 						<br />
 
 					</h:panelGrid>
