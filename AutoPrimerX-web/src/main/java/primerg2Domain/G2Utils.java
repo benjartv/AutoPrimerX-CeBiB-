@@ -304,6 +304,7 @@ public class G2Utils {
 					if (i == 0) {
 						rev_ext = G2Utils.reverse_EXT(pre_sequences.get(i + 1).getComp(), pre_sequences.get(i).getRev(),
 								TMprimer);
+						
 						fwd_ext = "";
 						tm_rev_primer = G2Utils.funcionTM(rev_ext + pre_sequences.get(i).getRev());
 						SequenceExt sequence = new SequenceExt(pre_sequences.get(i).getName(),
@@ -419,137 +420,11 @@ public class G2Utils {
 			double tm_primer_rev_2 = 0;
 			double tm_homology = 0;
 			if (option.equals("lineal")) {
-				//if (i + 1 < sequences_ext.size()) {
-
-					if (i == 0) {
-						char[] arr = sequences_ext.get(i).getRev_ext().toCharArray();
-						char[] arr2 = sequences_ext.get(i + 1).getFwd_ext().toCharArray();
-
-						ArrayUtils.reverse(arr);
-
-						int length = arr.length;
-
-						if (length > arr2.length) {
-							length = arr2.length;
-						}
-
-						for (int j = 0; j < length; j++) {
-
-							rev_ext = rev_ext + arr[j];
-							fwd_ext = fwd_ext + arr2[j];
-							homology = fwd_ext + rev_ext;
-							tm_homology = funcionTM(homology);
-							tm_primer_fwd_2 = funcionTM(fwd_ext + sequences_ext.get(i + 1).getFwd());
-							tm_primer_rev_1 = funcionTM(rev_ext + sequences_ext.get(i).getRev());
-
-							if (tm_homology >= TMh) {
-
-								homology_name = sequences_ext.get(i).getName() + " "
-										+ sequences_ext.get(i + 1).getName();
-
-								sequences_ext.get(i).setRev_ext(rev_ext);
-								sequences_ext.get(i + 1).setFwd_ext(fwd_ext);
-
-								Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, fwd_ext);
-								homologys.add(hom);
-								// Ligamiento primer_fwd = new
-								// Ligamiento(sequences_ext.get(i).getName(),
-								// sequences_ext.get(i).getSequence(),
-								// sequences_ext.get(i).getFwd(), "");
-								// primers_fwd.add(primer_fwd);
-								Ligamiento primer_rev = new Ligamiento(sequences_ext.get(i).getName(),
-										sequences_ext.get(i).getSequence(), sequences_ext.get(i).getRev(),
-										sequences_ext.get(i).getRev_ext());
-								primers_rev.add(primer_rev);
-								results.add(homologys);
-								results.add(primers_fwd);
-								results.add(primers_rev);
-								break;
-							}
-						}
-
-					} else if (i + 1 == sequences_ext.size()) {
-						Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
-								sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd_ext(),
-								sequences_ext.get(i).getFwd());
-						primers_fwd.add(primer_fwd);
-						// Ligamiento primer_rev = new
-						// Ligamiento(sequences_ext.get(i).getName(),
-						// sequences_ext.get(i).getSequence(),
-						// sequences_ext.get(i).getRev(),
-						// sequences_ext.get(i).getRev_ext());
-						// primers_rev.add(primer_rev);
-						results.add(primers_fwd);
-						results.add(primers_rev);
-
-					}
-
-					else {
-						char[] arr = sequences_ext.get(i).getRev_ext().toCharArray();
-						char[] arr2 = sequences_ext.get(i + 1).getFwd_ext().toCharArray();
-
-						ArrayUtils.reverse(arr);
-
-						int length = arr.length;
-
-						if (length > arr2.length) {
-							length = arr2.length;
-						}
-
-						for (int j = 0; j < length; j++) {
-
-							rev_ext = rev_ext + arr[j];
-							fwd_ext = fwd_ext + arr2[j];
-							homology = fwd_ext + rev_ext;
-							tm_homology = funcionTM(homology);
-
-							tm_primer_rev_1 = funcionTM(rev_ext + sequences_ext.get(i).getRev());
-							tm_primer_fwd_1 = funcionTM(
-									sequences_ext.get(i).getFwd() + sequences_ext.get(i).getFwd_ext());
-
-							System.out.println("TM de homologia" + tm_homology);
-							 if (tm_homology >= TMh &&
-							 Math.abs(tm_primer_rev_1 - tm_primer_fwd_1) <=
-							 tolerance) {
-							//if (tm_homology >= TMh) {
-
-								homology_name = sequences_ext.get(i).getName() + sequences_ext.get(i + 1).getName();
-
-								sequences_ext.get(i).setRev_ext(rev_ext);
-								sequences_ext.get(i + 1).setFwd_ext(fwd_ext);
-
-								Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, fwd_ext);
-								homologys.add(hom);
-								Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
-										sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd_ext(),
-										sequences_ext.get(i).getFwd());
-								primers_fwd.add(primer_fwd);
-								Ligamiento primer_rev = new Ligamiento(sequences_ext.get(i).getName(),
-										sequences_ext.get(i).getSequence(), sequences_ext.get(i).getRev(),
-										sequences_ext.get(i).getRev_ext());
-								primers_rev.add(primer_rev);
-
-								results.add(homologys);
-								results.add(primers_fwd);
-								results.add(primers_rev);
-								break;
-							}
-
-						}
-
-					}
-
-				//}
-			}
-			// caso circular
-
-			else {
+				// if (i + 1 < sequences_ext.size()) {
 
 				if (i == 0) {
 					char[] arr = sequences_ext.get(i).getRev_ext().toCharArray();
 					char[] arr2 = sequences_ext.get(i + 1).getFwd_ext().toCharArray();
-
-					System.out.println("extension primero circular" + sequences_ext.get(i).getFwd_ext());
 
 					ArrayUtils.reverse(arr);
 
@@ -561,7 +436,132 @@ public class G2Utils {
 
 					for (int j = 0; j < length; j++) {
 
-						rev_ext = rev_ext + arr[j];
+						rev_ext = rev_ext + arr[arr.length-1-j];
+						fwd_ext = fwd_ext + arr2[j];
+						homology = fwd_ext + rev_ext;
+						tm_homology = funcionTM(homology);
+						tm_primer_fwd_2 = funcionTM(fwd_ext + sequences_ext.get(i + 1).getFwd());
+						tm_primer_rev_1 = funcionTM(rev_ext + sequences_ext.get(i).getRev());
+
+						if (tm_homology >= TMh) {
+							System.out.println("reverso de extension alterado: "+ rev_ext);
+							System.out.println("reverso de extension original: "+ sequences_ext.get(i).getRev_ext());
+							homology_name = sequences_ext.get(i).getName() + " " + sequences_ext.get(i + 1).getName();
+
+							sequences_ext.get(i).setRev_ext(rev_ext);
+							sequences_ext.get(i + 1).setFwd_ext(fwd_ext);
+
+							Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, fwd_ext);
+							homologys.add(hom);
+							// Ligamiento primer_fwd = new
+							// Ligamiento(sequences_ext.get(i).getName(),
+							// sequences_ext.get(i).getSequence(),
+							// sequences_ext.get(i).getFwd(), "");
+							// primers_fwd.add(primer_fwd);
+							Ligamiento primer_rev = new Ligamiento(sequences_ext.get(i).getName(),
+									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getRev(),
+									sequences_ext.get(i).getRev_ext());
+							primers_rev.add(primer_rev);
+							results.add(homologys);
+							results.add(primers_fwd);
+							results.add(primers_rev);
+							break;
+						}
+					}
+
+				} else if (i + 1 == sequences_ext.size()) {
+					Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
+							sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd_ext(),
+							sequences_ext.get(i).getFwd());
+					primers_fwd.add(primer_fwd);
+					// Ligamiento primer_rev = new
+					// Ligamiento(sequences_ext.get(i).getName(),
+					// sequences_ext.get(i).getSequence(),
+					// sequences_ext.get(i).getRev(),
+					// sequences_ext.get(i).getRev_ext());
+					// primers_rev.add(primer_rev);
+					results.add(primers_fwd);
+					results.add(primers_rev);
+
+				}
+
+				else {
+					char[] arr = sequences_ext.get(i).getRev_ext().toCharArray();
+					char[] arr2 = sequences_ext.get(i + 1).getFwd_ext().toCharArray();
+
+					ArrayUtils.reverse(arr);
+
+					int length = arr.length;
+
+					if (length > arr2.length) {
+						length = arr2.length;
+					}
+
+					for (int j = 0; j < length; j++) {
+
+						rev_ext = rev_ext + arr[arr.length-1-j];
+						fwd_ext = fwd_ext + arr2[j];
+						homology = fwd_ext + rev_ext;
+						tm_homology = funcionTM(homology);
+
+						tm_primer_rev_1 = funcionTM(rev_ext + sequences_ext.get(i).getRev());
+						tm_primer_fwd_1 = funcionTM(sequences_ext.get(i).getFwd() + sequences_ext.get(i).getFwd_ext());
+
+					
+						// if (tm_homology >= TMh &&
+						// Math.abs(tm_primer_rev_1 - tm_primer_fwd_1) <=
+						// tolerance) {
+						if (tm_homology >= TMh) {
+
+							homology_name = sequences_ext.get(i).getName() + sequences_ext.get(i + 1).getName();
+
+							sequences_ext.get(i).setRev_ext(rev_ext);
+							sequences_ext.get(i + 1).setFwd_ext(fwd_ext);
+
+							Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, fwd_ext);
+							homologys.add(hom);
+							Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
+									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd_ext(),
+									sequences_ext.get(i).getFwd());
+							primers_fwd.add(primer_fwd);
+							Ligamiento primer_rev = new Ligamiento(sequences_ext.get(i).getName(),
+									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getRev(),
+									sequences_ext.get(i).getRev_ext());
+							primers_rev.add(primer_rev);
+
+							results.add(homologys);
+							results.add(primers_fwd);
+							results.add(primers_rev);
+							break;
+						}
+
+					}
+
+				}
+
+				// }
+			}
+			// caso circular
+
+			else {
+
+				if (i == 0) {
+					char[] arr = sequences_ext.get(i).getRev_ext().toCharArray();
+					char[] arr2 = sequences_ext.get(i + 1).getFwd_ext().toCharArray();
+
+					
+
+					ArrayUtils.reverse(arr);
+
+					int length = arr.length;
+
+					if (length > arr2.length) {
+						length = arr2.length;
+					}
+
+					for (int j = 0; j < length; j++) {
+
+						rev_ext = rev_ext + arr[arr.length-1-j];
 						fwd_ext = fwd_ext + arr2[j];
 						homology = fwd_ext + rev_ext;
 						tm_homology = funcionTM(homology);
@@ -599,7 +599,7 @@ public class G2Utils {
 					char[] arr = sequences_ext.get(i).getRev_ext().toCharArray();
 					char[] arr2 = sequences_ext.get(0).getFwd_ext().toCharArray();
 
-					System.out.println("extension primero circular" + sequences_ext.get(i).getFwd_ext());
+					
 
 					ArrayUtils.reverse(arr);
 
@@ -611,7 +611,7 @@ public class G2Utils {
 
 					for (int j = 0; j < length; j++) {
 
-						rev_ext = rev_ext + arr[j];
+						rev_ext = rev_ext + arr[arr.length-1-j];
 						fwd_ext = fwd_ext + arr2[j];
 						homology = fwd_ext + rev_ext;
 						tm_homology = funcionTM(homology);
@@ -663,7 +663,7 @@ public class G2Utils {
 
 					for (int j = 0; j < length; j++) {
 
-						rev_ext = rev_ext + arr[j];
+						rev_ext = rev_ext + arr[arr.length-1-j];
 						fwd_ext = fwd_ext + arr2[j];
 						homology = fwd_ext + rev_ext;
 						tm_homology = funcionTM(homology);
@@ -671,8 +671,10 @@ public class G2Utils {
 						tm_primer_rev_1 = funcionTM(rev_ext + sequences_ext.get(i).getRev());
 						tm_primer_fwd_1 = funcionTM(sequences_ext.get(i).getFwd() + sequences_ext.get(i).getFwd_ext());
 
-						System.out.println("TM de homologia" + tm_homology);
-						if (tm_homology >= TMh && Math.abs(tm_primer_rev_1 - tm_primer_fwd_1) <= tolerance) {
+					
+						// if (tm_homology >= TMh && Math.abs(tm_primer_rev_1 -
+						// tm_primer_fwd_1) <= tolerance) {
+						if (tm_homology >= TMh) {
 
 							homology_name = sequences_ext.get(i).getName() + sequences_ext.get(i + 1).getName();
 
