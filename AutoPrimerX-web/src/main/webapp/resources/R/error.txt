@@ -1,0 +1,2 @@
+ERROR:  Error in .Call2("new_input_filexp", filepath, PACKAGE = "XVector"): cannot open file 'C:\Users\JAno\Documents\Universidad\Bioinformática\AutoPrimerX-CeBiB-\AutoPrimerX-ear\target\gfdeploy\AutoPrimerX-ear\AutoPrimerX-web-1.0-SNAPSHOT_war\resources\R\258seqdump-completo.txt'
+

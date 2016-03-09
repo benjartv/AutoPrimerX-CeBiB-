@@ -7,15 +7,19 @@ package managedbeans;
 
 import entities.CodonUsage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +30,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 import org.primefaces.model.UploadedFile;
 import org.biojava.nbio.alignment.Alignments;
 import org.biojava.nbio.alignment.template.AlignedSequence;
@@ -67,6 +72,7 @@ public class PrimerG3  implements Serializable{
     private String resultNucleotidSeq;
     private String [] aminoSeqs;
     private int count;
+    private int random;
 
     public int getCount() {
         return count++;
@@ -394,21 +400,112 @@ public class PrimerG3  implements Serializable{
             }
         }
         
+        /*
+        Thread t1;
+        t1 = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try(InputStream inputFile = file.getInputstream()){
+                    System.out.println("NOMBRE ARCHIVO: "+file.getFileName());
+                    System.out.println("INPUT FILE: "+inputFile.toString());
+                    random = new Random().nextInt(1000);
+                    Files.copy(inputFile, new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/R/"), random + file.getFileName()).toPath());
+                }
+                catch(IOException e){
+                    System.out.println("Error upload file: "+e.getMessage());
+                }
+            }
+            
+        });
+        
+        t1.start();
+        
+        Thread t2 = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                
+                BufferedReader br=null;
+                try{
+
+                    runRScript();
+
+                    br = new BufferedReader(new InputStreamReader(file.getInputstream()));
+                    if(br == null){
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar un archivo", null));
+                        return;
+                    }
+                    String linea;
+                    ArrayList<String> identificador= new ArrayList<String>();
+                    ArrayList<String> secuencia= new ArrayList<String>();
+                    int contador=-1;
+                    boolean primero=false;
+                    //linea = br.readLine();
+                    while ((linea = br.readLine()) != null) {
+                        if (linea.length() == 0) {
+                            //System.out.println("soy un salto");
+                        }
+                        else{
+                            if(linea.charAt(0)=='>'){
+                                //poner identificador
+                                identificador.add(linea);
+                                contador++;
+                                primero = true;
+                            }
+                            else{
+                                if (primero == true) {
+                                    secuencia.add(linea);
+                                    primero = false;
+                                } else {
+                                    linea = secuencia.get(contador).concat(linea);
+                                    secuencia.set(contador, linea);
+                                }
+
+                            }
+                        }
+
+                    }
+                    input.add(identificador);
+                    input.add(secuencia);
+
+                }catch (IOException e) {
+                    System.out.println(e);
+                } finally {
+                    try {
+                        if(br != null){
+                            br.close(); 
+                        }
+                    } catch (IOException e) {
+                    }
+                }
+            }
+            
+        });
+        
+        t2.join();
+        t2.start();
+        */
+        
+        try(InputStream inputFile = file.getInputstream()){
+            random = new Random().nextInt(1000);
+            Files.copy(inputFile, new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/R/"), random + file.getFileName()).toPath());
+        }
+        catch(IOException e){
+            System.out.println("Error upload file: "+e.getMessage());
+        }
         
         BufferedReader br=null;
         try{
-            if(file.getFileName().isEmpty()){
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar un archivo", null));
-                return;
-            }
+
+            //runRScript();
+
             br = new BufferedReader(new InputStreamReader(file.getInputstream()));
             if(br == null){
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar un archivo", null));
                 return;
             }
             String linea;
-            ArrayList<String> identificador= new ArrayList<String>();;
-            ArrayList<String> secuencia= new ArrayList<String>();;
+            ArrayList<String> identificador= new ArrayList<String>();
+            ArrayList<String> secuencia= new ArrayList<String>();
             int contador=-1;
             boolean primero=false;
             //linea = br.readLine();
@@ -434,11 +531,11 @@ public class PrimerG3  implements Serializable{
 
                     }
                 }
-                
+
             }
             input.add(identificador);
             input.add(secuencia);
-            
+
         }catch (IOException e) {
             System.out.println(e);
         } finally {
@@ -449,10 +546,11 @@ public class PrimerG3  implements Serializable{
             } catch (IOException e) {
             }
         }
+        
         // SE CARGA EL ABECEDARIO
         createIUPAC();
         // SE CARGA EL USO DE CODONES
-        createCodonUsage();
+        createCodonUsage();        
         
         sequencesSplit = multipleSequenceAlignment(input.get(1));
         
@@ -488,15 +586,16 @@ public class PrimerG3  implements Serializable{
         for (int h = 0; h < consensos.size(); h++) {
             secuenciasNucleotidos.add(nucleotidSequence(consensos.get(h)));
         }
-    
+        
     }
     
     public boolean validateSequence(String seq){
         boolean validate = true;
         
         for(int i=0; i<seq.length(); i++){
-            if(!(seq.substring(i, i+1).equals("-") || seq.substring(i, i+1).equals("A") || seq.substring(i, i+1).equals("C") || seq.substring(i, i+1).equals("D") || seq.substring(i, i+1).equals("E") || seq.substring(i, i+1).equals("F") || seq.substring(i, i+1).equals("G") || seq.substring(i, i+1).equals("H") || seq.substring(i, i+1).equals("I") || seq.substring(i, i+1).equals("K") || seq.substring(i, i+1).equals("L") || seq.substring(i, i+1).equals("M") || seq.substring(i, i+1).equals("N") || seq.substring(i, i+1).equals("P") || seq.substring(i, i+1).equals("Q") || seq.substring(i, i+1).equals("R") || seq.substring(i, i+1).equals("S") || seq.substring(i, i+1).equals("T") || seq.substring(i, i+1).equals("V") || seq.substring(i, i+1).equals("W") || seq.substring(i, i+1).equals("Y"))){
+            if(!(seq.substring(i, i+1).equals("-") || seq.substring(i, i+1).equals("A") || seq.substring(i, i+1).equals("C") || seq.substring(i, i+1).equals("D") || seq.substring(i, i+1).equals("E") || seq.substring(i, i+1).equals("F") || seq.substring(i, i+1).equals("G") || seq.substring(i, i+1).equals("H") || seq.substring(i, i+1).equals("I") || seq.substring(i, i+1).equals("K") || seq.substring(i, i+1).equals("L") || seq.substring(i, i+1).equals("M") || seq.substring(i, i+1).equals("N") || seq.substring(i, i+1).equals("P") || seq.substring(i, i+1).equals("Q") || seq.substring(i, i+1).equals("R") || seq.substring(i, i+1).equals("S") || seq.substring(i, i+1).equals("T") || seq.substring(i, i+1).equals("V") || seq.substring(i, i+1).equals("W") || seq.substring(i, i+1).equals("Y") || seq.substring(i, i+1).equals("X"))){
                 validate = false;
+                System.out.println("ERROR en Columna "+ i+1+" - Seq: "+seq.substring(i, i+1));
                 break;
             }
         }
@@ -895,6 +994,9 @@ public class PrimerG3  implements Serializable{
             case "N":
                 aux = codons.getProbabilidadMayor(codons.getCodonusage().getN());
                 break;
+            case "X":
+                aux = codons.getProbabilidadMayor(codons.getCodonusage().getN());
+                break;
             case "P":
                 aux = codons.getProbabilidadMayor(codons.getCodonusage().getP());
                 break;
@@ -933,7 +1035,7 @@ public class PrimerG3  implements Serializable{
         }
         try{
             Profile<ProteinSequence, AminoAcidCompound> profile = Alignments.getMultipleSequenceAlignment(lst);
-            //System.out.printf("Clustalw:%n%s%n", profile);
+            System.out.printf("Clustalw:%n%s%n", profile);
             ConcurrencyTools.shutdown();
 
             String [] secuencias = new String[profile.getAlignedSequences().size()];
@@ -1238,6 +1340,31 @@ public class PrimerG3  implements Serializable{
         }
         
         return secuencias;
+    }
+    
+    public Process runRScript(){
+        try {
+            
+            System.out.println("Entra en el script. File: "+ FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/R/")+" - "+file.getFileName());
+            //Runtime.getRuntime().exec("\"c:\\Program Files\\R\\R-3.2.2\\bin\\Rscript.exe\" \"c:\\Users\\JAno\\Documents\\Universidad\\Bioinformática\\AutoPrimerX-CeBiB-\\AutoPrimerX-web\\src\\main\\webapp\\resources\\R\\alineamiento.R\" "+new BufferedReader(new InputStreamReader(file.getInputstream())));
+            Process proc = Runtime.getRuntime().exec("\"c:\\Program Files\\R\\R-3.2.2\\bin\\Rscript.exe\" \"c:\\Users\\JAno\\Documents\\Universidad\\Bioinformática\\AutoPrimerX-CeBiB-\\AutoPrimerX-web\\src\\main\\webapp\\resources\\R\\alineamiento.R\" "+ FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/R/") + "\\" + random + file.getFileName());
+            try{
+                Files.delete(new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/R/") + "/" + random + file.getFileName()).toPath());
+            }
+            catch(Exception e){
+                System.out.println("Error: "+e.getMessage());
+            }
+            
+            return proc;
+        }
+        catch(IOException e){
+            System.out.println("ERROR Run Script IO: "+e.getMessage());
+            return null;
+        }
+        catch(NullPointerException e){
+            System.out.println("ERROR Run Script Null: "+e.getMessage());
+            return null;
+        }
     }
     
     public void createIUPAC(){
