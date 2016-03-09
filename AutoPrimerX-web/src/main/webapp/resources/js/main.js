@@ -50,7 +50,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function showSeq(obj){
     var parent = obj.parentNode.parentNode;
-    console.log(obj);
     var child = parent.childNodes;
     var spans = [];
     for(i=0; i<child.length; i++){ 
@@ -74,6 +73,8 @@ function showSeq(obj){
     for(i=0; i<hiddenIds.length; i++){
         document.getElementById('result'+hiddenIds[i]).className = "hidden";
     }
+    console.log(hiddenIds);
+    
 }
 
 function getNucleotideSeq(element){
