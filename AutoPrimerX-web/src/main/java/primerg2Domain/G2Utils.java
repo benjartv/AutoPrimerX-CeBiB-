@@ -1,7 +1,17 @@
 package primerg2Domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
+import org.apache.commons.lang3.ArrayUtils;
+
+import com.google.common.collect.Lists;
 
 public class G2Utils {
 
@@ -65,7 +75,7 @@ public class G2Utils {
 				T = T + 1;
 		}
 		molWeight = ((A * 313.21) + (T * 304.2) + (C * 289.18) + (G * 329.21) - 61.96);
-		System.out.println("MW:" + molWeight + "g/mol");
+
 		return molWeight;
 	}
 
@@ -138,7 +148,7 @@ public class G2Utils {
 
 			}
 		}
-		System.out.println("El forward es: " + forwd);
+
 		return forwd;
 	}
 
@@ -170,11 +180,12 @@ public class G2Utils {
 		for (int i = diferencia; i < largoSEC; i++) {
 			reversoComplementario = reversoComplementario + arr[i];
 		}
-		System.out.println("El reverso complementario es: " + reversoComplementario);
+
 		return reversoComplementario;
 	}
 
-	public static String reverse_EXT(String secuencia, double TM) {
+	public static String reverse_EXT(String secuencia, String rev, double TM) {
+
 		char[] arr = secuencia.toCharArray();
 		char[] arregloRVREXT = new char[arr.length];
 		double tmAux = 0;
@@ -184,7 +195,7 @@ public class G2Utils {
 				arregloRVREXT[i] = arr[i];
 				for (int j = 0; j < arregloRVREXT.length; j++) {
 					rvrEXT = rvrEXT + arregloRVREXT[i];
-					tmAux = funcionTM(rvrEXT);
+					tmAux = funcionTM(rev + rvrEXT);
 					if (tmAux >= TM) {
 						break;
 					}
@@ -193,11 +204,11 @@ public class G2Utils {
 
 			}
 		}
-		System.out.println("El reverso de extension es: " + rvrEXT);
+
 		return rvrEXT;
 	}
 
-	public static String forward_EXT(String secuencia, double TM) {
+	public static String forward_EXT(String secuencia, String fwd, double TM) {
 		char[] arr = secuencia.toCharArray();
 		char[] arregloFWDEXT = new char[arr.length];
 		double tmAux = 0;
@@ -211,7 +222,7 @@ public class G2Utils {
 				// arregloRVR.add(arr[i]);
 				for (int j = 0; j < arregloFWDEXT.length; j++) {
 					fwdEXT = fwdEXT + arregloFWDEXT[i];
-					tmAux = funcionTM(fwdEXT);
+					tmAux = funcionTM(fwdEXT + fwd);
 					if (tmAux >= TM) {
 						break;
 					}
@@ -230,75 +241,511 @@ public class G2Utils {
 		// System.out.println("El frwd extension es: "+ forwardExtension);
 	}
 
-	public static List<Ligamiento> forwards_lineal(List<Sequence> sequences) {
-		List<Ligamiento> forwards = new ArrayList<>();
-		for (int i = 1; i < sequences.size(); i++) {
-			Ligamiento primer = new Ligamiento(sequences.get(i).getName(), sequences.get(i).getSequence(),
-					sequences.get(i).getFwd_ext(), sequences.get(i).getFwd());
-			forwards.add(primer);
+	public static List<Sequence> create_sequence(List<Input> inputs, String option, double TM, double tolerance) {
+		List<Sequence> sequences = new ArrayList<>();
+		String comp;
+		String fwd;
+		String rev;
+		double tm_fwd;
+		double tm_rev;
+		for (Input input : inputs) {
+			comp = G2Utils.complemento(input.getSequence());
+			char[] arr = comp.toCharArray();
+			fwd = G2Utils.forward(input.getSequence(), TM);
+			rev = G2Utils.reverse(input.getSequence(), TM);
+			tm_fwd = G2Utils.funcionTM(fwd);
+			tm_rev = G2Utils.funcionTM(rev);
+
+			if (Math.abs(tm_fwd - tm_rev) <= tolerance) {
+
+				Sequence sequence = new Sequence(input.getName(), input.getSequence(), comp, fwd, rev, tm_fwd, tm_rev);
+				sequences.add(sequence);
+			}
+
+			else {
+				if (fwd.length() + rev.length() < arr.length) {
+					for (int i = 1; i < arr.length; i++) {
+						// do {
+						fwd = fwd + arr[fwd.length() + i];
+						rev = rev + arr[input.getSequence().length() - (rev.length() + i)];
+						tm_fwd = G2Utils.funcionTM(fwd);
+						tm_rev = G2Utils.funcionTM(rev);
+						if (Math.abs(tm_fwd - tm_rev) <= tolerance) {
+
+							Sequence sequence = new Sequence(input.getName(), input.getSequence(), comp, fwd, rev,
+									tm_fwd, tm_rev);
+							sequences.add(sequence);
+						}
+						// } while (Math.abs(tm_fwd - tm_rev) > 3);
+					}
+				} else {
+
+					System.out.println("ERROR: No es posible cumplir la condicion de tolerancia");
+					FacesContext context;
+					context = FacesContext.getCurrentInstance();
+					context.addMessage(null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Tolerance is very low"));
+				}
+			}
+
 		}
-		return forwards;
+
+		return sequences;
 	}
 
-	public static List<Ligamiento> forwards_circular(List<Sequence> sequences) {
-		List<Ligamiento> forwards = new ArrayList<>();
-		for (int i = 0; i < sequences.size(); i++) {
-			Ligamiento primer = new Ligamiento(sequences.get(i).getName(), sequences.get(i).getSequence(),
-					sequences.get(i).getFwd_ext(), sequences.get(i).getFwd());
-			forwards.add(primer);
+	public static List<SequenceExt> sequences_ext(List<Sequence> pre_sequences, String option, double TMprimer) {
+		String rev_ext = "";
+		String fwd_ext = "";
+
+		double tm_rev_primer;
+		double tm_fwd_primer;
+
+		List<SequenceExt> sequences_ext = new ArrayList<>();
+		// String comp_aux;
+		if (pre_sequences.size() > 0) {
+			for (int i = 0; i < pre_sequences.size(); i++) {
+				if (option.equals("lineal")) {
+
+					if (i == 0) {
+						rev_ext = G2Utils.reverse_EXT(pre_sequences.get(i + 1).getComp(), pre_sequences.get(i).getRev(),
+								TMprimer);
+						fwd_ext = "";
+						tm_rev_primer = G2Utils.funcionTM(rev_ext + pre_sequences.get(i).getRev());
+						SequenceExt sequence = new SequenceExt(pre_sequences.get(i).getName(),
+								pre_sequences.get(i).getSequence(), pre_sequences.get(i).getComp(),
+								pre_sequences.get(i).getFwd(), pre_sequences.get(i).getRev(), "", rev_ext,
+								pre_sequences.get(i).getTm_fwd(), pre_sequences.get(i).getTm_rev(), 0, tm_rev_primer);
+						sequences_ext.add(sequence);
+					}
+
+					else if (i + 1 == pre_sequences.size()) {
+						rev_ext = "";
+						fwd_ext = G2Utils.forward_EXT(pre_sequences.get(i - 1).getSequence(),
+								pre_sequences.get(i).getFwd(), TMprimer);
+
+						tm_fwd_primer = G2Utils.funcionTM(fwd_ext + pre_sequences.get(i).getFwd());
+						SequenceExt sequence = new SequenceExt(pre_sequences.get(i).getName(),
+								pre_sequences.get(i).getSequence(), pre_sequences.get(i).getComp(),
+								pre_sequences.get(i).getFwd(), pre_sequences.get(i).getRev(), fwd_ext, "",
+								pre_sequences.get(i).getTm_fwd(), pre_sequences.get(i).getTm_rev(), tm_fwd_primer, 0);
+						sequences_ext.add(sequence);
+
+					}
+
+					else {
+
+						rev_ext = G2Utils.reverse_EXT(pre_sequences.get(i + 1).getComp(), pre_sequences.get(i).getRev(),
+								TMprimer);
+						fwd_ext = G2Utils.forward_EXT(pre_sequences.get(i - 1).getSequence(),
+								pre_sequences.get(i).getFwd(), TMprimer);
+						tm_rev_primer = G2Utils.funcionTM(rev_ext + pre_sequences.get(i).getRev());
+						tm_fwd_primer = G2Utils.funcionTM(fwd_ext + pre_sequences.get(i).getFwd());
+						SequenceExt sequence = new SequenceExt(pre_sequences.get(i).getName(),
+								pre_sequences.get(i).getSequence(), pre_sequences.get(i).getComp(),
+								pre_sequences.get(i).getFwd(), pre_sequences.get(i).getRev(), fwd_ext, rev_ext,
+								pre_sequences.get(i).getTm_fwd(), pre_sequences.get(i).getTm_rev(), tm_fwd_primer,
+								tm_rev_primer);
+						sequences_ext.add(sequence);
+					}
+
+				} else {
+
+					if (i == 0) {
+						rev_ext = G2Utils.reverse_EXT(pre_sequences.get(i + 1).getComp(), pre_sequences.get(i).getRev(),
+								TMprimer);
+						fwd_ext = G2Utils.forward_EXT(pre_sequences.get(pre_sequences.size() - 1).getSequence(),
+								pre_sequences.get(i).getFwd(), TMprimer);
+						tm_rev_primer = G2Utils.funcionTM(rev_ext + pre_sequences.get(i).getRev());
+						tm_fwd_primer = G2Utils.funcionTM(fwd_ext + pre_sequences.get(i).getFwd());
+						SequenceExt sequence = new SequenceExt(pre_sequences.get(i).getName(),
+								pre_sequences.get(i).getSequence(), pre_sequences.get(i).getComp(),
+								pre_sequences.get(i).getFwd(), pre_sequences.get(i).getRev(), fwd_ext, rev_ext,
+								pre_sequences.get(i).getTm_fwd(), pre_sequences.get(i).getTm_rev(), tm_fwd_primer,
+								tm_rev_primer);
+						sequences_ext.add(sequence);
+					}
+
+					else if (i + 1 == pre_sequences.size()) {
+						rev_ext = G2Utils.forward_EXT(pre_sequences.get(0).getComp(), pre_sequences.get(i).getFwd(),
+								TMprimer);
+						fwd_ext = G2Utils.forward_EXT(pre_sequences.get(i - 1).getSequence(),
+								pre_sequences.get(i).getFwd(), TMprimer);
+						tm_rev_primer = G2Utils.funcionTM(rev_ext + pre_sequences.get(i).getRev());
+						tm_fwd_primer = G2Utils.funcionTM(fwd_ext + pre_sequences.get(i).getFwd());
+						SequenceExt sequence = new SequenceExt(pre_sequences.get(i).getName(),
+								pre_sequences.get(i).getSequence(), pre_sequences.get(i).getComp(),
+								pre_sequences.get(i).getFwd(), pre_sequences.get(i).getRev(), fwd_ext, rev_ext,
+								pre_sequences.get(i).getTm_fwd(), pre_sequences.get(i).getTm_rev(), tm_fwd_primer,
+								tm_rev_primer);
+						sequences_ext.add(sequence);
+
+					}
+
+					else {
+						rev_ext = G2Utils.reverse_EXT(pre_sequences.get(i + 1).getComp(), pre_sequences.get(i).getRev(),
+								TMprimer);
+						fwd_ext = G2Utils.forward_EXT(pre_sequences.get(i - 1).getSequence(),
+								pre_sequences.get(i).getFwd(), TMprimer);
+						tm_rev_primer = G2Utils.funcionTM(rev_ext + pre_sequences.get(i).getRev());
+						tm_fwd_primer = G2Utils.funcionTM(fwd_ext + pre_sequences.get(i).getFwd());
+						SequenceExt sequence = new SequenceExt(pre_sequences.get(i).getName(),
+								pre_sequences.get(i).getSequence(), pre_sequences.get(i).getComp(),
+								pre_sequences.get(i).getFwd(), pre_sequences.get(i).getRev(), fwd_ext, rev_ext,
+								pre_sequences.get(i).getTm_fwd(), pre_sequences.get(i).getTm_rev(), tm_fwd_primer,
+								tm_rev_primer);
+						sequences_ext.add(sequence);
+
+					}
+
+				}
+			}
+		} else {
+			return null;
 		}
-		return forwards;
+		return sequences_ext;
 	}
 
-	public static List<Ligamiento> revs_lineal(List<Sequence> sequences) {
-		List<Ligamiento> revs = new ArrayList<>();
-		for (int i = 0; i < sequences.size(); i++) {
-			Ligamiento primer = new Ligamiento(sequences.get(i).getName(), sequences.get(i).getSequence(),
-					sequences.get(i).getRev(), sequences.get(i).getRev_ext());
-			revs.add(primer);
-		}
-		return revs;
-	}
+	public static List<List<Ligamiento>> results(List<SequenceExt> sequences_ext, String option, double TM, double TMh,
+			double TMprimer, double tolerance) {
 
-	public static List<Ligamiento> revs_circular(List<Sequence> sequences) {
-		List<Ligamiento> revs = new ArrayList<>();
-		for (int i = 0; i < sequences.size(); i++) {
-			Ligamiento primer = new Ligamiento(sequences.get(i).getName(), sequences.get(i).getSequence(),
-					sequences.get(i).getRev(), sequences.get(i).getRev_ext());
-			revs.add(primer);
-		}
-		return revs;
-	}
-
-	public static List<Ligamiento> homologys_lineal(List<Sequence> sequences) {
 		List<Ligamiento> homologys = new ArrayList<>();
-		for (int i = 0; i < sequences.size(); i++) {
-			if ((i + 1) < sequences.size()) {
-				Ligamiento primer = new Ligamiento(sequences.get(i).getName(), sequences.get(i).getSequence(),
-						sequences.get(i).getRev_ext(), sequences.get(i + 1).getFwd_ext());
-				homologys.add(primer);
+		List<Ligamiento> primers_fwd = new ArrayList<>();
+		List<Ligamiento> primers_rev = new ArrayList<>();
+		List<List<Ligamiento>> results = new ArrayList<>();
+
+		for (int i = 0; i < sequences_ext.size(); i++) {
+			String fwd_ext = "";
+			String rev_ext = "";
+			String homology = "";
+			String homology_name = "";
+			double tm_primer_fwd_1 = 0;
+			double tm_primer_rev_1 = 0;
+			double tm_primer_fwd_2 = 0;
+			double tm_primer_rev_2 = 0;
+			double tm_homology = 0;
+			if (option.equals("lineal")) {
+				if (i + 1 < sequences_ext.size()) {
+
+					if (i == 0) {
+						char[] arr = sequences_ext.get(i).getRev_ext().toCharArray();
+						char[] arr2 = sequences_ext.get(i + 1).getFwd_ext().toCharArray();
+
+						ArrayUtils.reverse(arr);
+
+						int length = arr.length;
+
+						if (length < arr2.length) {
+							length = arr2.length;
+						}
+
+						for (int j = 0; j < length; j++) {
+
+							if (j > arr2.length) {
+
+								continue;
+							}
+
+							if (j > arr.length) {
+
+								continue;
+							}
+							rev_ext = rev_ext + arr[j];
+							fwd_ext = fwd_ext + arr2[j];
+							homology = fwd_ext + rev_ext;
+							tm_homology = funcionTM(homology);
+							tm_primer_fwd_2 = funcionTM(fwd_ext + sequences_ext.get(i + 1).getFwd());
+							tm_primer_rev_1 = funcionTM(rev_ext + sequences_ext.get(i).getRev());
+
+							if (tm_homology >= TMh) {
+
+								homology_name = sequences_ext.get(i).getName() + sequences_ext.get(i + 1).getName();
+
+								sequences_ext.get(i).setRev_ext(rev_ext);
+								sequences_ext.get(i + 1).setFwd_ext(fwd_ext);
+
+								Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, fwd_ext);
+								homologys.add(hom);
+								Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
+										sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd(), "");
+								primers_fwd.add(primer_fwd);
+								Ligamiento primer_rev = new Ligamiento(sequences_ext.get(i).getName(),
+										sequences_ext.get(i).getSequence(), sequences_ext.get(i).getRev(),
+										sequences_ext.get(i).getRev_ext());
+								primers_rev.add(primer_rev);
+								results.add(homologys);
+								results.add(primers_fwd);
+								results.add(primers_rev);
+								break;
+							}
+						}
+
+					} else {
+						char[] arr = sequences_ext.get(i).getRev_ext().toCharArray();
+						char[] arr2 = sequences_ext.get(i + 1).getFwd_ext().toCharArray();
+
+						ArrayUtils.reverse(arr);
+
+						int length = arr.length;
+
+						if (length < arr2.length) {
+							length = arr2.length;
+						}
+
+						for (int j = 0; j < length; j++) {
+
+							if (j > arr2.length) {
+
+								continue;
+							}
+
+							if (j > arr.length) {
+
+								continue;
+							}
+
+							rev_ext = rev_ext + arr[j];
+							fwd_ext = fwd_ext + arr2[j];
+							homology = fwd_ext + rev_ext;
+							tm_homology = funcionTM(homology);
+
+							tm_primer_rev_1 = funcionTM(rev_ext + sequences_ext.get(i).getRev());
+							tm_primer_fwd_1 = funcionTM(
+									sequences_ext.get(i).getFwd() + sequences_ext.get(i).getFwd_ext());
+
+							System.out.println("TM de homologia" + tm_homology);
+							if (tm_homology >= TMh && Math.abs(tm_primer_rev_1 - tm_primer_fwd_1) <= tolerance) {
+
+								homology_name = sequences_ext.get(i).getName() + sequences_ext.get(i + 1).getName();
+
+								sequences_ext.get(i).setRev_ext(rev_ext);
+								sequences_ext.get(i + 1).setFwd_ext(fwd_ext);
+
+								Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, fwd_ext);
+								homologys.add(hom);
+								Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
+										sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd(),
+										sequences_ext.get(i).getFwd_ext());
+								primers_fwd.add(primer_fwd);
+								Ligamiento primer_rev = new Ligamiento(sequences_ext.get(i).getName(),
+										sequences_ext.get(i).getSequence(), sequences_ext.get(i).getRev(),
+										sequences_ext.get(i).getRev_ext());
+								primers_rev.add(primer_rev);
+
+								results.add(homologys);
+								results.add(primers_fwd);
+								results.add(primers_rev);
+								break;
+							}
+
+						}
+
+					}
+
+				} else {
+					Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
+							sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd(),
+							sequences_ext.get(i).getFwd_ext());
+					primers_fwd.add(primer_fwd);
+					Ligamiento primer_rev = new Ligamiento(sequences_ext.get(i).getName(),
+							sequences_ext.get(i).getSequence(), sequences_ext.get(i).getRev(),
+							sequences_ext.get(i).getRev_ext());
+					primers_rev.add(primer_rev);
+					results.add(primers_fwd);
+					results.add(primers_rev);
+
+				}
 			}
+			// caso circular
+
+			else {
+				boolean trap = true;
+				// if (i + 1 == sequences_ext.size()) {
+				if (trap) {
+					char[] arr = sequences_ext.get(i).getRev_ext().toCharArray();
+					char[] arr2 = sequences_ext.get(0).getFwd_ext().toCharArray();
+
+					System.out.println("extension primero circular" + sequences_ext.get(i).getFwd_ext());
+
+					ArrayUtils.reverse(arr);
+
+					int length = arr.length;
+
+					if (length < arr2.length) {
+						length = arr2.length;
+					}
+
+					for (int j = 0; j < length; j++) {
+
+						if (j > arr2.length) {
+
+							continue;
+						}
+
+						if (j > arr.length) {
+
+							continue;
+						}
+						rev_ext = rev_ext + arr[j];
+						fwd_ext = fwd_ext + arr2[j];
+						homology = fwd_ext + rev_ext;
+						tm_homology = funcionTM(homology);
+						tm_primer_fwd_2 = funcionTM(fwd_ext + sequences_ext.get(0).getFwd());
+						tm_primer_rev_1 = funcionTM(rev_ext + sequences_ext.get(i).getRev());
+
+						// if (tm_homology >= TMh && Math.abs(tm_primer_rev_1 -
+						// tm_primer_fwd_1) <= tolerance) {
+						if (tm_homology >= TMh) {
+							homology_name = sequences_ext.get(i).getName() + sequences_ext.get(0).getName();
+
+							sequences_ext.get(i).setRev_ext(rev_ext);
+							sequences_ext.get(0).setFwd_ext(fwd_ext);
+
+							Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, fwd_ext);
+							homologys.add(hom);
+							Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
+									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd_ext(),
+									sequences_ext.get(i).getFwd());
+							primers_fwd.add(primer_fwd);
+							Ligamiento primer_rev = new Ligamiento(sequences_ext.get(i).getName(),
+									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getRev(),
+									sequences_ext.get(i).getRev_ext());
+							primers_rev.add(primer_rev);
+							results.add(homologys);
+							results.add(primers_fwd);
+							results.add(primers_rev);
+							trap = false;
+							break;
+						}
+					}
+					trap = false;
+
+				}
+
+				else if (i == 0) {
+					char[] arr = sequences_ext.get(i).getRev_ext().toCharArray();
+					char[] arr2 = sequences_ext.get(i + 1).getFwd_ext().toCharArray();
+
+					System.out.println("extension primero circular" + sequences_ext.get(i).getFwd_ext());
+
+					ArrayUtils.reverse(arr);
+
+					int length = arr.length;
+
+					if (length > arr2.length) {
+						length = arr2.length;
+					}
+
+					for (int j = 0; j < length; j++) {
+
+						if (j > arr2.length) {
+
+							continue;
+						}
+
+						if (j > arr.length) {
+
+							continue;
+						}
+						rev_ext = rev_ext + arr[j];
+						fwd_ext = fwd_ext + arr2[j];
+						homology = fwd_ext + rev_ext;
+						tm_homology = funcionTM(homology);
+						tm_primer_fwd_2 = funcionTM(fwd_ext + sequences_ext.get(i + 1).getFwd());
+						tm_primer_rev_1 = funcionTM(rev_ext + sequences_ext.get(i).getRev());
+
+						if (tm_homology >= TMh) {
+
+							homology_name = sequences_ext.get(i).getName() + sequences_ext.get(i + 1).getName();
+
+							sequences_ext.get(i).setRev_ext(rev_ext);
+							sequences_ext.get(i + 1).setFwd_ext(fwd_ext);
+
+							Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, fwd_ext);
+							homologys.add(hom);
+							Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
+									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd_ext(),
+									sequences_ext.get(i).getFwd());
+							primers_fwd.add(primer_fwd);
+							Ligamiento primer_rev = new Ligamiento(sequences_ext.get(i).getName(),
+									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getRev(),
+									sequences_ext.get(i).getRev_ext());
+							primers_rev.add(primer_rev);
+							results.add(homologys);
+							results.add(primers_fwd);
+							results.add(primers_rev);
+							break;
+						}
+					}
+
+				}
+				// caso de ser el ultimo
+
+				// caso de cualquier otro
+				else {
+					char[] arr = sequences_ext.get(i).getRev_ext().toCharArray();
+					char[] arr2 = sequences_ext.get(i + 1).getFwd_ext().toCharArray();
+
+					System.out.println("extension primero circular" + sequences_ext.get(i).getFwd_ext());
+
+					ArrayUtils.reverse(arr);
+
+					int length = arr.length;
+
+					if (length < arr2.length) {
+						length = arr2.length;
+					}
+
+					for (int j = 0; j < length; j++) {
+
+						if (j > arr2.length) {
+
+							continue;
+						}
+
+						if (j > arr.length) {
+
+							continue;
+						}
+						rev_ext = rev_ext + arr[j];
+						fwd_ext = fwd_ext + arr2[j];
+						homology = fwd_ext + rev_ext;
+						tm_homology = funcionTM(homology);
+
+						tm_primer_rev_1 = funcionTM(rev_ext + sequences_ext.get(i).getRev());
+						tm_primer_fwd_1 = funcionTM(sequences_ext.get(i).getFwd() + sequences_ext.get(i).getFwd_ext());
+
+						System.out.println("TM de homologia" + tm_homology);
+						if (tm_homology >= TMh && Math.abs(tm_primer_rev_1 - tm_primer_fwd_1) <= tolerance) {
+
+							homology_name = sequences_ext.get(i).getName() + sequences_ext.get(i + 1).getName();
+
+							sequences_ext.get(i).setRev_ext(rev_ext);
+							sequences_ext.get(i + 1).setFwd_ext(fwd_ext);
+
+							Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, fwd_ext);
+							homologys.add(hom);
+							Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
+									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd(),
+									sequences_ext.get(i).getFwd_ext());
+							primers_fwd.add(primer_fwd);
+							Ligamiento primer_rev = new Ligamiento(sequences_ext.get(i).getName(),
+									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getRev(),
+									sequences_ext.get(i).getRev_ext());
+							primers_rev.add(primer_rev);
+
+							results.add(homologys);
+							results.add(primers_fwd);
+							results.add(primers_rev);
+							break;
+						}
+					}
+
+				}
+			}
+
 		}
-		return homologys;
-	}
-	
-	public static List<Ligamiento> homologys_circular(List<Sequence> sequences) {
-		List<Ligamiento> homologys = new ArrayList<>();
-		for (int i = 0; i < sequences.size(); i++) {
-			if ((i + 1) < sequences.size()) {
-				Ligamiento primer = new Ligamiento(sequences.get(i).getName(), sequences.get(i).getSequence(),
-						sequences.get(i).getRev_ext(), sequences.get(i + 1).getFwd_ext());
-				homologys.add(primer);
-			}
-			
-			if(i == (sequences.size()-1)){
-				Ligamiento primer = new Ligamiento(sequences.get(i).getName(), sequences.get(i).getSequence(),
-						sequences.get(i).getRev_ext(), sequences.get(0).getFwd_ext());
-				homologys.add(primer);
-				
-			}
-		}
-		return homologys;
+
+		return results;
 	}
 
 }

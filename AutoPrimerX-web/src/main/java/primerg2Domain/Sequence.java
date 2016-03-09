@@ -12,20 +12,19 @@ public class Sequence {
 	
 	private String rev;
 	
-	private String fwd_ext;
+	private double tm_fwd;
 	
-	private String rev_ext;
-	
-	private double tmParam;
-	
-	public Sequence(String name, String sequence, double tmParam) {
+	private double tm_rev;
+		
+	public Sequence(String name, String sequence, String comp, String fwd, String rev, double tm_fwd, double tm_rev) {
+
 		this.name = name;
 		this.sequence = sequence;
-		this.comp = G2Utils.complemento(this.sequence);
-		this.fwd = G2Utils.forward(this.sequence, tmParam);
-		this.rev = G2Utils.reverse(this.sequence, tmParam);
-		this.fwd_ext = G2Utils.forward_EXT(this.sequence, tmParam);
-		this.rev_ext = G2Utils.reverse_EXT(this.sequence, tmParam);
+		this.comp = comp;
+		this.fwd = fwd;
+		this.rev = rev;
+		this.tm_fwd = tm_fwd;
+		this.tm_rev = tm_rev;
 	}
 
 	public String getName() {
@@ -68,35 +67,27 @@ public class Sequence {
 		this.rev = rev;
 	}
 
-	public String getFwd_ext() {
-		return fwd_ext;
+	public double getTm_fwd() {
+		return tm_fwd;
 	}
 
-	public void setFwd_ext(String fwd_ext) {
-		this.fwd_ext = fwd_ext;
+	public void setTm_fwd(double tm_fwd) {
+		this.tm_fwd = tm_fwd;
 	}
 
-	public String getRev_ext() {
-		return rev_ext;
+	public double getTm_rev() {
+		return tm_rev;
 	}
 
-	public void setRev_ext(String rev_ext) {
-		this.rev_ext = rev_ext;
-	}
-
-	public double getTmParam() {
-		return tmParam;
-	}
-
-	public void setTmParam(double tmParam) {
-		this.tmParam = tmParam;
+	public void setTm_rev(double tm_rev) {
+		this.tm_rev = tm_rev;
 	}
 
 	@Override
 	public String toString() {
 		return "Sequence [name=" + name + ", sequence=" + sequence + ", comp=" + comp + ", fwd=" + fwd + ", rev=" + rev
-				+ ", fwd_ext=" + fwd_ext + ", rev_ext=" + rev_ext + "]";
+				+ ", tm_fwd=" + tm_fwd + ", tm_rev=" + tm_rev + "]";
 	}
-	
 
+	
 }

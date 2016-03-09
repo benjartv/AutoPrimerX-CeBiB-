@@ -6,48 +6,77 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import primerg2Domain.Sequence;
+import primerg2Domain.SequenceExt;
 import primerg2Domain.G2Utils;
+import primerg2Domain.Input;
 import primerg2Domain.Ligamiento;
-
 
 @Named
 @SessionScoped
-public class PrimerG2 implements Serializable{
-	
+public class PrimerG2 implements Serializable {
+
 	private String name;
-	
+
 	private String sequence;
-		
-	private List<Sequence> sequences; 
-	
-	private List<Ligamiento> primers_fwd;
-	
-	private List<Ligamiento> primers_rev;
-	
-	private List<Ligamiento> homologys;
-	
+
+	private String option;
+
+	private double tolerance;
+
 	private double sodio;
-	
+
 	private double TM;
-	
+
+	private double TMh;
+
+	private double TMprimer;
+
+	private List<Input> inputs;
+
+	private List<Sequence> sequences;
+
+	private List<SequenceExt> sequences_ext;
+
+	private List<List<Ligamiento>> results;
+
+	private List<Sequence> pre_sequences;
+
+	private List<Ligamiento> primers_fwd;
+
+	private List<Ligamiento> primers_rev;
+
+	private List<Ligamiento> homologys;
+
 	@PostConstruct
-	public void init(){
+	public void init() {
 		TM = 45;
+		TMh = 52;
+		TMprimer = 72;
 		sodio = 50;
+		tolerance = 3;
+		option = "lineal";
 
 		sequences = new ArrayList<>();
-		
+
 		primers_fwd = new ArrayList<>();
-		
+
 		primers_rev = new ArrayList<>();
-		
+
 		homologys = new ArrayList<>();
 
+		inputs = new ArrayList<>();
+
+		pre_sequences = new ArrayList<>();
+
+		sequences_ext = new ArrayList<>();
+
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -103,7 +132,7 @@ public class PrimerG2 implements Serializable{
 	public void setTM(double tM) {
 		TM = tM;
 	}
-	
+
 	public String getSequence() {
 		return sequence;
 	}
@@ -112,40 +141,134 @@ public class PrimerG2 implements Serializable{
 		this.sequence = sequence;
 	}
 
-	public void lineal(){
-		
-		primers_fwd = G2Utils.forwards_lineal(sequences);
-		primers_rev = G2Utils.revs_lineal(sequences);
-		homologys = G2Utils.homologys_lineal(sequences);
-		
+	public String getOption() {
+		return option;
 	}
-	
-	public void circular(){
-		
-		primers_fwd = G2Utils.forwards_circular(sequences);
-		primers_rev = G2Utils.revs_circular(sequences);
-		homologys = G2Utils.homologys_circular(sequences);
-		
+
+	public void setOption(String option) {
+		this.option = option;
 	}
-	
-	public void download(){
-		
-		//Hacer código para generar PDF
-		
+
+	public List<Input> getInputs() {
+		return inputs;
 	}
-	
-	public void add(){
-		
-		Sequence sequence = new Sequence(this.name, this.sequence, TM);
-		sequences.add(sequence);
+
+	public void setInputs(List<Input> inputs) {
+		this.inputs = inputs;
+	}
+
+	public double getTMh() {
+		return TMh;
+	}
+
+	public void setTMh(double tMh) {
+		TMh = tMh;
+	}
+
+	public double getTMprimer() {
+		return TMprimer;
+	}
+
+	public void setTMprimer(double tMprimer) {
+		TMprimer = tMprimer;
+	}
+
+	public double getTolerance() {
+		return tolerance;
+	}
+
+	public void setTolerance(double tolerance) {
+		this.tolerance = tolerance;
+	}
+
+	public List<Sequence> getPre_sequences() {
+		return pre_sequences;
+	}
+
+	public void setPre_sequences(List<Sequence> pre_sequences) {
+		this.pre_sequences = pre_sequences;
+	}
+
+	public List<List<Ligamiento>> getResults() {
+		return results;
+	}
+
+	public void setResults(List<List<Ligamiento>> results) {
+		this.results = results;
+	}
+
+	public List<SequenceExt> getSequences_ext() {
+		return sequences_ext;
+	}
+
+	public void setSequences_ext(List<SequenceExt> sequences_ext) {
+		this.sequences_ext = sequences_ext;
+	}
+
+	public void assembly() {
+		System.out.println("opcion" + this.option);
+		if (option.equals("lineal")) {
+			// List<Sequence> pre_sequences = new ArrayList<>();
+			pre_sequences = G2Utils.create_sequence(inputs, "lineal", TM, tolerance);
+			sequences_ext = G2Utils.sequences_ext(pre_sequences, "lineal", TMprimer);
+			results = G2Utils.results(sequences_ext, "lineal", TM, TMh, TMprimer, tolerance);
+			homologys = results.get(0);
+			primers_fwd = results.get(1);
+			primers_rev = results.get(2);
+
+			/*
+			 * primers_fwd = G2Utils.forwards_lineal(sequences); primers_rev =
+			 * G2Utils.revs_lineal(sequences); homologys =
+			 * G2Utils.homologys_lineal(sequences);
+			 */
+
+		} else {
+
+			pre_sequences = G2Utils.create_sequence(inputs, "circular", TM, tolerance);
+			sequences_ext = G2Utils.sequences_ext(pre_sequences, "circular", TMprimer);
+			results = G2Utils.results(sequences_ext, "circular", TM, TMh, TMprimer, tolerance);
+			homologys = results.get(0);
+			primers_fwd = results.get(1);
+			primers_rev = results.get(2);
+			/*
+			 * if (results != null) {
+			 * 
+			 * primers_fwd = results.get(0); primers_rev = results.get(1);
+			 * homologys = results.get(2);
+			 * 
+			 * } else { FacesContext context; context =
+			 * FacesContext.getCurrentInstance(); context.addMessage(null, new
+			 * FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+			 * "Not coincidences"));
+			 * 
+			 * }
+			 */
+			/*
+			 * primers_fwd = G2Utils.forwards_circular(sequences); primers_rev =
+			 * G2Utils.revs_circular(sequences); homologys =
+			 * G2Utils.homologys_circular(sequences);
+			 */
+
+		}
+
+		option = "";
+	}
+
+	public void add() {
+
+		// Sequence sequence = new Sequence(this.name, this.sequence, TM);
+		Input input = new Input(this.name, this.sequence);
+		inputs.add(input);
+		// sequences.add(sequence);
+
 		this.name = "";
 		this.sequence = "";
-		
+
 	}
-	
-	public void remove(Sequence sequence) {
-        sequences.remove(sequence);
-       
-    }
-	
+
+	public void remove(Input input) {
+		inputs.remove(input);
+
+	}
+
 }
