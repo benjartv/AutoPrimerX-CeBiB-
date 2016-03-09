@@ -626,17 +626,43 @@ public class PrimerG3  implements Serializable{
         
         ArrayList<String> temporal = new ArrayList<>();
         for (int i = 0; i < sequences[0].length(); i++) {
+            int contador=0;
+            //System.out.println("tam: "+sequences.length);
             for (int j = 0; j < sequences.length; j++) {
+                if(matrizSequence[i][j].equals("-")==true){
+                    contador++;
+                    //System.out.println("contador: "+contador);
+                }
+                
                 if (j == 0) {
                     temporal.add(matrizSequence[i][j]);
                 } else if (temporal.contains(matrizSequence[i][j]) == false) {
                     temporal.add(matrizSequence[i][j]);
+                    if(j==sequences.length-1 && contador>= ((sequences.length)/2)){
+                        temporal.add("-1");
+                        
+                    }
+                }if (temporal.contains(matrizSequence[i][j]) == true){
+                    if (j == sequences.length - 1 && contador >= ((sequences.length) / 2)) {
+                    temporal.add("-1");
+                   
+                }                    
                 }
+                
             }
             //System.out.println(temporal);
             String temp = "";
             for (int k = 0; k < temporal.size(); k++) {
-                temp = temp.concat(temporal.get(k));
+                if(temporal.contains("-1")==true){
+                    temporal.remove("-1");
+                    if(k==0){
+                        temp="ñ";
+                    }
+                    temp = temp.concat(temporal.get(k));                    
+                }
+                else{
+                    temp = temp.concat(temporal.get(k));
+                }
             }
             sitios.add(temp);
             //System.out.println(sitios.get(i));
@@ -652,17 +678,31 @@ public class PrimerG3  implements Serializable{
         for (int i = 0; i < sitios.size(); i++) {
             //if (sitios.get(i).length() == 1) {
             if (sitios.get(i).length() == (identico+1)) {
-                tipo.add("I");
+                if (sitios.get(i).charAt(0) == 'ñ') {//si existen muchos gaps que aminoacidos
+                    sitios.set(i, sitios.get(i).substring(1));
+                    tipo.add("X");
+                } else {                   
+                    tipo.add("I");
+                }
                 //System.out.println("tamI " +sitios.get(i).length());
             }
             //if (sitios.get(i).length() <= sitioConservados && sitios.get(i).length() > 1) {
             if (sitios.get(i).length() <= sitioConservados && sitios.get(i).length() > (identico+1)) {
-                tipo.add("C");
-                //System.out.println("tamC " +sitios.get(i).length());
+                if(sitios.get(i).charAt(0)=='ñ'){//si existen muchos gaps que aminoacidos
+                    sitios.set(i, sitios.get(i).substring(1));
+                    tipo.add("X");
+                }
+                else{
+                    tipo.add("C");
+                }
             }
             if (sitios.get(i).length() > sitioConservados) {
-                tipo.add("X");
-                //System.out.println("tamX " +sitios.get(i).length());
+                if (sitios.get(i).charAt(0) == 'ñ') {//si existen muchos gaps que aminoacidos
+                    sitios.set(i, sitios.get(i).substring(1));
+                    tipo.add("X");
+                } else {
+                    tipo.add("X");
+                }
             }
         }
         while (tipo.indexOf("I") != -1) {
