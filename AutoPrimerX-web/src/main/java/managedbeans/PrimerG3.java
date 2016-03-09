@@ -9,30 +9,21 @@ import entities.CodonUsage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
-import javax.faces.bean.ManagedBean;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
-import javax.servlet.ServletContext;
 import org.primefaces.model.UploadedFile;
 import org.biojava.nbio.alignment.Alignments;
 import org.biojava.nbio.alignment.template.AlignedSequence;
@@ -40,12 +31,7 @@ import org.biojava.nbio.alignment.template.Profile;
 import org.biojava.nbio.core.exceptions.CompoundNotFoundException;
 import org.biojava.nbio.core.sequence.ProteinSequence;
 import org.biojava.nbio.core.sequence.compound.AminoAcidCompound;
-import org.biojava.nbio.core.sequence.io.FastaReaderHelper;
 import org.biojava.nbio.core.util.ConcurrencyTools;
-import org.jgrapht.DirectedGraph;
-import org.jgrapht.graph.DefaultDirectedGraph;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.GraphPath; 
 import primerg3Domain.Codon;
 import primerg3Domain.CondonUsage;
 import primerg3Domain.NomenclaturaIUPAC;
@@ -57,7 +43,6 @@ public class PrimerG3  implements Serializable{
     private String sequences;
     private String log;
     private ArrayList<NomenclaturaIUPAC> iupac;
-    //private entities.CodonUsage codonusage;
     private Integer conservado = 0;
     private Integer tamanoPrimer;
     private ArrayList <String> resultado=new ArrayList <String>();
@@ -204,12 +189,9 @@ public class PrimerG3  implements Serializable{
     public void setSequences(String sequences) {
         this.sequences = sequences;
     }
-    public void submitprob(CodonUsage codon){
-        //cambiarUsoCodon(codon);
-    }    
+    
     public void submit(CodonUsage codon) throws IOException, Exception{
-        int sitioConservado = conservado;
-        
+       
         if(codons.getAglobal() != null){
             String temp = codons.getAglobal();
             String [] cdn = temp.split(" : ");
@@ -411,91 +393,8 @@ public class PrimerG3  implements Serializable{
             }
         }
         
+        //Función que permite subir archivos al servidor
         /*
-        Thread t1;
-        t1 = new Thread(new Runnable(){
-            @Override
-            public void run() {
-                try(InputStream inputFile = file.getInputstream()){
-                    System.out.println("NOMBRE ARCHIVO: "+file.getFileName());
-                    System.out.println("INPUT FILE: "+inputFile.toString());
-                    random = new Random().nextInt(1000);
-                    Files.copy(inputFile, new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/R/"), random + file.getFileName()).toPath());
-                }
-                catch(IOException e){
-                    System.out.println("Error upload file: "+e.getMessage());
-                }
-            }
-            
-        });
-        
-        t1.start();
-        
-        Thread t2 = new Thread(new Runnable(){
-            @Override
-            public void run() {
-                
-                BufferedReader br=null;
-                try{
-
-                    runRScript();
-
-                    br = new BufferedReader(new InputStreamReader(file.getInputstream()));
-                    if(br == null){
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar un archivo", null));
-                        return;
-                    }
-                    String linea;
-                    ArrayList<String> identificador= new ArrayList<String>();
-                    ArrayList<String> secuencia= new ArrayList<String>();
-                    int contador=-1;
-                    boolean primero=false;
-                    //linea = br.readLine();
-                    while ((linea = br.readLine()) != null) {
-                        if (linea.length() == 0) {
-                            //System.out.println("soy un salto");
-                        }
-                        else{
-                            if(linea.charAt(0)=='>'){
-                                //poner identificador
-                                identificador.add(linea);
-                                contador++;
-                                primero = true;
-                            }
-                            else{
-                                if (primero == true) {
-                                    secuencia.add(linea);
-                                    primero = false;
-                                } else {
-                                    linea = secuencia.get(contador).concat(linea);
-                                    secuencia.set(contador, linea);
-                                }
-
-                            }
-                        }
-
-                    }
-                    input.add(identificador);
-                    input.add(secuencia);
-
-                }catch (IOException e) {
-                    System.out.println(e);
-                } finally {
-                    try {
-                        if(br != null){
-                            br.close(); 
-                        }
-                    } catch (IOException e) {
-                    }
-                }
-            }
-            
-        });
-        
-        t2.join();
-        t2.start();
-        */
-        
         try(InputStream inputFile = file.getInputstream()){
             random = new Random().nextInt(1000);
             Files.copy(inputFile, new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/R/"), random + file.getFileName()).toPath());
@@ -503,12 +402,11 @@ public class PrimerG3  implements Serializable{
         catch(IOException e){
             System.out.println("Error upload file: "+e.getMessage());
         }
+        */
         
         BufferedReader br=null;
         try{
-
-            //runRScript();
-
+        
             br = new BufferedReader(new InputStreamReader(file.getInputstream()));
             if(br == null){
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar un archivo", null));
@@ -519,10 +417,9 @@ public class PrimerG3  implements Serializable{
             ArrayList<String> secuencia= new ArrayList<String>();
             int contador=-1;
             boolean primero=false;
-            //linea = br.readLine();
             while ((linea = br.readLine()) != null) {
                 if (linea.length() == 0) {
-                    //System.out.println("soy un salto");
+                
                 }
                 else{
                     if(linea.charAt(0)=='>'){
@@ -587,7 +484,6 @@ public class PrimerG3  implements Serializable{
                 prueba=true;
             }
         }
-        //////////////////////////////////////////////////////////////
         
         resultado = resultado=determinarConservado(sequencesSplit);
         consensos = determinarConsenso(resultado, conservado, tamanoPrimer);
@@ -620,18 +516,15 @@ public class PrimerG3  implements Serializable{
         for (int i = 0; i < sequences.length; i++) {
             for (int j = 0; j < sequences[0].length(); j++) {
                 matrizSequence[j][i] = sequences[i].substring(j, j + 1);
-                //System.out.println(sequences[i].length());
             }
         }
         
         ArrayList<String> temporal = new ArrayList<>();
         for (int i = 0; i < sequences[0].length(); i++) {
             int contador=0;
-            //System.out.println("tam: "+sequences.length);
             for (int j = 0; j < sequences.length; j++) {
                 if(matrizSequence[i][j].equals("-")==true){
                     contador++;
-                    //System.out.println("contador: "+contador);
                 }
                 
                 if (j == 0) {
@@ -650,7 +543,6 @@ public class PrimerG3  implements Serializable{
                 }
                 
             }
-            //System.out.println(temporal);
             String temp = "";
             for (int k = 0; k < temporal.size(); k++) {
                 if(temporal.contains("-1")==true){
@@ -665,7 +557,6 @@ public class PrimerG3  implements Serializable{
                 }
             }
             sitios.add(temp);
-            //System.out.println(sitios.get(i));
             temporal.clear();
         }
 
@@ -676,17 +567,14 @@ public class PrimerG3  implements Serializable{
         ArrayList<String> consenso = new ArrayList<String>();
         ArrayList<String> tipo = new ArrayList<String>();
         for (int i = 0; i < sitios.size(); i++) {
-            //if (sitios.get(i).length() == 1) {
-            if (sitios.get(i).length() == (identico+1)) {
+            if (sitios.get(i).length() <= (identico+1)) {
                 if (sitios.get(i).charAt(0) == 'ñ') {//si existen muchos gaps que aminoacidos
                     sitios.set(i, sitios.get(i).substring(1));
                     tipo.add("X");
                 } else {                   
                     tipo.add("I");
                 }
-                //System.out.println("tamI " +sitios.get(i).length());
             }
-            //if (sitios.get(i).length() <= sitioConservados && sitios.get(i).length() > 1) {
             if (sitios.get(i).length() <= sitioConservados && sitios.get(i).length() > (identico+1)) {
                 if(sitios.get(i).charAt(0)=='ñ'){//si existen muchos gaps que aminoacidos
                     sitios.set(i, sitios.get(i).substring(1));
@@ -714,28 +602,19 @@ public class PrimerG3  implements Serializable{
             for (int i = 0; i < tam; i++) {
                 posicionInf = (posicion - (tam - 1)) + i;
                 posicionSup = posicion + i;
-                //System.out.println("entre for");
                 if (posicionInf >= 0 && posicionSup < tipo.size()) {
-                    //System.out.println("entre if");
-                    //System.out.println("posicioninf "+posicionInf +" " +posicionSup);
                     for (int j = posicionInf; j <= posicionSup; j++) {
-                        // System.out.println("entre 2 for");
                         if (tipo.get(j).equals("C") == true) {
                             puntaje = puntaje + 2;
-                            // System.out.println("puntajeC: "+puntaje);
                         }
                         if (tipo.get(j).equals("I") == true) {
                             puntaje = puntaje + 4;
-                            //System.out.println("puntajeI: "+puntaje);
                         }
                         if (tipo.get(j).equals("X") == true) {
                             puntaje = puntaje + 1;
-                            //System.out.println("puntajeX: "+puntaje);
                         }
                     }
-                    //System.out.println("puntaje: "+puntaje);
                     if (puntaje > puntajeMax[0]) {
-                        //System.out.println("puntaje: "+puntaje);
                         puntajeMax[0] = puntaje;
                         puntajeMax[1] = posicionInf;
                         puntajeMax[2] = posicionSup;
@@ -750,13 +629,11 @@ public class PrimerG3  implements Serializable{
                     esMenor = true;
                 }
                 if (tipo.get(puntajeMax[1] + i).equals("N") == false) { 
-                    if (i > 0 && esMenor == false) {
-                        //System.out.println("i " +i);                        
+                    if (i > 0 && esMenor == false) {                  
                         temporal = temporal.concat("-");
                         temporal = temporal.concat(sitios.get(puntajeMax[1] + i));
                     }
                     if (i > 0 && esMenor == true) {
-                        //System.out.println("i " + i);
                         if ((puntajeMax[1] + i) - 1 < posicion) {
                             temporal = temporal.concat("-");
                             temporal = temporal.concat(sitios.get(puntajeMax[1] + i));
@@ -766,9 +643,6 @@ public class PrimerG3  implements Serializable{
                         temporal = temporal.concat(sitios.get(puntajeMax[1] + i));
                     }
                     tipo.set(puntajeMax[1] + i, "N");
-                    //temporal=temporal.concat("]");
-                    /*if(i != tam -1)
-                        temporal = temporal.concat("-");*/
                 }
             }
             puntajeMax[0] = 0;
@@ -896,7 +770,6 @@ public class PrimerG3  implements Serializable{
                             nucleotidoIupac = nucleotidoIupac.concat("N");
                             break;
                         default:
-                            //System.out.println("DEFAULT");
                             break;
                     }
                 }
@@ -933,13 +806,10 @@ public class PrimerG3  implements Serializable{
                 SelectItem [] select = new SelectItem[allConsensos[i].length()];
                 if(allConsensos[i].length() == 1){
                     if(!allConsensos[i].equals(" ")){
-                        //aminos[i] = new String[1];
-                        //aminos[i][0] = allConsensos[i];
                         select[0] = new SelectItem(i+"-"+0+"-"+allConsensos[i], allConsensos[i]);
                     }
                 }
                 else{
-                    //aminos[i] = new String[allConsensos[i].length()];
                     for(int j = 0; j < allConsensos[i].length(); j++){
                         select[j] = new SelectItem(i+"-"+j+"-"+allConsensos[i].substring(j, j+1), allConsensos[i].substring(j, j+1));
                     }
@@ -1008,47 +878,6 @@ public class PrimerG3  implements Serializable{
         return aminos;
     }
     
-    public String aminoAcidToNucleotidSeq(String aminoSeq){
-        String nucleotidSeq = "";
-        String [] consenso = aminoSeq.split("-");
-        String seqAux = Arrays.toString(consenso);
-        
-        DirectedGraph<String, DefaultEdge> dGraph = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
-        for(int i = 0; i < seqAux.length(); i++){
-            dGraph.addVertex(seqAux.substring(i, i+1));
-        }
-        
-        //Se agregan las aristas
-        for(int i = 0; i < consenso.length-1; i++){
-            if(consenso[i].length() == 1){
-                if(consenso[i+1].length() == 1){
-                    dGraph.addEdge(consenso[i], consenso[i+1]);
-                }
-                else{
-                    for(int j = 0; j < consenso[i+1].length(); j++){
-                        dGraph.addEdge(consenso[i], consenso[i+1].substring(j, j+1));
-                    }
-                }
-            }
-            else {
-                if(consenso[i+1].length() == 1){
-                    for(int j = 0; j < consenso[i].length(); j++){
-                        dGraph.addEdge(consenso[i].substring(j, j+1), consenso[i+1]);
-                    }
-                }
-                else{
-                    for(int j = 0; j < consenso[i].length(); j++){
-                        for(int k = 0; k < consenso[i+1].length(); k++){
-                            dGraph.addEdge(consenso[i].substring(j, j+1), consenso[i+1].substring(k, k+1));
-                        }
-                    }
-                }
-            }
-        }
-           
-        return nucleotidSeq;
-    }
-    
     public void getCodonSeq(String [] aminoSeq){
         String sequence= "";
         for(String amino : aminoSeq){
@@ -1056,7 +885,6 @@ public class PrimerG3  implements Serializable{
         }
     
         resultNucleotidSeq = sequence;
-        System.out.println("Result nucleotid seq: "+sequence);
     }
     
     public Codon getCodon(String amino){
@@ -1451,7 +1279,6 @@ public class PrimerG3  implements Serializable{
         try {
             
             System.out.println("Entra en el script. File: "+ FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/R/")+" - "+file.getFileName());
-            //Runtime.getRuntime().exec("\"c:\\Program Files\\R\\R-3.2.2\\bin\\Rscript.exe\" \"c:\\Users\\JAno\\Documents\\Universidad\\Bioinformática\\AutoPrimerX-CeBiB-\\AutoPrimerX-web\\src\\main\\webapp\\resources\\R\\alineamiento.R\" "+new BufferedReader(new InputStreamReader(file.getInputstream())));
             Process proc = Runtime.getRuntime().exec("\"c:\\Program Files\\R\\R-3.2.2\\bin\\Rscript.exe\" \"c:\\Users\\JAno\\Documents\\Universidad\\Bioinformática\\AutoPrimerX-CeBiB-\\AutoPrimerX-web\\src\\main\\webapp\\resources\\R\\alineamiento.R\" "+ FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/R/") + "\\" + random + file.getFileName());
             try{
                 Files.delete(new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/R/") + "/" + random + file.getFileName()).toPath());

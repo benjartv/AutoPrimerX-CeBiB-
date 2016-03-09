@@ -145,15 +145,30 @@
                                     <p:outputLabel styleClass="form-label" value="Enter tolerance's size for conserved amino acids" for="conservado" /> 
                                     <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="You must enter size of the tolerance for You must enter size of the tolerance for preserved aminoácids aminoácids" />                                   
                                     
-                                    <p:outputLabel styleClass="form-label" value="Enter tolerance's size for identical amino acids" for="identico" />
-                                    <p:inputText type="number" id="identico" value="#{primerG3.identico}" required="true" requiredMessage="You must enter size of the tolerance for identical aminoácids" />
-                                    <br/>
-
                                     <p:outputLabel styleClass="form-label" value="Enter conserved region's size" for="tamanoPrimer" />
                                     <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" required="true" requiredMessage="You must enter size for You must enter size of the tolerance for preserved aminoácids region"/>
 
                                     <br/>
                                     <br/>
+                                    
+                                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-default">
+                                            <div class="pannel-heading" role="tab" id="headingOne">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                        Advanced options
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                <div class="panel-body">
+                                                    <p:outputLabel styleClass="form-label" value="Enter tolerance's size for identical amino acids" for="identico" />
+                                                    <p:inputText type="number" id="identico" value="#{primerG3.identico}" required="true" requiredMessage="You must enter size of the tolerance for identical aminoácids" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                     <div class="row">
                                         <div id="errorMsge" class="col-md-12 alert alert-danger hidden" role="alert">
                                             <p>
