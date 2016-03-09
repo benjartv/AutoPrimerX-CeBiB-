@@ -38,8 +38,6 @@ public class PrimerG2 implements Serializable {
 
 	private List<Input> inputs;
 
-	private List<Sequence> sequences;
-
 	private List<SequenceExt> sequences_ext;
 
 	private List<List<Ligamiento>> results;
@@ -60,8 +58,6 @@ public class PrimerG2 implements Serializable {
 		sodio = 50;
 		tolerance = 3;
 		option = "lineal";
-
-		sequences = new ArrayList<>();
 
 		primers_fwd = new ArrayList<>();
 
@@ -115,14 +111,6 @@ public class PrimerG2 implements Serializable {
 
 	public void setSodio(double sodio) {
 		this.sodio = sodio;
-	}
-
-	public List<Sequence> getSequences() {
-		return sequences;
-	}
-
-	public void setSequences(List<Sequence> sequences) {
-		this.sequences = sequences;
 	}
 
 	public double getTM() {
@@ -212,9 +200,15 @@ public class PrimerG2 implements Serializable {
 			pre_sequences = G2Utils.create_sequence(inputs, "lineal", TM, tolerance);
 			sequences_ext = G2Utils.sequences_ext(pre_sequences, "lineal", TMprimer);
 			results = G2Utils.results(sequences_ext, "lineal", TM, TMh, TMprimer, tolerance);
-			homologys = results.get(0);
-			primers_fwd = results.get(1);
-			primers_rev = results.get(2);
+			if (results != null) {
+				homologys = results.get(0);
+				primers_fwd = results.get(1);
+				primers_rev = results.get(2);
+			} else {
+				FacesContext context;
+				context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Not coincidences"));
+			}
 
 			/*
 			 * primers_fwd = G2Utils.forwards_lineal(sequences); primers_rev =
@@ -227,39 +221,24 @@ public class PrimerG2 implements Serializable {
 			pre_sequences = G2Utils.create_sequence(inputs, "circular", TM, tolerance);
 			sequences_ext = G2Utils.sequences_ext(pre_sequences, "circular", TMprimer);
 			results = G2Utils.results(sequences_ext, "circular", TM, TMh, TMprimer, tolerance);
-			homologys = results.get(0);
-			primers_fwd = results.get(1);
-			primers_rev = results.get(2);
-			/*
-			 * if (results != null) {
-			 * 
-			 * primers_fwd = results.get(0); primers_rev = results.get(1);
-			 * homologys = results.get(2);
-			 * 
-			 * } else { FacesContext context; context =
-			 * FacesContext.getCurrentInstance(); context.addMessage(null, new
-			 * FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-			 * "Not coincidences"));
-			 * 
-			 * }
-			 */
-			/*
-			 * primers_fwd = G2Utils.forwards_circular(sequences); primers_rev =
-			 * G2Utils.revs_circular(sequences); homologys =
-			 * G2Utils.homologys_circular(sequences);
-			 */
+			if (results != null) {
+				homologys = results.get(0);
+				primers_fwd = results.get(1);
+				primers_rev = results.get(2);
+			} else {
+				FacesContext context;
+				context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Not coincidences"));
+			}
 
 		}
 
-		option = "";
 	}
 
 	public void add() {
 
-		// Sequence sequence = new Sequence(this.name, this.sequence, TM);
 		Input input = new Input(this.name, this.sequence);
 		inputs.add(input);
-		// sequences.add(sequence);
 
 		this.name = "";
 		this.sequence = "";

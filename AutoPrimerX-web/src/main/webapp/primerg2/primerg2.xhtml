@@ -18,11 +18,11 @@
 
 				<h:form>
 					<h:panelGrid columns="6" cellpadding="4">
-						<h:outputLabel for="tm" value="Min TM:" style="width:150px" />
+						<h:outputLabel for="tm" value="TM min:" style="width:150px" />
 						<p:inputText id="tm" value="#{primerG2.TM}" style="width:150px"
 							required="true" requiredMessage="Ingrese valor TM"></p:inputText>
 
-						<h:outputLabel for="tmmax" value="TM primer:" style="width:150px" />
+						<h:outputLabel for="tmmax" value="TM max:" style="width:150px" />
 						<p:inputText id="tmmax" value="#{primerG2.TMprimer}"
 							style="width:150px" required="true"
 							requiredMessage="Ingrese valor TM"></p:inputText>
@@ -43,13 +43,9 @@
 							style="width:150px" required="true"
 							requiredMessage="Ingrese valor sodio"></p:inputText>
 
-						<p:outputLabel for="option" value="Assembly type:" />
 
-						<p:selectOneButton id="option" value="#{primerG2.option}"
-							required="true" requiredMessage="Ingrese option">
-							<f:selectItem itemLabel="Lineal" itemValue="lineal" />
-							<f:selectItem itemLabel="Circular" itemValue="circular" />
-						</p:selectOneButton>
+
+
 
 					</h:panelGrid>
 					<h:panelGrid columns="5" cellpadding="4">
@@ -113,92 +109,21 @@
 				</h:form>
 				<h:form>
 
+
 					<h:panelGrid columns="4" cellpadding="4">
+						<p:outputLabel for="option" value="Assembly type:" />
+						<p:selectOneButton id="option" value="#{primerG2.option}"
+							required="true" requiredMessage="Ingrese option">
+							<f:selectItem itemLabel="Lineal" itemValue="lineal" />
+							<f:selectItem itemLabel="Circular" itemValue="circular" />
+						</p:selectOneButton>
 
 						<p:commandButton value="Assembly"
-							update="tabla, tabla2, tabla3,pre_sequences, :growl"
+							update="tabla, tabla2, tabla3, :growl"
 							action="#{primerG2.assembly}" />
 
 
 					</h:panelGrid>
-
-					<p:dataTable id="pre_sequences" value="#{primerG2.sequences_ext}"
-						var="dato" resizableColumns="true" paginator="true" rows="5"
-						style="margin-bottom:20px">
-						<f:facet name="header">
-                                Sequences
-                            </f:facet>
-						<p:column headerText="Sequence name">
-							<h:outputText value="#{dato.name}"
-								style="float:left;overflow-y: auto;width: 100%;">
-								<f:convertNumber groupingUsed="true" minFractionDigits="2" />
-							</h:outputText>
-						</p:column>
-
-						<p:column headerText="Sequence">
-							<h:outputText value="#{dato.sequence}"
-								style="float:left;overflow-y: auto;width: 100%;">
-								<f:convertNumber groupingUsed="true" minFractionDigits="2" />
-							</h:outputText>
-						</p:column>
-
-						<p:column headerText="Fwd">
-							<h:outputText value="#{dato.fwd}"
-								style="float:left;overflow-y: auto;width: 100%;">
-								<f:convertNumber groupingUsed="true" minFractionDigits="2" />
-							</h:outputText>
-						</p:column>
-
-						<p:column headerText="rev">
-							<h:outputText value="#{dato.rev}"
-								style="float:left;overflow-y: auto;width: 100%;">
-								<f:convertNumber groupingUsed="true" minFractionDigits="2" />
-							</h:outputText>
-						</p:column>
-
-						<p:column headerText="Fwd_TM">
-							<h:outputText value="#{dato.tm_fwd}"
-								style="float:left;overflow-y: auto;width: 100%;">
-								<f:convertNumber groupingUsed="true" minFractionDigits="2" />
-							</h:outputText>
-						</p:column>
-
-						<p:column headerText="Rev_TM">
-							<h:outputText value="#{dato.tm_rev}"
-								style="float:left;overflow-y: auto;width: 100%;">
-								<f:convertNumber groupingUsed="true" minFractionDigits="2" />
-							</h:outputText>
-						</p:column>
-
-						<p:column headerText="Fwd_Ext">
-							<h:outputText value="#{dato.fwd_ext}"
-								style="float:left;overflow-y: auto;width: 100%;">
-								<f:convertNumber groupingUsed="true" minFractionDigits="2" />
-							</h:outputText>
-						</p:column>
-
-						<p:column headerText="Rev_Ext">
-							<h:outputText value="#{dato.rev_ext}"
-								style="float:left;overflow-y: auto;width: 100%;">
-								<f:convertNumber groupingUsed="true" minFractionDigits="2" />
-							</h:outputText>
-						</p:column>
-						
-						<p:column headerText="TM Primer fwd">
-							<h:outputText value="#{dato.tm_fwd_primer}"
-								style="float:left;overflow-y: auto;width: 100%;">
-								<f:convertNumber groupingUsed="true" minFractionDigits="2" />
-							</h:outputText>
-						</p:column>
-						
-						<p:column headerText="TM Primer rev">
-							<h:outputText value="#{dato.tm_rev_primer}"
-								style="float:left;overflow-y: auto;width: 100%;">
-								<f:convertNumber groupingUsed="true" minFractionDigits="2" />
-							</h:outputText>
-						</p:column>
-					</p:dataTable>
-
 
 					<h:panelGrid cellpadding="2">
 						<p:dataTable id="tabla" var="dato" resizableColumns="true"
@@ -214,7 +139,11 @@
 							</p:column>
 
 							<p:column headerText="Primer">
-								<h:outputText value="#{dato.primer}"
+								<h:outputText value="#{dato.seq1}"
+									style="float:left;overflow-y: auto;width: 100%;color:red;">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
+								</h:outputText>
+								<h:outputText value="#{dato.seq2}"
 									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
@@ -270,7 +199,11 @@
 							</p:column>
 
 							<p:column headerText="Primer">
-								<h:outputText value="#{dato.primer}"
+								<h:outputText value="#{dato.seq1}"
+									style="float:left;overflow-y: auto;width: 100%;color:red;">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
+								</h:outputText>
+								<h:outputText value="#{dato.seq2}"
 									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
@@ -320,13 +253,18 @@
                                 Homology regions
                             </f:facet>
 							<p:column headerText="Sequence name">
-								<h:outputText value="#{dato.nameSequence}" style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText value="#{dato.nameSequence}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 
 							<p:column headerText="Homology">
-								<h:outputText value="#{dato.seq1} #{dato.seq2}"
+								<h:outputText value="#{dato.seq1}"
+									style="float:left;overflow-y: auto;width: 100%;color:red;">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
+								</h:outputText>
+								<h:outputText value="#{dato.seq2}"
 									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
