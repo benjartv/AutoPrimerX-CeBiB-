@@ -30,6 +30,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
 import javax.servlet.ServletContext;
 import org.primefaces.model.UploadedFile;
 import org.biojava.nbio.alignment.Alignments;
@@ -73,6 +75,15 @@ public class PrimerG3  implements Serializable{
     private String [] aminoSeqs;
     private int count;
     private int random;
+    private List<SelectItem> aminoacidSeq = new ArrayList();
+
+    public List<SelectItem> getAminoacidSeq() {
+        return aminoacidSeq;
+    }
+
+    public void setAminoacidSeq(List<SelectItem> aminoacidSeq) {
+        this.aminoacidSeq = aminoacidSeq;
+    }
 
     public int getCount() {
         return count++;
@@ -866,19 +877,74 @@ public class PrimerG3  implements Serializable{
         }
     }
     
-    /*
-    public void initializer(String seq){
-        setCount(0);
-        setAminoSeqs(getLengthAminoSeq(seq));
+    public List<SelectItem> setSelectItems(String seq){
+        List<SelectItem> listItems = new ArrayList();
+        String [] allConsensos = seq.split("-");
+        
+        List<SelectItemGroup> itemGroup = new ArrayList();
+        for(String str : allConsensos){
+            itemGroup.add(new SelectItemGroup(str));
+        }
+        
+        String [][] aminos = new String[allConsensos.length][];
+        
+        for(int i = 0; i < allConsensos.length; i++){
+            if(allConsensos[i].length() != 0){
+                SelectItem [] select = new SelectItem[allConsensos[i].length()];
+                if(allConsensos[i].length() == 1){
+                    if(!allConsensos[i].equals(" ")){
+                        //aminos[i] = new String[1];
+                        //aminos[i][0] = allConsensos[i];
+                        select[0] = new SelectItem(i+"-"+0+"-"+allConsensos[i], allConsensos[i]);
+                    }
+                }
+                else{
+                    //aminos[i] = new String[allConsensos[i].length()];
+                    for(int j = 0; j < allConsensos[i].length(); j++){
+                        select[j] = new SelectItem(i+"-"+j+"-"+allConsensos[i].substring(j, j+1), allConsensos[i].substring(j, j+1));
+                    }
+                }
+                itemGroup.get(i).setSelectItems(select);
+            } 
+        }
+       
+        
+        for(SelectItemGroup sg : itemGroup){
+            listItems.add(sg);
+        }
+        
+        return listItems;
     }
-    */
     
+    public void editConsensus() throws IOException{
+        String [] options = resultNucleotidSeq.split("-");
+        String [][] secuencias = getConsensosSeqs(sequences);
+        
+        secuencias[Integer.parseInt(options[0])][Integer.parseInt(options[1])] = "";
+        
+        String result = "";
+        
+        for(String [] array : secuencias){
+            if(array != null){
+                for(String str : array){
+                    result = result.concat(str);
+                }
+                result = result.concat("-");
+            }
+        }
+        
+        int index = consensos.indexOf(sequences);
+        consensos.set(index, result.substring(0, result.length()));
+        
+        FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "sequence's edit successfully", null));
+    }
+        
     public String [][] getConsensosSeqs(String consenso){
         String [] allConsensos = consenso.split("-");
         String [][] aminos = new String[allConsensos.length][];
         
         nucleotidSeq = new String[allConsensos.length][];
-        //aminoSeqs = new String[largo];
         
         for(int i = 0; i < allConsensos.length; i++){
             if(allConsensos[i].length() != 0){
@@ -898,7 +964,6 @@ public class PrimerG3  implements Serializable{
                 }
             } 
         }
-                
         
         return aminos;
     }

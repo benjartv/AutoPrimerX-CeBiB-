@@ -142,10 +142,10 @@
                                             <input type="text" class="form-control" readonly="true" />
                                         </div>
                                     </div>
-                                    <p:outputLabel styleClass="form-label" value="Enter tolerance's size for conserved aminoácids" for="conservado" /> 
+                                    <p:outputLabel styleClass="form-label" value="Enter tolerance's size for conserved amino acids" for="conservado" /> 
                                     <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="You must enter size of the tolerance for You must enter size of the tolerance for preserved aminoácids aminoácids" />                                   
                                     
-                                    <p:outputLabel styleClass="form-label" value="Enter tolerance's size for identical aminoácids" for="identico" />
+                                    <p:outputLabel styleClass="form-label" value="Enter tolerance's size for identical amino acids" for="identico" />
                                     <p:inputText type="number" id="identico" value="#{primerG3.identico}" required="true" requiredMessage="You must enter size of the tolerance for identical aminoácids" />
                                     <br/>
 
@@ -171,34 +171,18 @@
                                 <div class="col-md-7" >
                                     <p:outputLabel styleClass="form-label" value="Conserved DNA Sites" />
                                     <hr/>
-                                    <!--div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                        <span class="hidden">#{count = 0}</span>
-                                        <ui:repeat value="#{primerG3.consensos}" var="seq">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading" role="tab" id="heading#{count}">
-                                                    <h5 class="panel-title">
-                                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse#{count}" aria-expanded="false" aria-controls="collapse#{count}">
-                                                            <span class="link-seq" id="link#{count}">
-                                                                #{seq}
-                                                            </span>
-                                                        </a>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapse#{count}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading#{count}">
-                                                    <div class="panel-body" id="body#{count}">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <span class="hidden">#{count = count + 1}</span>
-                                        </ui:repeat>
-                                    </div-->
                                     <span class="hidden">#{i = 0}</span>
-                                    <p:panelGrid columns="1">
+                                    <p:panelGrid columns="1" >
                                         <table class="table table-condensed">
                                             <ui:repeat value="#{primerG3.consensos}" var="seq">
                                                 <tr>
                                                     <td>
                                                         <p:outputLabel value="#{primerG3.nucleotidSequence(seq)}"/> 
+                                                    </td>
+                                                    <td>
+                                                        <p:link styleClass="btn btn-success link-button" outcome="edit_amino_seq" value="Edit">
+                                                            <f:param name="sequences" value="#{seq}"/>
+                                                        </p:link>
                                                     </td>
                                                     <td>
                                                         <p:link styleClass="btn btn-success link-button" outcome="choose_nucleotide_seq" value="Choose nucleotide sequence">
