@@ -689,7 +689,7 @@ public class PrimerG3  implements Serializable{
     public Integer count(String arreglo[], String aminoacido) {
         Integer match = 0;
         for (int i = 0; i < arreglo.length; i++) {
-            if (arreglo[i] == aminoacido) {
+            if (arreglo[i].equals(aminoacido)==true) {
                 match++;
             }
         }
@@ -705,7 +705,7 @@ public class PrimerG3  implements Serializable{
             conservado = new ArrayList<String>();
             for (int j = 0; j < matriz[i].length; j++) {
                 double contador = 0;
-                if (temporal.contains(matriz[i][j]) == false) {
+                if (temporal.contains(matriz[i][j]) == false && matriz[i][j].equals("-")==false) {
                     contador = count(matriz[i], matriz[i][j]);
                     temporal.add(matriz[i][j]);
                     contador = (contador / matriz[i].length) * 100;
