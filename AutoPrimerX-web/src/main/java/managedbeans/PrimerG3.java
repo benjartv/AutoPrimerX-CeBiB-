@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.nio.file.Files;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -61,7 +62,25 @@ public class PrimerG3  implements Serializable{
     private int count;
     private int random;
     private List<SelectItem> aminoacidSeq = new ArrayList();
+    private String[][] matrizSequence;
+    private  ArrayList<ArrayList <String>> probabilidades;
 
+    public ArrayList<ArrayList<String>> getProbabilidades() {
+        return probabilidades;
+    }
+
+    public void setProbabilidades(ArrayList<ArrayList<String>> probabilidades) {
+        this.probabilidades = probabilidades;
+    }
+
+    public String[][] getMatrizSequence() {
+        return matrizSequence;
+    }
+
+    public void setMatrizSequence(String[][] matrizSequence) {
+        this.matrizSequence = matrizSequence;
+    }
+    
     public List<SelectItem> getAminoacidSeq() {
         return aminoacidSeq;
     }
@@ -487,6 +506,7 @@ public class PrimerG3  implements Serializable{
         
         resultado = resultado=determinarConservado(sequencesSplit);
         consensos = determinarConsenso(resultado, conservado, tamanoPrimer);
+        probabilidades=calculoProbabilidad(matrizSequence);
         
         marcaSitiosConservados();
         
@@ -512,7 +532,7 @@ public class PrimerG3  implements Serializable{
     
     public ArrayList<String> determinarConservado(String[] sequences) {
         ArrayList<String> sitios = new ArrayList<String>();
-        String[][] matrizSequence = new String[sequences[0].length()][sequences.length];
+        matrizSequence = new String[sequences[0].length()][sequences.length];
         for (int i = 0; i < sequences.length; i++) {
             for (int j = 0; j < sequences[0].length(); j++) {
                 matrizSequence[j][i] = sequences[i].substring(j, j + 1);
@@ -664,6 +684,38 @@ public class PrimerG3  implements Serializable{
             }
         }
         return consenso;
+    }
+    
+    public Integer count(String arreglo[], String aminoacido) {
+        Integer match = 0;
+        for (int i = 0; i < arreglo.length; i++) {
+            if (arreglo[i] == aminoacido) {
+                match++;
+            }
+        }
+        return match;
+    }
+
+    public ArrayList<ArrayList<String>> calculoProbabilidad(String matriz[][]) {
+        ArrayList<ArrayList<String>> resultado = new ArrayList<ArrayList<String>>();
+        ArrayList<String> conservado;
+        ArrayList<String> temporal = new ArrayList<String>();
+        DecimalFormat df2 = new DecimalFormat(".##");
+        for (int i = 0; i < matriz.length; i++) {
+            conservado = new ArrayList<String>();
+            for (int j = 0; j < matriz[i].length; j++) {
+                double contador = 0;
+                if (temporal.contains(matriz[i][j]) == false) {
+                    contador = count(matriz[i], matriz[i][j]);
+                    temporal.add(matriz[i][j]);
+                    contador = (contador / matriz[i].length) * 100;
+                    conservado.add(df2.format(contador).concat("%"));
+                }
+            }
+            resultado.add(conservado);
+            temporal.clear();
+        }
+        return resultado;
     }
     
     //Recibe Strings separados por un guión '-'
