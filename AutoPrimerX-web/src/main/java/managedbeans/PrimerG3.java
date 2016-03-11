@@ -36,7 +36,7 @@ import org.biojava.nbio.core.util.ConcurrencyTools;
 import primerg3Domain.Codon;
 import primerg3Domain.CondonUsage;
 import primerg3Domain.NomenclaturaIUPAC;
-
+import primerg3Domain.Aminoacid;
 
 @Named(value = "primerG3")
 @SessionScoped
@@ -63,13 +63,13 @@ public class PrimerG3  implements Serializable{
     private int random;
     private List<SelectItem> aminoacidSeq = new ArrayList();
     private String[][] matrizSequence;
-    private  ArrayList<ArrayList <String>> probabilidades;
+    private  ArrayList<ArrayList <Aminoacid>> probabilidades;
 
-    public ArrayList<ArrayList<String>> getProbabilidades() {
+    public ArrayList<ArrayList<Aminoacid>> getProbabilidades() {
         return probabilidades;
     }
 
-    public void setProbabilidades(ArrayList<ArrayList<String>> probabilidades) {
+    public void setProbabilidades(ArrayList<ArrayList<Aminoacid>> probabilidades) {
         this.probabilidades = probabilidades;
     }
 
@@ -696,23 +696,35 @@ public class PrimerG3  implements Serializable{
         return match;
     }
 
-    public ArrayList<ArrayList<String>> calculoProbabilidad(String matriz[][]) {
-        ArrayList<ArrayList<String>> resultado = new ArrayList<ArrayList<String>>();
-        ArrayList<String> conservado;
-        ArrayList<String> temporal = new ArrayList<String>();
+    public ArrayList<ArrayList <Aminoacid>>calculoProbabilidad(String matriz [][]){
+        ArrayList<ArrayList <Aminoacid>> resultado= new ArrayList<ArrayList<Aminoacid>>() ;
+        ArrayList<Aminoacid> conservado;
+        Aminoacid aminoacido;
+        ArrayList <String> temporal = new ArrayList<String>();
         DecimalFormat df2 = new DecimalFormat(".##");
-        for (int i = 0; i < matriz.length; i++) {
-            conservado = new ArrayList<String>();
-            for (int j = 0; j < matriz[i].length; j++) {
-                double contador = 0;
-                if (temporal.contains(matriz[i][j]) == false && matriz[i][j].equals("-")==false) {
-                    contador = count(matriz[i], matriz[i][j]);
-                    temporal.add(matriz[i][j]);
-                    contador = (contador / matriz[i].length) * 100;
-                    conservado.add(df2.format(contador).concat("%"));
+        for(int i=0;i<matriz.length;i++){
+            conservado=new ArrayList<Aminoacid>();            
+            for(int j=0;j<matriz[i].length;j++){
+                double contador=0;
+                int inicio=0, fin=0;
+                if(temporal.contains(matriz[i][j])==false && matriz[i][j].equals("-")==false){
+                    contador=count(matriz[i],matriz[i][j]);
+                    temporal.add(matriz[i][j]); 
+                    for (int k=0;k<posiciones.size()/2;k++){
+                        inicio = posiciones.get(2*k);
+                        fin = posiciones.get(2*k+1);
+                        if(inicio<= i && fin >=i){
+                            contador = (contador / matriz[i].length) * 100;
+                            aminoacido = new Aminoacid(matriz[i][j], df2.format(contador).concat("%"));
+                            conservado.add(aminoacido);
+                        }
+                    }
                 }
             }
-            resultado.add(conservado);
+            if(conservado.isEmpty()==false){
+                resultado.add(conservado);
+            }
+            
             temporal.clear();
         }
         return resultado;
