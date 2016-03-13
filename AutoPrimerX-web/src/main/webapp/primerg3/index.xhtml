@@ -101,7 +101,7 @@
 
                 </p:dialog>
                 <h:form id="probab-form" enctype="multipart/form-data" prependId="false">
-                    <p:commandButton action="#{primerG3.submitprob(codonUsageController.selected)}" id="codonUsageBtn" immediate="true" ajax="true"  icon="ui-icon-pencil" value="Choose odds for the codon usage" update=":CodonUsageProbForm" oncomplete="PF('CodonUsageProbDlg').show()" disabled="#{empty codonUsageController.selected}"/>     
+                    <p:commandButton id="codonUsageBtn" immediate="true" ajax="true"  icon="ui-icon-pencil" value="Choose odds for the codon usage" update=":CodonUsageProbForm" oncomplete="PF('CodonUsageProbDlg').show()" disabled="#{empty codonUsageController.selected}"/>     
                 </h:form>
                 <div>
                     <h:form enctype="multipart/form-data" prependId="false">
