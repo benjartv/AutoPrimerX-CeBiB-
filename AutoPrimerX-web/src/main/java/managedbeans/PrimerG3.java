@@ -44,8 +44,8 @@ public class PrimerG3  implements Serializable{
     private String sequences;
     private String log;
     private ArrayList<NomenclaturaIUPAC> iupac;
-    private Integer conservado = 0;
-    private Integer tamanoPrimer;
+    private Integer conservado = 1;
+    private Integer tamanoPrimer = 1;
     private ArrayList <String> resultado=new ArrayList <String>();
     private ArrayList <String> consensos=new ArrayList <String>();
     private selectCodon codons = new selectCodon();
@@ -730,6 +730,41 @@ public class PrimerG3  implements Serializable{
         return resultado;
     }
     
+    public Aminoacid findAminoacid(String amino){
+        for(int i=0; i<probabilidades.size(); i++){
+            for(int j=0; j<probabilidades.get(i).size(); j++){
+                if(probabilidades.get(i).get(j).getAminoacid().equals(amino)){
+                    return probabilidades.get(i).get(j);
+                }
+            }
+        }
+        return null;
+    }
+    
+    public Aminoacid [][] joinConsesusWhitProbabilidaes(String seq){
+        String [] allConsensos = seq.split("-");
+        Aminoacid [][] aminos = new Aminoacid[allConsensos.length][];
+        
+        for(int i = 0; i < allConsensos.length; i++){
+            if(allConsensos[i].length() != 0){
+                if(allConsensos[i].length() == 1){
+                    if(!allConsensos[i].equals(" ")){
+                        aminos[i] = new Aminoacid[1];
+                        aminos[i][0] = findAminoacid(allConsensos[i]);
+                    }
+                }
+                else{
+                    aminos[i] = new Aminoacid[allConsensos[i].length()];
+                    for(int j = 0; j < allConsensos[i].length(); j++){
+                        aminos[i][j] = findAminoacid(allConsensos[i].substring(j, j+1));
+                    }
+                }
+            } 
+        }
+                       
+        return aminos;
+    }
+    
     //Recibe Strings separados por un guión '-'
     public String nucleotidSequence(String seq){
         String nucleotidSeq = "";
@@ -863,19 +898,19 @@ public class PrimerG3  implements Serializable{
             itemGroup.add(new SelectItemGroup(str));
         }
         
-        String [][] aminos = new String[allConsensos.length][];
-        
         for(int i = 0; i < allConsensos.length; i++){
             if(allConsensos[i].length() != 0){
                 SelectItem [] select = new SelectItem[allConsensos[i].length()];
                 if(allConsensos[i].length() == 1){
                     if(!allConsensos[i].equals(" ")){
-                        select[0] = new SelectItem(i+"-"+0+"-"+allConsensos[i], allConsensos[i]);
+                        Aminoacid amino = findAminoacid(allConsensos[i]);
+                        select[0] = new SelectItem(i+"-"+0+"-"+allConsensos[i], amino.getAminoacid()+" "+amino.getProbabilidad());
                     }
                 }
                 else{
                     for(int j = 0; j < allConsensos[i].length(); j++){
-                        select[j] = new SelectItem(i+"-"+j+"-"+allConsensos[i].substring(j, j+1), allConsensos[i].substring(j, j+1));
+                        Aminoacid amino = findAminoacid(allConsensos[i].substring(j, j+1));
+                        select[j] = new SelectItem(i+"-"+j+"-"+allConsensos[i].substring(j, j+1), amino.getAminoacid()+" "+amino.getProbabilidad());
                     }
                 }
                 itemGroup.get(i).setSelectItems(select);
@@ -1091,6 +1126,7 @@ public class PrimerG3  implements Serializable{
         sequencesShow = new ArrayList<>();
         input= new ArrayList<ArrayList<String>>();
         file = null;
+        consensos = new ArrayList<>(); 
     }
     
     public ArrayList<String> convertNucleotideSequence(String seq){
