@@ -117,7 +117,7 @@ public class PrimerG3  implements Serializable{
     private  ArrayList<ArrayList <Aminoacid>> probabilidades;
 
  /**
-  GETTES AND SETTES OF GLOBAL VARIABLES
+  GETTERS AND SETTERS OF GLOBAL VARIABLES
   
   */   
     
@@ -642,7 +642,7 @@ public class PrimerG3  implements Serializable{
         return sitios;
     }
     /**
-     * Function that determines consensus
+     * Function that determines consensus sequence
      * @param sitioConservados conserved sites obtained from @determinarConservado
      * @param sitios is the number of conserved sites
      * @param tam is the size of conserved site
@@ -1026,7 +1026,7 @@ public class PrimerG3  implements Serializable{
     /**
      * Function that edits consensus for primer
      * This function uses global variables for work, and delete
-     * aminoacids seleted by user
+     * aminoacids selected by user
      */
     public void editConsensus() throws IOException{
         String [] options = resultNucleotidSeq.split("-");
