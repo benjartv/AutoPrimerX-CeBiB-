@@ -9,130 +9,267 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="Diseño Primer's"></h:outputText>
+            <h:outputText value="AutoprimerX"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:body>
                 <b:container>
-                <h3>Diseño de Primer's para clonación</h3>
+                <h3>Primer's design for molecular cloning</h3>
                 <br />
-                <h:form>
+                <h:form id="form" prependId="false">
+                    <p:panel id="pnl" styleClass="no-border" >
                     <h:panelGrid columns="3" cellpadding="4">
-                        <h:outputLabel for="sequence" value="Ingrese la secuencia de entrada:" />
+                        <p:panel>
+                        <h:outputLabel for="sequence" value="Enter the target sequence: " />
                         <p:inputTextarea id="sequence" value="#{primerG1.sequence}" autoResize="false" rows="6" cols="100" onkeyup="javascript:this.value = this.value.toUpperCase();" >
                             <f:validator validatorId="custom.seqValidator" />
                         </p:inputTextarea>
                         <br/>
-                        <h:outputLabel id="displayRange" value="Largo del Primer entre #{primerG1.largo1} y #{primerG1.largo2}" />
+                        <h:outputLabel id="displayRange" value="Primer's size range #{primerG1.largo1} - #{primerG1.largo2}: " />
                         <p:slider for="largo1,largo2" display="displayRange" style="width: 400px" range="true" displayTemplate="Largo del Primer entre {min} y {max}" />
                         <h:panelGroup>
                             <h:inputHidden id="largo1" value="#{primerG1.largo1}" />
                             <h:inputHidden id="largo2" value="#{primerG1.largo2}" />
                         </h:panelGroup>
-                        <h:outputLabel for="enzyme" value="Seleccione la enzima de restricción" />
-                        <h:panelGroup >
-                            <p:selectOneMenu id="enzyme" value="#{enzyme}" >
-                                <f:selectItem itemLabel="Select One" itemValue="" />
+                        </p:panel>
+                        <p:panel>
+                        <h:outputLabel for="enzyme" value="Select the restriction enzyme (optional): " />
+                        <h:panelGroup id="enzyme" >
+                            <p:selectOneMenu id="enz1" style="width: 110px;" value="#{primerG1.enzima_sel}" >
+                                <f:selectItem itemLabel="Select Fwd" itemValue="" />
+                                <f:selectItems value="#{enzymeController.items}" />
+                            </p:selectOneMenu>
+                            
+                            <p:selectOneMenu id="enz2" style="width: 110px;" value="#{primerG1.enzima_sel2}" >
+                                <f:selectItem itemLabel="Select Rev" itemValue="" />
                                 <f:selectItems value="#{enzymeController.items}" />
                             </p:selectOneMenu> 
                         </h:panelGroup>
-                        <p:button outcome="/enzyme/List" value="Agregar Enzimas" icon="ui-icon-plus" /> 
-                        <p:commandButton value="Generar" update="answer, length, tabla, tabla2, tabla3, :growl" action="#{primerG1.submit}" />
+                        <br/>
+                        <p:button outcome="/enzyme/List" value="Add Enzyme" icon="ui-icon-plus" />
+                        </p:panel>
+                        <br/>
+                        <p:panel>
+                            <p:commandButton value="Submit" update="answer, length, tabla, tabla2, tabla3, tabla4, :growl" onclick="PF('block').show();" oncomplete="PF('block').hide();" action="#{primerG1.submit}" />
+                        </p:panel>
                     </h:panelGrid>
                     <p:separator />
                     <br/>
-                    <h:outputText value="Has ingresado una secuencia de largo: " />
+                    <p:panel>
+                    <h:outputLabel value="Sequence size: " />
                     <h:outputText id="length" value="#{primerG1.size_seq}" />
+                    </p:panel>
                     <br/>
-                    <h:outputLabel value="Complemento de secuencia de entrada: "/>
+                    
+                    <h:outputLabel value="Complement sequence: "/>
+                    <p:panel style="width:200; overflow-x: scroll" >
                     <h:outputText id="answer" value="#{primerG1.com_sequence}" style="display:block;width:135px" />
+                    </p:panel>
                     <br/>
-
+                    
                     <h:panelGrid cellpadding="2" >
-                        <p:dataTable id="tabla" var="dato" resizableColumns="true" value="#{primerG1.primers_fwd}">
+                        <p:dataTable id="tabla" var="dato" scrollable="true" scrollWidth="1100" sortMode="single" resizableColumns="true" value="#{primerG1.primers_fwd}"
+                                 paginator="true"
+                                 rows="5"
+                                 rowsPerPageTemplate="5,10,20,30,40,50">>
                             <f:facet name="header">
                                 Fwd Sequence Primer's
                             </f:facet>
-                            <p:column headerText="Secuencia">
+                            <p:column headerText="Sequence"  width="200" sortBy="#{dato.seq}">
                                 <h:outputText value="#{dato.seq}" />
                             </p:column>
 
-                            <p:column headerText="Tm">
+                            <p:column headerText="Tm" width="100" sortBy="#{dato.tm}">
                                 <h:outputText value="#{dato.tm}" />
                             </p:column>
 
-                            <p:column headerText="GC %">
+                            <p:column headerText="GC %" width="100" sortBy="#{dato.GC}">
                                 <h:outputText value="#{dato.GC}" />
                             </p:column>
 
-                            <p:column headerText="Size primer">
+                            <p:column headerText="Primer Size" width="100" sortBy="#{dato.largo}">
                                 <h:outputText value="#{dato.largo}" />
                             </p:column>
 
-                            <p:column headerText="LCS Fwd">
-                                <h:outputText value="#{dato.maxAF}" />
+                            <p:column headerText="LCS Fwd" width="100" sortBy="#{dato.maxAR}">
+                                <h:outputText value="#{dato.maxAF}"/>
                             </p:column>
 
-                            <p:column headerText="LCS Rev">
+                            <p:column headerText="LCS Rev" width="100" sortBy="#{dato.maxAF}">
                                 <h:outputText value="#{dato.maxAR}" />
                             </p:column>
                         </p:dataTable>
                         <br/>
 
-                        <p:dataTable id="tabla2" var="dato" resizableColumns="true" value="#{primerG1.primers_rev}" >
+                        <p:dataTable id="tabla2" var="dato" scrollable="true" scrollWidth="1100" resizableColumns="true" value="#{primerG1.primers_rev}" 
+                                 paginator="true"
+                                 rows="5"
+                                 rowsPerPageTemplate="5,10,20,30,40,50">>
                             <f:facet name="header">
                                 Rev Sequence Primer's 
                             </f:facet>
-                            <p:column headerText="Secuencia">
+                            <p:column headerText="Sequence" width="200" sortBy="#{dato.seq}">
                                 <h:outputText value="#{dato.seq}" />
                             </p:column>
 
-                            <p:column headerText="Tm">
+                            <p:column headerText="Tm" width="100" sortBy="#{dato.tm}">
                                 <h:outputText value="#{dato.tm}" />
                             </p:column>
 
-                            <p:column headerText="GC %">
+                            <p:column headerText="GC %" width="100" sortBy="#{dato.GC}">
                                 <h:outputText value="#{dato.GC}" />
                             </p:column>
 
-                            <p:column headerText="Size primer">
+                            <p:column headerText="Primer size" width="100" sortBy="#{dato.largo}">
                                 <h:outputText value="#{dato.largo}" />
                             </p:column>
 
-                            <p:column headerText="LCS Fwd">
+                            <p:column headerText="LCS Fwd" width="100" sortBy="#{dato.maxAF}">
                                 <h:outputText value="#{dato.maxAR}" />
                             </p:column>
 
-                            <p:column headerText="LCS Rev">
+                            <p:column headerText="LCS Rev" width="100" sortBy="#{dato.maxAR}">
                                 <h:outputText value="#{dato.maxAF}" />
                             </p:column>
                         </p:dataTable>
-                        <p:dataTable id="tabla3" var="dato" resizableColumns="true" value="#{primerG1.primersMatch}" >
+                        <br/>
+                        <p:dataTable id="tabla3" var="dato" scrollable="true" scrollWidth="1100" resizableColumns="true" value="#{primerG1.primersMatch}"
+                                 paginator="true"
+                                 rows="5"
+                                 rowsPerPageTemplate="5,10,20,30,40,50">>
                             <f:facet name="header">
                                 Best Cloning Primer's 
                             </f:facet>
-                            <p:column headerText="Primer fwd">
+                            <p:column headerText="Primer fwd" width="400" sortBy="#{dato.pri_seq_fw}">
                                 <h:outputText value="#{dato.pri_seq_fw}" />
                             </p:column>
                             
-                            <p:column headerText="Primer rev">
+                            <p:column headerText="Primer rev" width="400" sortBy="#{dato.pri_seq_rv}">
                                 <h:outputText value="#{dato.pri_seq_rv}" />
                             </p:column>
 
-                            <p:column headerText="Tm difference">
+                            <p:column headerText="&#916; Tm" width="100" sortBy="#{dato.tmD}">
                                 <h:outputText value="#{dato.tmD}" />
                             </p:column>
+                            
+                            <p:column headerText="Tm" width="100" sortBy="#{dato.tmP}">
+                                <h:outputText value="#{dato.tmP}" />
+                            </p:column>
 
-                            <p:column headerText="Primer fwd size">
+                            <p:column headerText="Fwd size" width="100" sortBy="#{dato.length_fw}">
                                 <h:outputText value="#{dato.length_fw}" />
                             </p:column>
 
-                            <p:column headerText="Primer rev size">
+                            <p:column headerText="Rev size" width="100" sortBy="#{dato.length_rv}">
                                 <h:outputText value="#{dato.length_rv}" />
                             </p:column>
+                            
+                            <p:column headerText="Fwd LCS FWD" sortBy="#{dato.fwdseqLCS}" width="120">
+                                <h:outputText value="#{dato.fwdseqLCS}" />
+                            </p:column>
+                            
+                            <p:column headerText="Fwd LCS REV" sortBy="#{dato.fwdcomLCS}" width="120">
+                                <h:outputText value="#{dato.fwdcomLCS}" />
+                            </p:column>
+                            
+                            <p:column headerText="Rev LCS FWD" sortBy="#{dato.fwdseqLCS}" width="120">
+                                <h:outputText value="#{dato.revcomLCS}" />
+                            </p:column>
+                            
+                            <p:column headerText="Rev LCS REV" sortBy="#{dato.fwdcomLCS}" width="120">
+                                <h:outputText value="#{dato.revseqLCS}" />
+                            </p:column>
+                            
+                            
                         </p:dataTable>
-                        
+                        <br/>
+                        <p:dataTable id="tabla4" scrollWidth="1100" var="dato" selectionMode="single" selection="#{primerG1.selected}" rowKey="#{dato.primerPar.id}" scrollable="true"  resizableColumns="true" value="#{primerG1.primersExt}"
+                                 paginator="true"
+                                 rows="5"
+                                 rowsPerPageTemplate="5,10,20,30,40,50">>
+                            <f:facet name="header">
+                                Best Cloning Primer's with restriction enzyme
+                            </f:facet>
+                            <p:column headerText="Primer fwd" width="400" sortBy="#{dato.primerPar.pri_seq_fw}">
+                                <h:outputText value="#{dato.primerPar.pri_seq_fw}" />
+                            </p:column>
+                            
+                            <p:column headerText="Primer rev" width="400" sortBy="#{dato.primerPar.pri_seq_rv}">
+                                <h:outputText value="#{dato.primerPar.pri_seq_rv}" />
+                            </p:column>
+
+                            <p:column headerText="&#916; Tm" sortBy="#{dato.primerPar.tmD}" width="100">
+                                <h:outputText value="#{dato.primerPar.tmD}" />
+                            </p:column>
+                            
+                            <p:column headerText="Tm" sortBy="#{dato.primerPar.tmP}" width="100">
+                                <h:outputText value="#{dato.primerPar.tmP}" />
+                            </p:column>
+
+                            <p:column headerText="Fwd size" sortBy="#{dato.primerPar.length_fw}" width="100">
+                                <h:outputText value="#{dato.primerPar.length_fw}" />
+                            </p:column>
+
+                            <p:column headerText="Rev size" sortBy="#{dato.primerPar.length_rv}" width="100">
+                                <h:outputText value="#{dato.primerPar.length_rv}" />
+                            </p:column>
+                            
+                            <p:column headerText="Fwd LCS Seq" sortBy="#{dato.primerPar.fwdseqLCS}" width="120">
+                                <h:outputText value="#{dato.primerPar.fwdseqLCS}" />
+                            </p:column>
+                            
+                            <p:column headerText="Fwd LCS Com" sortBy="#{dato.primerPar.fwdcomLCS}" width="120">
+                                <h:outputText value="#{dato.primerPar.fwdcomLCS}" />
+                            </p:column>
+                            
+                            <p:column headerText="Rev LCS Seq" sortBy="#{dato.primerPar.fwdseqLCS}" width="120">
+                                <h:outputText value="#{dato.primerPar.revseqLCS}" />
+                            </p:column>
+                            
+                            <p:column headerText="Rev LCS Com" sortBy="#{dato.primerPar.fwdcomLCS}" width="120">
+                                <h:outputText value="#{dato.primerPar.revcomLCS}" />
+                            </p:column>
+                            <f:facet name="footer">
+                                <p:commandButton process="tabla4" update=":form:primerDetail" icon="ui-icon-search" value="View" oncomplete="PF('primerDialog').show()" />
+                            </f:facet>
+                            
+                        </p:dataTable>
                     </h:panelGrid>
+                    </p:panel>
+                    <p:blockUI block="pnl" widgetVar="block">
+                        <p id="loading">Loading</p>
+                        <p:graphicImage library="images" name="loader.gif"/>
+                    </p:blockUI>
+                    
+                    <p:dialog header="Primer Info" widgetVar="primerDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="primerDetail" style="text-align:center;">
+                            <p:panelGrid  columns="2" rendered="#{not empty primerG1.selected}" columnClasses="label,value">
+                                
+                                <h:outputLabel value="First cycle's"/>
+                                <br/>
+                                <h:outputLabel value="Primer Fwd"/>
+                                <h:outputText value="#{primerG1.selected.primerFirstCycle.pri_seq_fw}" />
+                                <h:outputLabel value="Tm Fwd"/>
+                                <h:outputText value="#{primerG1.selected.primerFirstCycle.tmf}" />
+                                <h:outputLabel value="Primer Rev"/>
+                                <h:outputText value="#{primerG1.selected.primerFirstCycle.pri_seq_rv}" />
+                                <h:outputLabel value="Tm Rev"/>
+                                <h:outputText value="#{primerG1.selected.primerFirstCycle.tmr}" />
+                                
+                                <h:outputLabel value="Extention cycle's"/>
+                                <br/>
+                                <h:outputLabel value="Primer Fwd:" />
+                                <h:outputText value="#{primerG1.selected.primerPar.pri_seq_fw}" />
+                                <h:outputLabel value="Tm Fwd:" />
+                                <h:outputText value="#{primerG1.selected.primerPar.tmf}" />
+                                <h:outputLabel value="Primer Rev:" />
+                                <h:outputText value="#{primerG1.selected.primerPar.pri_seq_rv}" />
+                                <h:outputLabel value="Tm Rev:" />
+                                <h:outputText value="#{primerG1.selected.primerPar.tmr}" />
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                    
                 </h:form>
             </b:container>
             </h:body>

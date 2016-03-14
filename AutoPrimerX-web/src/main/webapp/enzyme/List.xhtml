@@ -10,12 +10,12 @@
 
 
         <ui:define name="title">
-            <h:outputText value="Enzimas de restricción"></h:outputText>
+            <h:outputText value="Restriction Enzymes"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
             <h:form id="EnzymeListForm">
-                <p:panel header="Lista de enzimas de restriccion">
+                <p:panel header="List of restriction enzymes">
                     <p:dataTable id="datalist" value="#{enzymeController.items}" var="item"
                                  selectionMode="single" selection="#{enzymeController.selected}"
                                  paginator="true"
@@ -24,8 +24,8 @@
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowSelect"   update="createButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton editButton deleteButton"/>
 
                         <p:column>
                             <f:facet name="header">
@@ -41,19 +41,12 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Alternative DNA Target"/>
-                            </f:facet>
-                            <h:outputText value="#{item.alt_dnaTarget}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="Number of base pairs from the end"/>
                             </f:facet>
                             <h:outputText value="#{item.numBasePair}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="Nuevo" actionListener="#{enzymeController.prepareCreate}" update=":EnzymeCreateForm" oncomplete="PF('EnzymeCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="Ver" update=":EnzymeViewForm" oncomplete="PF('EnzymeViewDialog').show()" disabled="#{empty enzymeController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":EnzymeEditForm" oncomplete="PF('EnzymeEditDialog').show()" disabled="#{empty enzymeController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Eliminar" actionListener="#{enzymeController.destroy}" update=":growl,datalist" disabled="#{empty enzymeController.selected}"/>
                         </f:facet>
