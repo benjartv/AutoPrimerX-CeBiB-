@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.nio.file.Files;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -35,33 +36,107 @@ import org.biojava.nbio.core.util.ConcurrencyTools;
 import primerg3Domain.Codon;
 import primerg3Domain.CondonUsage;
 import primerg3Domain.NomenclaturaIUPAC;
-
+import primerg3Domain.Aminoacid;
 
 @Named(value = "primerG3")
 @SessionScoped
 public class PrimerG3  implements Serializable{
+    /**
+     * Sequences keeps the url param in choose nucleotide sequence 
+     */
     private String sequences;
     private String log;
+    /**
+     * Kepp the IUPAC nomenclature
+     */
     private ArrayList<NomenclaturaIUPAC> iupac;
-    private Integer conservado = 0;
-    private Integer tamanoPrimer;
+    /**
+     * Form's param for tolerance's size for conserved amino acids
+     */
+    private Integer conservado = 1;
+    /**
+     * Form's param for conserved region's size
+     */
+    private Integer tamanoPrimer = 1;
+    /**
+     * Variable that keeps regions conserved
+     */
     private ArrayList <String> resultado=new ArrayList <String>();
+    /**
+     * Variable that keeps conserved regions consensus
+     */
     private ArrayList <String> consensos=new ArrayList <String>();
+    /**
+     * Variable that keeps the codon usage, select by user.
+     */
     private selectCodon codons = new selectCodon();
+    /**
+     * Variable that keeps the consensus for get nucleotid sequence functionality
+     */
     private ArrayList <String> secuenciasNucleotidos = new ArrayList <String>();
+    /**
+     * Variable for identify a identical column in alingment
+     */
     private Integer identico = 0;
+    /**
+     * Variable that keeps the homologous sequences file from BLAST
+     */
     private UploadedFile file = null;
+    /**
+     * Variable that keeps the sequences in the homologous sequences file
+     */
     private ArrayList<ArrayList<String>> input= new ArrayList<ArrayList<String>>();
-    private ArrayList<Integer> posiciones= new ArrayList<Integer>();  
+    /**
+     * Variable that keeps the positions conserved sites within the alingment
+     */
+    private ArrayList<Integer> posiciones= new ArrayList<Integer>();
+    /**
+     * Variable that keeps the alingment sequences
+     */
     private String [] sequencesSplit;
+    /**
+     * Variable that keeps the alingment sequences for showing in user space
+     */
     private ArrayList<ArrayList<SequenceShow>> sequencesShow = new ArrayList<ArrayList<SequenceShow>>();
+    /**
+     * Variables that are used for determining consensus
+     */
     private String [][] nucleotidSeq;
     private String resultNucleotidSeq;
+    /**
+     * Variables for showing alingment sequences in ui:repeat
+     */
     private String [] aminoSeqs;
     private int count;
     private int random;
     private List<SelectItem> aminoacidSeq = new ArrayList();
+    private String[][] matrizSequence;
+    /**
+     * Matriz that keeps de odds of occurrence of amino acids
+     */
+    private  ArrayList<ArrayList <Aminoacid>> probabilidades;
 
+ /**
+  GETTERS AND SETTERS OF GLOBAL VARIABLES
+  
+  */   
+    
+    public ArrayList<ArrayList<Aminoacid>> getProbabilidades() {
+        return probabilidades;
+    }
+
+    public void setProbabilidades(ArrayList<ArrayList<Aminoacid>> probabilidades) {
+        this.probabilidades = probabilidades;
+    }
+
+    public String[][] getMatrizSequence() {
+        return matrizSequence;
+    }
+
+    public void setMatrizSequence(String[][] matrizSequence) {
+        this.matrizSequence = matrizSequence;
+    }
+    
     public List<SelectItem> getAminoacidSeq() {
         return aminoacidSeq;
     }
@@ -189,7 +264,16 @@ public class PrimerG3  implements Serializable{
     public void setSequences(String sequences) {
         this.sequences = sequences;
     }
-    
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+     /**
+     * Function that performs the submit action button. 
+     * This method call to all another functions.
+     * Check codon usage or if the user selected any codon else if the user not selected
+     * any codon, this method always use the highest probability codon in the amino acid.
+     * Do multple sequence alingment, looking for identical and conserved regions and
+     * create consensus and primer. 
+     * @param  codon  the codon usage select by user
+     */
     public void submit(CodonUsage codon) throws IOException, Exception{
        
         if(codons.getAglobal() != null){
@@ -392,18 +476,6 @@ public class PrimerG3  implements Serializable{
                 }
             }
         }
-        
-        //Función que permite subir archivos al servidor
-        /*
-        try(InputStream inputFile = file.getInputstream()){
-            random = new Random().nextInt(1000);
-            Files.copy(inputFile, new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/R/"), random + file.getFileName()).toPath());
-        }
-        catch(IOException e){
-            System.out.println("Error upload file: "+e.getMessage());
-        }
-        */
-        
         BufferedReader br=null;
         try{
         
@@ -487,6 +559,7 @@ public class PrimerG3  implements Serializable{
         
         resultado = resultado=determinarConservado(sequencesSplit);
         consensos = determinarConsenso(resultado, conservado, tamanoPrimer);
+        probabilidades=calculoProbabilidad(matrizSequence);
         
         marcaSitiosConservados();
         
@@ -495,7 +568,10 @@ public class PrimerG3  implements Serializable{
         }
         
     }
-    
+    /**
+     * Function that validated a sequence. 
+     * @param  seq  sequence to be validated
+     */
     public boolean validateSequence(String seq){
         boolean validate = true;
         
@@ -509,10 +585,13 @@ public class PrimerG3  implements Serializable{
         
         return validate;
     }
-    
+    /**
+     * Function that determines the sites conserved in aligned sequences. 
+     * @param  sequences  aligned sequences
+     */
     public ArrayList<String> determinarConservado(String[] sequences) {
         ArrayList<String> sitios = new ArrayList<String>();
-        String[][] matrizSequence = new String[sequences[0].length()][sequences.length];
+        matrizSequence = new String[sequences[0].length()][sequences.length];
         for (int i = 0; i < sequences.length; i++) {
             for (int j = 0; j < sequences[0].length(); j++) {
                 matrizSequence[j][i] = sequences[i].substring(j, j + 1);
@@ -562,7 +641,12 @@ public class PrimerG3  implements Serializable{
 
         return sitios;
     }
-    
+    /**
+     * Function that determines consensus sequence
+     * @param sitioConservados conserved sites obtained from @determinarConservado
+     * @param sitios is the number of conserved sites
+     * @param tam is the size of conserved site
+     */
     public ArrayList<String> determinarConsenso(ArrayList<String> sitios, Integer sitioConservados, Integer tam) {
         ArrayList<String> consenso = new ArrayList<String>();
         ArrayList<String> tipo = new ArrayList<String>();
@@ -665,8 +749,110 @@ public class PrimerG3  implements Serializable{
         }
         return consenso;
     }
+    /**
+     * Function that count the repetitions of an amino acid
+     * @param arreglo array containing amino acids
+     * @param aminoacido amino acid to search
+     * @return the amount of amino acids in an array
+     */
+    public Integer count(String arreglo[], String aminoacido) {
+        Integer match = 0;
+        for (int i = 0; i < arreglo.length; i++) {
+            if (arreglo[i].equals(aminoacido)==true) {
+                match++;
+            }
+        }
+        return match;
+    }
     
-    //Recibe Strings separados por un guión '-'
+    /**
+     * Function that calculates the probability of occurrence of an amino acid in a conserved site
+     * @param matriz void probability matrix
+     * @return the matrix of probabilities
+     */
+    public ArrayList<ArrayList <Aminoacid>>calculoProbabilidad(String matriz [][]){
+        ArrayList<ArrayList <Aminoacid>> resultado= new ArrayList<ArrayList<Aminoacid>>() ;
+        ArrayList<Aminoacid> conservado;
+        Aminoacid aminoacido;
+        ArrayList <String> temporal = new ArrayList<String>();
+        DecimalFormat df2 = new DecimalFormat(".##");
+        for(int i=0;i<matriz.length;i++){
+            conservado=new ArrayList<Aminoacid>();            
+            for(int j=0;j<matriz[i].length;j++){
+                double contador=0;
+                int inicio=0, fin=0;
+                if(temporal.contains(matriz[i][j])==false && matriz[i][j].equals("-")==false){
+                    contador=count(matriz[i],matriz[i][j]);
+                    temporal.add(matriz[i][j]); 
+                    for (int k=0;k<posiciones.size()/2;k++){
+                        inicio = posiciones.get(2*k);
+                        fin = posiciones.get(2*k+1);
+                        if(inicio<= i && fin >=i){
+                            contador = (contador / matriz[i].length) * 100;
+                            aminoacido = new Aminoacid(matriz[i][j], df2.format(contador).concat("%"));
+                            conservado.add(aminoacido);
+                        }
+                    }
+                }
+            }
+            if(conservado.isEmpty()==false){
+                resultado.add(conservado);
+            }
+            
+            temporal.clear();
+        }
+        return resultado;
+    }
+    /**
+     * Function that finds an amino acid in the matrix of probabilities
+     * @param amino probability matrix
+     * @return the probability of an amino acid
+     */
+    public Aminoacid findAminoacid(String amino){
+        for(int i=0; i<probabilidades.size(); i++){
+            for(int j=0; j<probabilidades.get(i).size(); j++){
+                if(probabilidades.get(i).get(j).getAminoacid().equals(amino)){
+                    return probabilidades.get(i).get(j);
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Function that joins consesus with probabilities matrix for a sequence
+     * @param seq sequence to join
+     * @return the odds for sequence amino acids
+     */
+    public Aminoacid [][] joinConsesusWhitProbabilidaes(String seq){
+        String [] allConsensos = seq.split("-");
+        Aminoacid [][] aminos = new Aminoacid[allConsensos.length][];
+        
+        for(int i = 0; i < allConsensos.length; i++){
+            if(allConsensos[i].length() != 0){
+                if(allConsensos[i].length() == 1){
+                    if(!allConsensos[i].equals(" ")){
+                        aminos[i] = new Aminoacid[1];
+                        aminos[i][0] = findAminoacid(allConsensos[i]);
+                    }
+                }
+                else{
+                    aminos[i] = new Aminoacid[allConsensos[i].length()];
+                    for(int j = 0; j < allConsensos[i].length(); j++){
+                        aminos[i][j] = findAminoacid(allConsensos[i].substring(j, j+1));
+                    }
+                }
+            } 
+        }
+                       
+        return aminos;
+    }
+    
+    /**
+     * Function that converts nucleotide sequence into IUPAC nomenclature
+     * @param seq sequence to convert
+     * @return sequence in IUPAC nomenclature
+     */
     public String nucleotidSequence(String seq){
         String nucleotidSeq = "";
         String [] consenso = seq.split("-");
@@ -779,17 +965,29 @@ public class PrimerG3  implements Serializable{
         return nucleotidSeq;
     }
     
+    /**
+     * Function that gives consensus size
+     * @param consenso sequence to size
+     * @return size of consensus
+     */
     public int getLengthAminoSeq(String consenso){
         return consenso.split("-").length;
     }
-    
+    /**
+     * Function that creates a chain of amino acids of a length indicated
+     * @param largo sequence's size
+     */
     public void setLengthAminoSeq(int largo){
         this.aminoSeqs = new String[largo];
         for(String str : this.aminoSeqs){
             str = new String();
         }
     }
-    
+    /**
+     * Function that Formatting a string of consensus
+     * @param seq concensus sequence
+     * @return formated list
+     */
     public List<SelectItem> setSelectItems(String seq){
         List<SelectItem> listItems = new ArrayList();
         String [] allConsensos = seq.split("-");
@@ -799,19 +997,19 @@ public class PrimerG3  implements Serializable{
             itemGroup.add(new SelectItemGroup(str));
         }
         
-        String [][] aminos = new String[allConsensos.length][];
-        
         for(int i = 0; i < allConsensos.length; i++){
             if(allConsensos[i].length() != 0){
                 SelectItem [] select = new SelectItem[allConsensos[i].length()];
                 if(allConsensos[i].length() == 1){
                     if(!allConsensos[i].equals(" ")){
-                        select[0] = new SelectItem(i+"-"+0+"-"+allConsensos[i], allConsensos[i]);
+                        Aminoacid amino = findAminoacid(allConsensos[i]);
+                        select[0] = new SelectItem(i+"-"+0+"-"+allConsensos[i], amino.getAminoacid()+" "+amino.getProbabilidad());
                     }
                 }
                 else{
                     for(int j = 0; j < allConsensos[i].length(); j++){
-                        select[j] = new SelectItem(i+"-"+j+"-"+allConsensos[i].substring(j, j+1), allConsensos[i].substring(j, j+1));
+                        Aminoacid amino = findAminoacid(allConsensos[i].substring(j, j+1));
+                        select[j] = new SelectItem(i+"-"+j+"-"+allConsensos[i].substring(j, j+1), amino.getAminoacid()+" "+amino.getProbabilidad());
                     }
                 }
                 itemGroup.get(i).setSelectItems(select);
@@ -825,7 +1023,11 @@ public class PrimerG3  implements Serializable{
         
         return listItems;
     }
-    
+    /**
+     * Function that edits consensus for primer
+     * This function uses global variables for work, and delete
+     * aminoacids selected by user
+     */
     public void editConsensus() throws IOException{
         String [] options = resultNucleotidSeq.split("-");
         String [][] secuencias = getConsensosSeqs(sequences);
@@ -849,7 +1051,11 @@ public class PrimerG3  implements Serializable{
         FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "sequence's edit successfully", null));
     }
-        
+     /**
+     * Function that gives a consensus sequence in an matrix from a sequence
+     * @param consenso string sequence
+     * @return concensus matrix
+     */    
     public String [][] getConsensosSeqs(String consenso){
         String [] allConsensos = consenso.split("-");
         String [][] aminos = new String[allConsensos.length][];
@@ -877,7 +1083,10 @@ public class PrimerG3  implements Serializable{
         
         return aminos;
     }
-    
+    /**
+     * Function that gives the codon corresponding to an amino acids sequence
+     * @param aminoSeq amino acids sequence
+     */    
     public void getCodonSeq(String [] aminoSeq){
         String sequence= "";
         for(String amino : aminoSeq){
@@ -886,7 +1095,12 @@ public class PrimerG3  implements Serializable{
     
         resultNucleotidSeq = sequence;
     }
-    
+
+    /**
+     * Function that gives information of a codon from an amino acid
+     * @param amino codon usage
+     * @return codon information
+     */
     public Codon getCodon(String amino){
         Codon aux = new Codon();
         
@@ -960,7 +1174,11 @@ public class PrimerG3  implements Serializable{
         
         return aux;
     }
-    
+    /**
+    * Function that gives the multiple sequence alignment
+    * @param seqs amino acids sequence
+    * @return multiple sequence alignment string array
+    */    
     private String [] multipleSequenceAlignment(ArrayList<String> seqs) throws Exception {
         List<ProteinSequence> lst = new ArrayList<ProteinSequence>();
         for (String seq : seqs) {
@@ -994,7 +1212,9 @@ public class PrimerG3  implements Serializable{
 
         
     }
-    
+    /**
+    * Function that changes the color to sites stored in the user area
+    */  
     public void marcaSitiosConservados(){        
         int k;
         int inicio = 0;
@@ -1020,15 +1240,22 @@ public class PrimerG3  implements Serializable{
             }
         }     
     }
-    
+    /**
+    * Function that cleans global variables an user area
+    */  
     public void cleanAnswer(){
         secuenciasNucleotidos = new ArrayList<>();
         sequencesSplit = new String[1]; 
         sequencesShow = new ArrayList<>();
         input= new ArrayList<ArrayList<String>>();
         file = null;
+        consensos = new ArrayList<>(); 
     }
-    
+    /**
+    * Function that formats the amino acid sequence
+    * @param seq amino acid sequence
+    * @return sequences array
+    */  
     public ArrayList<String> convertNucleotideSequence(String seq){
         ArrayList<String> secuencias = new ArrayList<>();
         
@@ -1044,261 +1271,10 @@ public class PrimerG3  implements Serializable{
         
         return secuencias;
     }
-    
-    public ArrayList<String> convertIUPACtoNormal(String secuencia){
-        ArrayList<String> secuencias = new ArrayList<>();
-        String aux;
-        secuencias.add("");
-        int j, largo;
-        for(int i = 0; i < secuencia.length()-1; i++){
-            aux = secuencia.substring(i, i+1);
-            switch (aux) {
-                case "A":
-                    for(String str : secuencias){
-                        str = str.concat("A");
-                    }
-                    break;
-                case "C":
-                    for(String str : secuencias){
-                        str = str.concat("C");
-                    }
-                    break;
-                case "G":
-                    for(String str : secuencias){
-                        str = str.concat("G");
-                    }
-                    break;
-                case "T":
-                    for(String str : secuencias){
-                        str = str.concat("T");
-                    }
-                    break;
-                case "R":
-                    largo = secuencias.size();
-                    for(int k = 0; k < largo; i++){
-                        secuencias.add(secuencias.get(k));
-                    }
-                    j = 0;
-                    for(String str : secuencias){
-                        if(j < secuencias.size()/2){
-                            str = str.concat("A");
-                        }
-                        else{
-                            str = str.concat("G");
-                        }
-                        j++;
-                    }
-                    break;
-                case "Y":
-                    largo = secuencias.size();
-                    for(int k = 0; k < largo; i++){
-                        secuencias.add(secuencias.get(k));
-                    }
-                    j = 0;
-                    for(String str : secuencias){
-                        if(j < secuencias.size()/2){
-                            str = str.concat("C");
-                        }
-                        else{
-                            str = str.concat("T");
-                        }
-                        j++;
-                    }
-                    break;
-                case "S":
-                    largo = secuencias.size();
-                    for(int k = 0; k < largo; i++){
-                        secuencias.add(secuencias.get(k));
-                    }
-                    j = 0;
-                    for(String str : secuencias){
-                        if(j < secuencias.size()/2){
-                            str = str.concat("G");
-                        }
-                        else{
-                            str = str.concat("C");
-                        }
-                        j++;
-                    }
-                    break;
-                case "W":
-                    largo = secuencias.size();
-                    for(int k = 0; k < largo; i++){
-                        secuencias.add(secuencias.get(k));
-                    }
-                    j = 0;
-                    for(String str : secuencias){
-                        if(j < secuencias.size()/2){
-                            str = str.concat("A");
-                        }
-                        else{
-                            str = str.concat("T");
-                        }
-                        j++;
-                    }
-                    break;
-                case "K":
-                    largo = secuencias.size();
-                    for(int k = 0; k < largo; i++){
-                        secuencias.add(secuencias.get(k));
-                    }
-                    j = 0;
-                    for(String str : secuencias){
-                        if(j < secuencias.size()/2){
-                            str = str.concat("G");
-                        }
-                        else{
-                            str = str.concat("T");
-                        }
-                        j++;
-                    }
-                    break;
-                case "M":
-                    largo = secuencias.size();
-                    for(int k = 0; k < largo; i++){
-                        secuencias.add(secuencias.get(k));
-                    }
-                    j = 0;
-                    for(String str : secuencias){
-                        if(j < secuencias.size()/2){
-                            str = str.concat("A");
-                        }
-                        else{
-                            str = str.concat("C");
-                        }
-                        j++;
-                    }
-                    break;
-                case "B":
-                    largo = secuencias.size();
-                    for(int k = 0; k < largo*2; i++){
-                        secuencias.add(secuencias.get(k%largo));
-                    }
-                    i = 0;
-                    for(String str : secuencias){
-                        if(i < largo){
-                            str = str.concat("C");
-                        }
-                        else if (i < largo * 2){
-                            str = str.concat("G");
-                        }
-                        else{
-                            str = str.concat("T");
-                        }
-                        i++;
-                    }
-                    break;
-                case "D":
-                    largo = secuencias.size();
-                    for(int k = 0; k < largo*2; i++){
-                        secuencias.add(secuencias.get(k%largo));
-                    }
-                    i = 0;
-                    for(String str : secuencias){
-                        if(i < largo){
-                            str = str.concat("A");
-                        }
-                        else if (i < largo * 2){
-                            str = str.concat("G");
-                        }
-                        else{
-                            str = str.concat("T");
-                        }
-                        i++;
-                    }
-                    break;
-                case "H":
-                    largo = secuencias.size();
-                    for(int k = 0; k < largo*2; i++){
-                        secuencias.add(secuencias.get(k%largo));
-                    }
-                    i = 0;
-                    for(String str : secuencias){
-                        if(i < largo){
-                            str = str.concat("A");
-                        }
-                        else if (i < largo * 2){
-                            str = str.concat("C");
-                        }
-                        else{
-                            str = str.concat("T");
-                        }
-                        i++;
-                    }
-                    break;
-                case "V":
-                    largo = secuencias.size();
-                    for(int k = 0; k < largo*2; i++){
-                        secuencias.add(secuencias.get(k%largo));
-                    }
-                    i = 0;
-                    for(String str : secuencias){
-                        if(i < largo){
-                            str = str.concat("C");
-                        }
-                        else if (i < largo * 2){
-                            str = str.concat("G");
-                        }
-                        else{
-                            str = str.concat("A");
-                        }
-                        i++;
-                    }
-                    break;
-                case "N":
-                    largo = secuencias.size();
-                    for(int k = 0; k < largo*3; i++){
-                        secuencias.add(secuencias.get(k%largo));
-                    }
-                    i = 0;
-                    for(String str : secuencias){
-                        if(i < largo){
-                            str = str.concat("C");
-                        }
-                        else if (i < largo * 2){
-                            str = str.concat("G");
-                        }
-                        else if (i < largo * 3){
-                            str = str.concat("T");
-                        }
-                        else{
-                            str = str.concat("A");
-                        }
-                        i++;
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-        
-        return secuencias;
-    }
-    
-    public Process runRScript(){
-        try {
-            
-            System.out.println("Entra en el script. File: "+ FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/R/")+" - "+file.getFileName());
-            Process proc = Runtime.getRuntime().exec("\"c:\\Program Files\\R\\R-3.2.2\\bin\\Rscript.exe\" \"c:\\Users\\JAno\\Documents\\Universidad\\Bioinformática\\AutoPrimerX-CeBiB-\\AutoPrimerX-web\\src\\main\\webapp\\resources\\R\\alineamiento.R\" "+ FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/R/") + "\\" + random + file.getFileName());
-            try{
-                Files.delete(new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/R/") + "/" + random + file.getFileName()).toPath());
-            }
-            catch(Exception e){
-                System.out.println("Error: "+e.getMessage());
-            }
-            
-            return proc;
-        }
-        catch(IOException e){
-            System.out.println("ERROR Run Script IO: "+e.getMessage());
-            return null;
-        }
-        catch(NullPointerException e){
-            System.out.println("ERROR Run Script Null: "+e.getMessage());
-            return null;
-        }
-    }
-    
+     
+    /**
+    * Function initialize instance iupac nomenclature
+    */ 
     public void createIUPAC(){
             iupac = new ArrayList();
                 /*
@@ -1336,6 +1312,7 @@ public class PrimerG3  implements Serializable{
             
     }
     
+    //////// 
     public void createCodonUsage(){
         ArrayList <Codon> G= new ArrayList<>();
             G.add(new Codon("GGG",16.47));
@@ -1411,10 +1388,12 @@ public class PrimerG3  implements Serializable{
             T.add(new Codon("ACT",13.12));
             T.add(new Codon("ACC",18.89));
     }
-    
-    
-        
-    
+          
+    /**
+    * Function changes codon usage for the selected user
+    * Sort aminacid by odds and instance the selected codon usage in user area
+     * @param selected codon usage selected
+    */
     public void cambiarUsoCodon(CodonUsage selected){
         ArrayList <Codon> G= new ArrayList<>();
             G.add(new Codon("GGG", selected.getGGG_probabilidad()));

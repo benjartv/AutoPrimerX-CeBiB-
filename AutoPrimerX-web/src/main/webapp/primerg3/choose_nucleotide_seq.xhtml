@@ -24,26 +24,22 @@
             <h:body>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-12">
-                            <p:outputLabel value="Choose nucleotide consensus: "/>
+                        <div class="col-md-8">
+                            <p:outputLabel value="Choose nucleotide consensus "/>
+                            <h:outputLink id="fade" value="#" onclick="showHelp()">
+                                <span class="glyphicon glyphicon-question-sign"></span>
+                                <h:outputText value="Help" />
+                            </h:outputLink>
                             <br/>
                             <h:form id="result-form" prependId="false">
-                                #{primerG3.setCount(0)}
-                                #{primerG3.setLengthAminoSeq(primerG3.getLengthAminoSeq(sequences))}
-                                <!--ui:repeat value="#{primerG3.getConsensosSeqs(primerG3.sequences)}" var="aminoSeq">
-                                    <p:selectOneButton value="#{primerG3.aminoSeqs[primerG3.count]}" >
-                                        <f:selectItems value="#{aminoSeq}" var="amino" itemLabel="#{amino}" itemValue="#{amino}"/>
-                                    </p:selectOneButton>
-                                </ui:repeat-->
-                                
                                 <span class="hidden">#{i = 0}</span>
-                                <ui:repeat value="#{primerG3.getConsensosSeqs(primerG3.sequences)}" var="aminoSeq">
+                                <ui:repeat value="#{primerG3.joinConsesusWhitProbabilidaes(primerG3.sequences)}" var="aminoSeq">
                                     <div class="btn-group" data-toggle="buttons">
                                         <ui:repeat value="#{aminoSeq}" var="amino">
                                             <label class="btn btn-success" onclick="showSeq(option#{i})">
-                                                <input type="radio" name="options" id="option#{i}" autocomplete="off"/> #{amino}
+                                                <input type="radio" name="options" id="option#{i}" autocomplete="off"/> #{amino.aminoacid} #{amino.probabilidad}
                                             </label>
-                                            <c:set value="#{amino}" var="aminoAux"/>
+                                            <c:set value="#{amino.aminoacid}" var="aminoAux"/>
                                             <span id="codon#{i}" class="hidden codons">#{primerG3.getCodon(aminoAux).getcodon()}</span>
                                             <span class="hidden">#{i = i + 1}</span>
                                         </ui:repeat>
@@ -56,9 +52,26 @@
                                     <span id="result"></span>
                                 </div>
                                 <br/>
-                                <p:link outcome="index" value="Volver" styleClass="btn btn-success">
-                                </p:link>
+                                <h:outputLink value="index.xhtml">
+                                    <span class="glyphicon glyphicon-arrow-left"></span>
+                                    <h:outputText value="Volver"/>
+                                </h:outputLink>
                             </h:form>                            
+                        </div>
+                        <div class="col-md-4">
+                            <div id="help" class="panel panel-default hidden">
+                                <div class="panel-heading">
+                                    <h4>Help</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <p>
+                                        Select the amino acids to form the nucleotid sequence.
+                                    </p>
+                                    <p>
+                                        You can select only one amino acid at a time from each column of the alignment.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

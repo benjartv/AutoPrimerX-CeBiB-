@@ -303,23 +303,24 @@ function getNucleotideSeq(element){
     body.appendChild(list);
     this.removeAttribute('onclick');
 }
-/*
-document.addEventListener("DOMContentLoaded", function() {    
-    var observer = new MutationObserver(function(mutations){
-        var links = document.getElementsByClassName("link-seq");
-        for(i = 0; i < links.length; i++){
-            links[i].onclick = function(){
-                console.log(links[i]);
-                getNucleotideSeq(links[i]);
-            };
-        }
-        mutations.forEach(function(mutation) {
-            console.log(mutation.type);
-          }); 
-    });
-    console.log("Hola");
-    var target = document.getElementById("accordion");
-    var config = {childList: true, subtree: true};
-    observer.observe(target, config);
-});*/
 
+function showHelp(){
+    var help = document.getElementById('help');
+    
+    if(help.className === "panel panel-default"){
+        help.className = "panel panel-default hidden";
+    }
+    else{
+        help.className = "panel panel-default";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+    var tolerancia = document.getElementById('conservado');
+    var tamaño = document.getElementById('tamanoPrimer');
+    var identico = document.getElementById('identico');
+    
+    tolerancia.setAttribute('min', '1');
+    tamaño.setAttribute('min', '1');
+    identico.setAttribute('min', '0');
+});

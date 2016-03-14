@@ -101,7 +101,7 @@
 
                 </p:dialog>
                 <h:form id="probab-form" enctype="multipart/form-data" prependId="false">
-                    <p:commandButton action="#{primerG3.submitprob(codonUsageController.selected)}" id="codonUsageBtn" immediate="true" ajax="true"  icon="ui-icon-pencil" value="Choose odds for the codon usage" update=":CodonUsageProbForm" oncomplete="PF('CodonUsageProbDlg').show()" disabled="#{empty codonUsageController.selected}"/>     
+                    <p:commandButton id="codonUsageBtn" immediate="true" ajax="true"  icon="ui-icon-pencil" value="Choose odds for the codon usage" update=":CodonUsageProbForm" oncomplete="PF('CodonUsageProbDlg').show()" disabled="#{empty codonUsageController.selected}"/>     
                 </h:form>
                 <div>
                     <h:form enctype="multipart/form-data" prependId="false">
@@ -214,7 +214,12 @@
                             </div>
                             <div>
                                 <p:outputLabel styleClass="form-label" value="Aligned sequences" />
-                                <span> <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Conserved DNA Sites</span>
+                                <h:outputLink id="fade" value="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC308517/">
+                                    <span class="glyphicon glyphicon-question-sign"></span>
+                                    <h:outputText value="About alignment" />
+                                </h:outputLink>
+                                <p:tooltip id="toolTipTrack" for="fade" value="Auto Primer X uses Clustal W for the sequences alignment. For more information, click on the link." trackMouse="true" />
+                                <div> <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Conserved DNA Sites</div>
                                 <div class="overflow">
                                     <table class="table table-hover">
                                         <ui:repeat value="#{primerG3.sequencesShow}" var="sequence">
