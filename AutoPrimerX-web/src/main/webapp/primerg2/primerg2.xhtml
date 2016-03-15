@@ -260,10 +260,11 @@
 							</p:column>
 
 							<p:column headerText="Homology" >
-								<h:outputText value="#{dato.seq1}"
+								<h:outputText id="hom_rev_ext"  value="#{dato.seq1}"
 									style="float:left;overflow-y: auto;width: 100%;color:red;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
+								<p:tooltip id="hom_rev_ext_indicator" for="hom_rev_ext" value="Reverse extension" trackMouse="true" />
 								<h:outputText value="#{dato.seq2}"
 									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
