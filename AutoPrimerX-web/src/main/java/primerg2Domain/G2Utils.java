@@ -427,6 +427,7 @@ public class G2Utils {
 					char[] arr2 = sequences_ext.get(i + 1).getFwd_ext().toCharArray();
 
 					ArrayUtils.reverse(arr);
+					ArrayUtils.reverse(arr2);
 
 					int length = arr.length;
 
@@ -444,8 +445,7 @@ public class G2Utils {
 						tm_primer_rev_1 = funcionTM(rev_ext + sequences_ext.get(i).getRev());
 
 						if (tm_homology >= TMh) {
-							System.out.println("reverso de extension alterado: "+ rev_ext);
-							System.out.println("reverso de extension original: "+ sequences_ext.get(i).getRev_ext());
+							
 							homology_name = sequences_ext.get(i).getName() + " " + sequences_ext.get(i + 1).getName();
 
 							sequences_ext.get(i).setRev_ext(rev_ext);
@@ -490,6 +490,7 @@ public class G2Utils {
 					char[] arr2 = sequences_ext.get(i + 1).getFwd_ext().toCharArray();
 
 					ArrayUtils.reverse(arr);
+					ArrayUtils.reverse(arr2);
 
 					int length = arr.length;
 
@@ -501,6 +502,9 @@ public class G2Utils {
 
 						rev_ext = rev_ext + arr[arr.length-1-j];
 						fwd_ext = fwd_ext + arr2[j];
+						
+						System.out.println("forward de extension alterado: "+ fwd_ext);
+						System.out.println("forward de extension original: "+ sequences_ext.get(i+1).getFwd_ext());
 						homology = fwd_ext + rev_ext;
 						tm_homology = funcionTM(homology);
 
@@ -548,10 +552,14 @@ public class G2Utils {
 				if (i == 0) {
 					char[] arr = sequences_ext.get(i).getRev_ext().toCharArray();
 					char[] arr2 = sequences_ext.get(i + 1).getFwd_ext().toCharArray();
-
-					
-
+					String secuenciaprueba = "";
 					ArrayUtils.reverse(arr);
+					ArrayUtils.reverse(arr2);
+					for (int j = 0; j < arr2.length; j++) {
+						secuenciaprueba = secuenciaprueba + arr2[j];
+						
+					}
+					System.out.println("secuencia prueba"+secuenciaprueba);
 
 					int length = arr.length;
 
@@ -571,7 +579,7 @@ public class G2Utils {
 						if (tm_homology >= TMh) {
 
 							homology_name = sequences_ext.get(i).getName() + sequences_ext.get(i + 1).getName();
-
+							
 							sequences_ext.get(i).setRev_ext(rev_ext);
 							sequences_ext.get(i + 1).setFwd_ext(fwd_ext);
 
@@ -602,6 +610,7 @@ public class G2Utils {
 					
 
 					ArrayUtils.reverse(arr);
+					ArrayUtils.reverse(arr2);
 
 					int length = arr.length;
 
@@ -654,7 +663,7 @@ public class G2Utils {
 					char[] arr2 = sequences_ext.get(i + 1).getFwd_ext().toCharArray();
 
 					ArrayUtils.reverse(arr);
-
+					ArrayUtils.reverse(arr2);
 					int length = arr.length;
 
 					if (length > arr2.length) {
