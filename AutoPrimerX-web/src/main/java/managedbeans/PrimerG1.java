@@ -192,8 +192,8 @@ public class PrimerG1 implements Serializable{
             size_seq = sequence.length();
             com_sequence = service.complemento(sequence);
             String sequence_back = new StringBuilder(sequence).reverse().toString();
-            String sequence_back_comp = new StringBuilder(com_sequence).reverse().toString();
-            primers_rev = service.createPrimer(sequence_back, sequence_back_comp, largo1, largo2);
+            //String sequence_back_comp = new StringBuilder(com_sequence).reverse().toString();
+            primers_rev = service.createPrimer(sequence_back, com_sequence, largo1, largo2);
             primers_fwd = service.createPrimer(com_sequence, sequence_back, largo1, largo2);
             System.out.println("Primers Calculados");
             System.out.println("Realizando match de primers");
