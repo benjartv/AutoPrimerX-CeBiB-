@@ -35,12 +35,12 @@
                         <p:panel>
                         <h:outputLabel for="enzyme" value="Select the restriction enzyme (optional): " />
                         <h:panelGroup id="enzyme" >
-                            <p:selectOneMenu id="enz1" style="width: 110px;" value="#{primerG1.enzima_sel}" >
+                            <p:selectOneMenu id="enz1" filter="true" filterMatchMode="startsWith" style="width: 110px;" value="#{primerG1.enzima_sel}" >
                                 <f:selectItem itemLabel="Select Fwd" itemValue="" />
                                 <f:selectItems value="#{enzymeController.items}" />
                             </p:selectOneMenu>
                             
-                            <p:selectOneMenu id="enz2" style="width: 110px;" value="#{primerG1.enzima_sel2}" >
+                            <p:selectOneMenu id="enz2" filter="true" filterMatchMode="startsWith" style="width: 110px;" value="#{primerG1.enzima_sel2}" >
                                 <f:selectItem itemLabel="Select Rev" itemValue="" />
                                 <f:selectItems value="#{enzymeController.items}" />
                             </p:selectOneMenu> 
