@@ -204,6 +204,9 @@ public class PrimerG2 implements Serializable {
 				homologys = results.get(0);
 				primers_fwd = results.get(1);
 				primers_rev = results.get(2);
+				//fwd de extension de la secuencia 1 en el primer
+				//homologys.get(homologys.size() -1).getSeq2();
+				
 			} else {
 				FacesContext context;
 				context = FacesContext.getCurrentInstance();
@@ -225,6 +228,9 @@ public class PrimerG2 implements Serializable {
 				homologys = results.get(0);
 				primers_fwd = results.get(1);
 				primers_rev = results.get(2);
+				Ligamiento primer_fwd = new Ligamiento(primers_fwd.get(0).getNameSequence(),primers_fwd.get(0).getSequence() ,homologys.get(homologys.size() -1).getSeq2(),primers_fwd.get(0).getSeq2());
+				primers_fwd.set(0, primer_fwd);
+				//primers_fwd.get(0).setSeq1(homologys.get(homologys.size() -1).getSeq2());
 			} else {
 				FacesContext context;
 				context = FacesContext.getCurrentInstance();
@@ -243,6 +249,11 @@ public class PrimerG2 implements Serializable {
 		this.name = "";
 		this.sequence = "";
 
+	}
+	
+	public void clean(){
+		
+		
 	}
 
 	public void remove(Input input) {

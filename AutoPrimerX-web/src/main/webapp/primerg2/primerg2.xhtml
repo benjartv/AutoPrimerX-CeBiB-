@@ -66,7 +66,8 @@
 
 
 						<h:commandButton value="add" update="inputs"
-							action="#{primerG2.add()}" />
+							action="#{primerG2.add()}" style="width:150px" />
+
 
 					</h:panelGrid>
 				</h:form>
@@ -86,7 +87,7 @@
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Sequence" >
+							<p:column headerText="Sequence">
 								<h:outputText value="#{dato.sequence}"
 									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
@@ -110,7 +111,7 @@
 				<h:form>
 
 
-					<h:panelGrid columns="4" cellpadding="4">
+					<h:panelGrid columns="6" cellpadding="4">
 						<p:outputLabel for="option" value="Assembly type:" />
 						<p:selectOneButton id="option" value="#{primerG2.option}"
 							required="true" requiredMessage="Ingrese option">
@@ -121,6 +122,10 @@
 						<p:commandButton value="Assembly"
 							update="tabla, tabla2, tabla3, :growl"
 							action="#{primerG2.assembly}" />
+						<p:outputLabel value="" style="width:500px" />
+						<h:commandButton value="Clean all"
+							update="tabla, tabla2, tabla3, inputs, :growl"
+							action="#{primerG2.init()}" style="width:150px" />
 
 
 					</h:panelGrid>
@@ -133,7 +138,8 @@
                                 Fwd Sequence Primer's
                             </f:facet>
 							<p:column headerText="Sequence name" style="width: 200px;">
-								<h:outputText value="#{dato.nameSequence}" style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText value="#{dato.nameSequence}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
@@ -150,31 +156,36 @@
 							</p:column>
 
 							<p:column headerText="Length" style="width: 100px;">
-								<h:outputText value="#{dato.largo}" style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText value="#{dato.largo}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 
 							<p:column headerText="Tm" style="width: 100px;">
-								<h:outputText value="#{dato.tm}" style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText value="#{dato.tm}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 
 							<p:column headerText="%GC" style="width: 100px;">
-								<h:outputText value="#{dato.gc}" style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText value="#{dato.gc}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 
 							<p:column headerText="Tm adjust" style="width: 100px;">
-								<h:outputText value="#{dato.tmAdjust}" style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText value="#{dato.tmAdjust}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 
 							<p:column headerText="Molecular weight" style="width: 163px;">
-								<h:outputText value="#{dato.molWeight}" style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText value="#{dato.molWeight}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
@@ -193,48 +204,54 @@
                                 Rev Sequence Primer's
                             </f:facet>
 							<p:column headerText="Sequence name" style="width: 200px;">
-								<h:outputText value="#{dato.nameSequence}" style="float:left;overflow-y: auto;width: 100%;color:red;">
+								<h:outputText value="#{dato.nameSequence}"
+									style="float:left;overflow-y: auto;width: 100%">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Primer"  >
+							<p:column headerText="Primer">
 								<h:outputText value="#{dato.seq1}"
-									style="float:left;overflow-y: auto;width: 100%;color:red;">
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 								<h:outputText value="#{dato.seq2}"
+									style="float:left;overflow-y: auto;width: 100%;color:red;">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Length" style="width: 100px;">
+								<h:outputText value="#{dato.largo}"
 									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Length" style="width: 100px;" >
-								<h:outputText value="#{dato.largo}" style="float:left;overflow-y: auto;width: 100%;">
-									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
-								</h:outputText>
-							</p:column>
-
-							<p:column headerText="Tm" style="width: 100px;" >
-								<h:outputText value="#{dato.tm}" style="float:left;overflow-y: auto;width: 100%;">
+							<p:column headerText="Tm" style="width: 100px;">
+								<h:outputText value="#{dato.tm}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 
 							<p:column headerText="%GC" style="width: 100px;">
-								<h:outputText value="#{dato.gc}" style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText value="#{dato.gc}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 
 							<p:column headerText="Tm adjust" style="width: 100px;">
-								<h:outputText value="#{dato.tmAdjust}" style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText value="#{dato.tmAdjust}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 
 							<p:column headerText="Molecular weight" style="width: 163px;">
-								<h:outputText value="#{dato.molWeight}" style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText value="#{dato.molWeight}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
@@ -259,11 +276,13 @@
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Homology" >
-								<h:outputText value="#{dato.seq1}"
+							<p:column headerText="Homology">
+								<h:outputText id="hom_rev_ext" value="#{dato.seq1}"
 									style="float:left;overflow-y: auto;width: 100%;color:red;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
+								<p:tooltip id="hom_rev_ext_indicator" for="hom_rev_ext"
+									value="Reverse extension" trackMouse="true" />
 								<h:outputText value="#{dato.seq2}"
 									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
@@ -271,31 +290,36 @@
 							</p:column>
 
 							<p:column headerText="Length" style="width: 100px;">
-								<h:outputText value="#{dato.largo}" style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText value="#{dato.largo}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 
 							<p:column headerText="Tm" style="width: 100px;">
-								<h:outputText value="#{dato.tm}" style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText value="#{dato.tm}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 
 							<p:column headerText="%GC" style="width: 100px;">
-								<h:outputText value="#{dato.gc}" style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText value="#{dato.gc}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 
 							<p:column headerText="Tm adjust" style="width: 100px;">
-								<h:outputText value="#{dato.tmAdjust}" style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText value="#{dato.tmAdjust}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 
 							<p:column headerText="Molecular weight" style="width: 163px;">
-								<h:outputText value="#{dato.molWeight}" style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText value="#{dato.molWeight}"
+									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
