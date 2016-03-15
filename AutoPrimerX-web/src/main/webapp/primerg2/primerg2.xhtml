@@ -210,15 +210,19 @@
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Primer">
-								<h:outputText value="#{dato.seq1}"
+
+							<p:column headerText="Primer"  >
+								<h:outputText id="rvr" value="#{dato.seq1}"
+
 									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
-								<h:outputText value="#{dato.seq2}"
+                                                                <p:tooltip id="hom_rev_indicator" for="rvr" value="Reverse primer" trackMouse="true" />
+								<h:outputText id= "rvr_ext" value="#{dato.seq2}"
 									style="float:left;overflow-y: auto;width: 100%;color:red;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
+                                                                <p:tooltip id="hom_reverse_ext_indicator" for="rvr_ext" value="Reverse extension primer" trackMouse="true" />
 							</p:column>
 
 							<p:column headerText="Length" style="width: 100px;">
@@ -281,12 +285,14 @@
 									style="float:left;overflow-y: auto;width: 100%;color:red;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
-								<p:tooltip id="hom_rev_ext_indicator" for="hom_rev_ext"
-									value="Reverse extension" trackMouse="true" />
-								<h:outputText value="#{dato.seq2}"
+
+								<p:tooltip id="hom_rev_ext_indicator" for="hom_rev_ext" value="Reverse extension" trackMouse="true" />
+								<h:outputText id="hom_fwd_ext" value="#{dato.seq2}"
+
 									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
+                                                                <p:tooltip id="hom_fwd_ext_indicator" for="hom_fwd_ext" value="Forward extension" trackMouse="true" />
 							</p:column>
 
 							<p:column headerText="Length" style="width: 100px;">
