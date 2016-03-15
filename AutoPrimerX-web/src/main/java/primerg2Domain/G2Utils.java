@@ -236,17 +236,15 @@ public class G2Utils {
 		// System.out.println("El frwd extension es: "+ forwardExtension);
 	}
 	
-	public static void reverString(String sequence){
-		String revertido = "";
+	public static String reverString(String sequence){
 		char[] arr = sequence.toCharArray();
 		ArrayUtils.reverse(arr);
 		//sequence = arr.toString();
+		System.out.println("original " + sequence);
 		sequence = String.valueOf(arr);
+		System.out.println("revertida " + sequence);
 		
-		System.out.println("Secuencia original " + sequence);
-		System.out.println("secuencia revertida " + revertido);
-		
-		//return revertido;
+		return sequence;
 	}
 
 	public static List<Sequence> create_sequence(List<Input> inputs, String option, double TM, double tolerance) {
@@ -464,9 +462,9 @@ public class G2Utils {
 							homology_name = sequences_ext.get(i).getName() + " " + sequences_ext.get(i + 1).getName();
 
 							sequences_ext.get(i).setRev_ext(rev_ext);
-							sequences_ext.get(i + 1).setFwd_ext(fwd_ext);
+							sequences_ext.get(i + 1).setFwd_ext(reverString(fwd_ext));
 
-							Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, fwd_ext);
+							Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, reverString(fwd_ext));
 							homologys.add(hom);
 							Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
 									sequences_ext.get(i).getSequence(), "", sequences_ext.get(i).getFwd());
@@ -527,9 +525,9 @@ public class G2Utils {
 							homology_name = sequences_ext.get(i).getName() + sequences_ext.get(i + 1).getName();
 
 							sequences_ext.get(i).setRev_ext(rev_ext);
-							sequences_ext.get(i + 1).setFwd_ext(fwd_ext);
+							sequences_ext.get(i + 1).setFwd_ext(reverString(fwd_ext));
 
-							Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, fwd_ext);
+							Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, reverString(fwd_ext));
 							homologys.add(hom);
 							Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
 									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd_ext(),
@@ -590,13 +588,13 @@ public class G2Utils {
 							homology_name = sequences_ext.get(i).getName() + sequences_ext.get(i + 1).getName();
 
 							sequences_ext.get(i).setRev_ext(rev_ext);
-							sequences_ext.get(i + 1).setFwd_ext(fwd_ext);
+							sequences_ext.get(i + 1).setFwd_ext(reverString(fwd_ext));
 							//System.out.println("Secuencia original 2 " + fwd_ext);
 							
-							//reverString(fwd_ext);
+							;
 							//System.out.println("secuencia revertida 2 " + fwd_ext);
 
-							Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, fwd_ext);
+							Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, reverString(fwd_ext));
 							homologys.add(hom);
 							Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
 									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd_ext(),
@@ -644,12 +642,12 @@ public class G2Utils {
 							homology_name = sequences_ext.get(i).getName() + sequences_ext.get(0).getName();
 
 							sequences_ext.get(i).setRev_ext(rev_ext);
-							sequences_ext.get(0).setFwd_ext(fwd_ext);
+							sequences_ext.get(0).setFwd_ext(reverString(fwd_ext));
 							//Ligamiento last_case = new Ligamiento(sequences_ext.get(i).getName(), sequences_ext.get(i).getSequence(),
 							//		fwd_ext, "");
 							//last_case.add(fwd_ext);
 
-							Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, fwd_ext);
+							Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, reverString(fwd_ext));
 							homologys.add(hom);
 							Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
 									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd_ext(),
@@ -701,9 +699,9 @@ public class G2Utils {
 							homology_name = sequences_ext.get(i).getName() + sequences_ext.get(i + 1).getName();
 
 							sequences_ext.get(i).setRev_ext(rev_ext);
-							sequences_ext.get(i + 1).setFwd_ext(fwd_ext);
+							sequences_ext.get(i + 1).setFwd_ext(reverString(fwd_ext));
 
-							Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, fwd_ext);
+							Ligamiento hom = new Ligamiento(homology_name, homology, rev_ext, reverString(fwd_ext));
 							homologys.add(hom);
 							Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
 									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd_ext(),
