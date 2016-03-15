@@ -920,7 +920,7 @@ public class PrimerEnzRes {
         return primers_list;
     }
     
-    public double calculateTm(String seq){
+    public static double calculateTm(String seq){
         int A = 0;
         int C = 0;
         int T = 0;
@@ -1149,6 +1149,8 @@ public class PrimerEnzRes {
                 }
             }
         }
+        double pTM = calculateTm(match);
+        match = match + " - " + pTM;
         return match;
     }
     

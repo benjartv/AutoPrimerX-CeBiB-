@@ -16,7 +16,7 @@
         <ui:define name="body">
             <h:form id="EnzymeListForm">
                 <p:panel header="List of restriction enzymes">
-                    <p:dataTable id="datalist" value="#{enzymeController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{enzymeController.items}" var="item" sortMode="single"
                                  selectionMode="single" selection="#{enzymeController.selected}"
                                  paginator="true"
                                  rowKey="#{item.id}"
@@ -27,19 +27,19 @@
                         <p:ajax event="rowSelect"   update="createButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column sortBy="#{item.nameEnzyme}" filterBy="#{item.nameEnzyme}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="Enzyme name"/>
                             </f:facet>
                             <h:outputText value="#{item.nameEnzyme}"/>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.dnaTarget}">
                             <f:facet name="header">
                                 <h:outputText value="DNA Target"/>
                             </f:facet>
                             <h:outputText value="#{item.dnaTarget}"/>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.numBasePair}">
                             <f:facet name="header">
                                 <h:outputText value="Number of base pairs from the end"/>
                             </f:facet>
