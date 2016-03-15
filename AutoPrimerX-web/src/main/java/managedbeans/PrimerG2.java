@@ -250,6 +250,11 @@ public class PrimerG2 implements Serializable {
 		this.sequence = "";
 
 	}
+	
+	public void clean(){
+		
+		
+	}
 
 	public void remove(Input input) {
 		inputs.remove(input);
