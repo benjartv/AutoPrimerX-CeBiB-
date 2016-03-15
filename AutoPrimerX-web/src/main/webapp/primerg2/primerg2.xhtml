@@ -156,7 +156,7 @@
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 								<h:outputText value="#{dato.seq2}"
-									style="float:left;overflow-y: auto;width: 100%;">
+									style="float:left;overflow-y: auto;width: 100%;color:blue;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 							</p:column>
@@ -220,13 +220,13 @@
 
 							<p:column headerText="Primer">
 								<h:outputText id="rvr" value="#{dato.seq1}"
-									style="float:left;overflow-y: auto;width: 100%;">
+									style="float:left;overflow-y: auto;width: 100%;color:orange;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 								<p:tooltip id="hom_rev_indicator" for="rvr"
 									value="Reverse primer" trackMouse="true" />
 								<h:outputText id="rvr_ext" value="#{dato.seq2}"
-									style="float:left;overflow-y: auto;width: 100%;color:red;">
+									style="float:left;overflow-y: auto;width: 100%;color:green;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 								<p:tooltip id="hom_reverse_ext_indicator" for="rvr_ext"
@@ -298,7 +298,7 @@
 								<p:tooltip id="hom_rev_ext_indicator" for="hom_rev_ext"
 									value="Reverse extension" trackMouse="true" />
 								<h:outputText id="hom_fwd_ext" value="#{dato.seq2}"
-									style="float:left;overflow-y: auto;width: 100%;">
+									style="float:left;overflow-y: auto;width: 100%;color:orange;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
 								<p:tooltip id="hom_fwd_ext_indicator" for="hom_fwd_ext"
