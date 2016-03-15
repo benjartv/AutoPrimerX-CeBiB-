@@ -65,8 +65,10 @@
 						</p:inputTextarea>
 
 
-						<h:commandButton value="add" update="inputs"
+						<h:commandButton id="add" value="add" update="inputs"
 							action="#{primerG2.add()}" style="width:150px" />
+						<p:tooltip id="tooltip_add" for="add"
+							value="Add sequence" trackMouse="true" />
 
 
 					</h:panelGrid>
@@ -79,7 +81,15 @@
 							style="margin-bottom:20px">
 							<f:facet name="header">
                                 Sequences
-                            </f:facet>
+                                <h:commandLink id="download_inputs"
+									style="float:right;">
+									<p:graphicImage value="/resources/images/excel.png" width="24" />
+									<p:dataExporter type="xls" target="inputs" fileName="Sequences"
+										pageOnly="true" />
+								</h:commandLink>
+								<p:tooltip id="tooltip_download_inputs" for="download_inputs"
+									value="Download as xls" trackMouse="true" />
+							</f:facet>
 							<p:column headerText="Sequence name" style="width: 200px;">
 								<h:outputText value="#{dato.name}"
 									style="float:left;overflow-y: auto;width: 100%;">
@@ -94,19 +104,17 @@
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Action" style="width: 100px;">
+							<p:column id="remove" headerText="Action" style="width: 100px;">
 								<h:commandButton value="remove"
 									action="#{primerG2.remove(dato)}" />
 							</p:column>
+							<p:tooltip id="tooltip_remove" for="remove"
+								value="Remove sequence" trackMouse="true" />
 
 						</p:dataTable>
 
 					</h:panelGrid>
-					<h:commandLink value="Download as xls">
 
-						<p:dataExporter type="xls" target="inputs" fileName="Sequences"
-							pageOnly="true" />
-					</h:commandLink>
 				</h:form>
 				<h:form>
 
@@ -119,13 +127,19 @@
 							<f:selectItem itemLabel="Circular" itemValue="circular" />
 						</p:selectOneButton>
 
-						<p:commandButton value="Assembly"
+						<p:commandButton id="assembly" value="Assembly"
 							update="tabla, tabla2, tabla3, :growl"
 							action="#{primerG2.assembly}" />
 						<p:outputLabel value="" style="width:500px" />
-						<h:commandButton value="Clean all"
+						<p:tooltip id="tooltip_assembly" for="assembly" value="Assembly"
+							trackMouse="true" />
+
+
+						<h:commandButton id="clean" value="Clean all"
 							update="tabla, tabla2, tabla3, inputs, :growl"
 							action="#{primerG2.init()}" style="width:150px" />
+						<p:tooltip id="tooltip_clean" for="clean"
+							value="Set default values" trackMouse="true" />
 
 
 					</h:panelGrid>
@@ -136,7 +150,15 @@
 							style="margin-bottom:20px">
 							<f:facet name="header">
                                 Fwd Sequence Primer's
-                            </f:facet>
+                                <h:commandLink id="download_primers"
+									style="float:right;">
+									<p:graphicImage value="/resources/images/excel.png" width="24" />
+									<p:dataExporter type="xls" target="tabla"
+										fileName="Primers_fwd" pageOnly="true" />
+								</h:commandLink>
+								<p:tooltip id="tooltip_download_primers" for="download_primers"
+									value="Download as xls" trackMouse="true" />
+							</f:facet>
 							<p:column headerText="Sequence name" style="width: 200px;">
 								<h:outputText value="#{dato.nameSequence}"
 									style="float:left;overflow-y: auto;width: 100%;">
@@ -145,14 +167,20 @@
 							</p:column>
 
 							<p:column headerText="Primer">
-								<h:outputText value="#{dato.seq1}"
+								<h:outputText id="fwd_extension_tooltip" value="#{dato.seq1}"
 									style="float:left;overflow-y: auto;width: 100%;color:red;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
-								<h:outputText value="#{dato.seq2}"
-									style="float:left;overflow-y: auto;width: 100%;">
+								<p:tooltip id="tooltip_fwd_extension"
+									for="fwd_extension_tooltip" value="Forward extension primer"
+									trackMouse="true" />
+
+								<h:outputText id="fwd_tooltip" value="#{dato.seq2}"
+									style="float:left;overflow-y: auto;width: 100%;color:blue;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
+								<p:tooltip id="tooltip_fwd" for="fwd_tooltip"
+									value="Forward primer" trackMouse="true" />
 							</p:column>
 
 							<p:column headerText="Length" style="width: 100px;">
@@ -190,11 +218,7 @@
 								</h:outputText>
 							</p:column>
 						</p:dataTable>
-						<h:commandLink value="Download as xls">
 
-							<p:dataExporter type="xls" target="tabla" fileName="Primers_fwd"
-								pageOnly="true" />
-						</h:commandLink>
 						<br />
 
 						<p:dataTable id="tabla2" var="dato" resizableColumns="true"
@@ -202,7 +226,16 @@
 							style="margin-bottom:20px">
 							<f:facet name="header">
                                 Rev Sequence Primer's
-                            </f:facet>
+                                <h:commandLink id="download_reverses"
+									style="float:right;">
+									<p:graphicImage value="/resources/images/excel.png" width="24" />
+									<p:dataExporter type="xls" target="tabla2"
+										fileName="Primers_rev" pageOnly="true" />
+								</h:commandLink>
+								<p:tooltip id="tooltip_download_reverses"
+									for="download_reverses" value="Download as xls"
+									trackMouse="true" />
+							</f:facet>
 							<p:column headerText="Sequence name" style="width: 200px;">
 								<h:outputText value="#{dato.nameSequence}"
 									style="float:left;overflow-y: auto;width: 100%">
@@ -211,18 +244,20 @@
 							</p:column>
 
 
-							<p:column headerText="Primer"  >
+							<p:column headerText="Primer">
 								<h:outputText id="rvr" value="#{dato.seq1}"
+									style="float:left;overflow-y: auto;width: 100%;color:orange;">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
+								</h:outputText>
+								<p:tooltip id="tooltip_rev_ext" for="rvr"
+									value="Reverse extension primer" trackMouse="true" />
 
-									style="float:left;overflow-y: auto;width: 100%;">
+								<h:outputText id="rvr_ext" value="#{dato.seq2}"
+									style="float:left;overflow-y: auto;width: 100%;color:green;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
-                                                                <p:tooltip id="hom_rev_indicator" for="rvr" value="Reverse primer" trackMouse="true" />
-								<h:outputText id= "rvr_ext" value="#{dato.seq2}"
-									style="float:left;overflow-y: auto;width: 100%;color:red;">
-									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
-								</h:outputText>
-                                                                <p:tooltip id="hom_reverse_ext_indicator" for="rvr_ext" value="Reverse extension primer" trackMouse="true" />
+								<p:tooltip id="tooltipo_rev" for="rvr_ext"
+									value="Reverse primer" trackMouse="true" />
 							</p:column>
 
 							<p:column headerText="Length" style="width: 100px;">
@@ -260,11 +295,7 @@
 								</h:outputText>
 							</p:column>
 						</p:dataTable>
-						<h:commandLink value="Download as xls">
 
-							<p:dataExporter type="xls" target="tabla2" fileName="Primers_rev"
-								pageOnly="true" />
-						</h:commandLink>
 						<br />
 
 						<p:dataTable id="tabla3" var="dato" resizableColumns="true"
@@ -272,7 +303,17 @@
 							style="margin-bottom:20px">
 							<f:facet name="header">
                                 Homology regions
-                            </f:facet>
+                                <h:commandLink style="float:right;">
+									<p:graphicImage id="download_homologys"
+										value="/resources/images/excel.png" width="24"
+										style="text-aling:right;" />
+									<p:dataExporter type="xls" target="tabla2"
+										fileName="Homology_regions" pageOnly="true" />
+								</h:commandLink>
+								<p:tooltip id="tooltip_download_homologys"
+									for="download_homologys" value="Download as xls"
+									trackMouse="true" />
+							</f:facet>
 							<p:column headerText="Homology name" style="width: 200px;">
 								<h:outputText value="#{dato.nameSequence}"
 									style="float:left;overflow-y: auto;width: 100%;">
@@ -285,14 +326,15 @@
 									style="float:left;overflow-y: auto;width: 100%;color:red;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
+								<p:tooltip id="tooltip_hom_fwd_ext" for="hom_rev_ext"
+									value="Forward extension" trackMouse="true" />
 
-								<p:tooltip id="hom_rev_ext_indicator" for="hom_rev_ext" value="Reverse extension" trackMouse="true" />
 								<h:outputText id="hom_fwd_ext" value="#{dato.seq2}"
-
-									style="float:left;overflow-y: auto;width: 100%;">
+									style="float:left;overflow-y: auto;width: 100%;color:orange;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 								</h:outputText>
-                                                                <p:tooltip id="hom_fwd_ext_indicator" for="hom_fwd_ext" value="Forward extension" trackMouse="true" />
+								<p:tooltip id="tooltip_hom_rev_ext" for="hom_fwd_ext"
+									value="Reverse extension" trackMouse="true" />
 							</p:column>
 
 							<p:column headerText="Length" style="width: 100px;">
@@ -330,11 +372,7 @@
 								</h:outputText>
 							</p:column>
 						</p:dataTable>
-						<h:commandLink value="Download as xls">
 
-							<p:dataExporter type="xls" target="tabla2"
-								fileName="Homology_regions" pageOnly="true" />
-						</h:commandLink>
 						<br />
 
 					</h:panelGrid>
