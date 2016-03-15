@@ -101,7 +101,7 @@
 
                 </p:dialog>
                 <h:form id="probab-form" enctype="multipart/form-data" prependId="false">
-                    <p:commandButton action="#{primerG3.submitprob(codonUsageController.selected)}" id="codonUsageBtn" immediate="true" ajax="true"  icon="ui-icon-pencil" value="Choose odds for the codon usage" update=":CodonUsageProbForm" oncomplete="PF('CodonUsageProbDlg').show()" disabled="#{empty codonUsageController.selected}"/>     
+                    <p:commandButton id="codonUsageBtn" immediate="true" ajax="true"  icon="ui-icon-pencil" value="Choose odds for the codon usage" update=":CodonUsageProbForm" oncomplete="PF('CodonUsageProbDlg').show()" disabled="#{empty codonUsageController.selected}"/>     
                 </h:form>
                 <div>
                     <h:form enctype="multipart/form-data" prependId="false">
@@ -142,18 +142,33 @@
                                             <input type="text" class="form-control" readonly="true" />
                                         </div>
                                     </div>
-                                    <p:outputLabel styleClass="form-label" value="Enter tolerance's size for conserved aminoácids" for="conservado" /> 
+                                    <p:outputLabel styleClass="form-label" value="Enter tolerance's size for conserved amino acids" for="conservado" /> 
                                     <p:inputText type="number" id="conservado" value="#{primerG3.conservado}" required="true" requiredMessage="You must enter size of the tolerance for You must enter size of the tolerance for preserved aminoácids aminoácids" />                                   
                                     
-                                    <p:outputLabel styleClass="form-label" value="Enter tolerance's size for identical aminoácids" for="identico" />
-                                    <p:inputText type="number" id="identico" value="#{primerG3.identico}" required="true" requiredMessage="You must enter size of the tolerance for identical aminoácids" />
-                                    <br/>
-
                                     <p:outputLabel styleClass="form-label" value="Enter conserved region's size" for="tamanoPrimer" />
                                     <p:inputText type="number" id="tamanoPrimer" value="#{primerG3.tamanoPrimer}" required="true" requiredMessage="You must enter size for You must enter size of the tolerance for preserved aminoácids region"/>
 
                                     <br/>
                                     <br/>
+                                    
+                                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-default">
+                                            <div class="pannel-heading" role="tab" id="headingOne">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                        Advanced options
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                <div class="panel-body">
+                                                    <p:outputLabel styleClass="form-label" value="Enter tolerance's size for identical amino acids" for="identico" />
+                                                    <p:inputText type="number" id="identico" value="#{primerG3.identico}" required="true" requiredMessage="You must enter size of the tolerance for identical aminoácids" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                     <div class="row">
                                         <div id="errorMsge" class="col-md-12 alert alert-danger hidden" role="alert">
                                             <p>
@@ -171,34 +186,18 @@
                                 <div class="col-md-7" >
                                     <p:outputLabel styleClass="form-label" value="Conserved DNA Sites" />
                                     <hr/>
-                                    <!--div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                        <span class="hidden">#{count = 0}</span>
-                                        <ui:repeat value="#{primerG3.consensos}" var="seq">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading" role="tab" id="heading#{count}">
-                                                    <h5 class="panel-title">
-                                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse#{count}" aria-expanded="false" aria-controls="collapse#{count}">
-                                                            <span class="link-seq" id="link#{count}">
-                                                                #{seq}
-                                                            </span>
-                                                        </a>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapse#{count}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading#{count}">
-                                                    <div class="panel-body" id="body#{count}">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <span class="hidden">#{count = count + 1}</span>
-                                        </ui:repeat>
-                                    </div-->
                                     <span class="hidden">#{i = 0}</span>
-                                    <p:panelGrid columns="1">
+                                    <p:panelGrid columns="1" >
                                         <table class="table table-condensed">
                                             <ui:repeat value="#{primerG3.consensos}" var="seq">
                                                 <tr>
                                                     <td>
                                                         <p:outputLabel value="#{primerG3.nucleotidSequence(seq)}"/> 
+                                                    </td>
+                                                    <td>
+                                                        <p:link styleClass="btn btn-success link-button" outcome="edit_amino_seq" value="Edit">
+                                                            <f:param name="sequences" value="#{seq}"/>
+                                                        </p:link>
                                                     </td>
                                                     <td>
                                                         <p:link styleClass="btn btn-success link-button" outcome="choose_nucleotide_seq" value="Choose nucleotide sequence">
@@ -215,7 +214,12 @@
                             </div>
                             <div>
                                 <p:outputLabel styleClass="form-label" value="Aligned sequences" />
-                                <span> <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Conserved DNA Sites</span>
+                                <h:outputLink id="fade" value="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC308517/">
+                                    <span class="glyphicon glyphicon-question-sign"></span>
+                                    <h:outputText value="About alignment" />
+                                </h:outputLink>
+                                <p:tooltip id="toolTipTrack" for="fade" value="Auto Primer X uses Clustal W for the sequences alignment. For more information, click on the link." trackMouse="true" />
+                                <div> <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Conserved DNA Sites</div>
                                 <div class="overflow">
                                     <table class="table table-hover">
                                         <ui:repeat value="#{primerG3.sequencesShow}" var="sequence">

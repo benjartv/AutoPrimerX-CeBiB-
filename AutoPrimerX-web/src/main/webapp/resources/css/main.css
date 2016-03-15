@@ -321,3 +321,31 @@ border: none;
     cursor: inherit;
     display: block;
 }
+
+#fade{
+    color: #333;
+}
+
+#fade:hover{
+    text-decoration: none;
+}
+
+#fade:visited{
+    text-decoration: none !important;
+}
+
+.panel-heading{
+    padding: 5px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.panel-body {
+    padding: 15px;
+}
+
+.btn-group{
+    margin-right: 10px;
+    margin-bottom: 10px;
+}

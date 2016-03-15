@@ -17,12 +17,15 @@ public class Primer {
     double Tm;
     double GC;
     int largo;
-    int maxAF;
-    int maxAR;
+    String maxAF;
+    String maxAR;
 
+    private static final int NEITHER     = 0;
+    private static final int UP          = 1;
+    private static final int LEFT        = 2;
+    private static final int UP_AND_LEFT = 3;
     
-    
-    private Primer(String seq, double Tm, double GC, int largo, int maxAF, int maxAR){
+    Primer(String seq, double Tm, double GC, int largo, String maxAF, String maxAR){
         this.seq = seq;
         this.Tm = Tm;
         this.GC = GC;
@@ -33,7 +36,6 @@ public class Primer {
 
     public Primer() {
     }
-
     
     public List<Primer> createPrimer(String seq, String comp_seq, int largo1, int largo2){
         List<Primer> primer_list = new ArrayList<Primer>();
@@ -45,48 +47,114 @@ public class Primer {
             String seq_string = new String(seq_array);
             String primer_string = complemento(seq_string);
             Primer primer = new Primer(primer_string, calculateTm(primer_string), calculateGC(primer_string), primer_string.length(), 
-                    maxValue(alignPrimer(seq, primer_string)), maxValue(alignPrimer(comp_seq, primer_string)));
+                    alignPrimer(seq, primer_string), alignPrimer(comp_seq, primer_string));
             primer_list.add(primer);
         }
         return primer_list;
     }
     
-    public List alignPrimer(String seq, String primer){
-        List matchList = new ArrayList();
-        for (int i = primer.length(); i < (seq.length()-primer.length()); i++) {
-            int LCS = 0;
-            int match = 0;
-            boolean flag = true;
+    public static String LCSAlgorithm(String a, String b) {
+		int n = a.length();
+		int m = b.length();
+		int S[][] = new int[n+1][m+1];
+		int R[][] = new int[n+1][m+1];
+		int ii, jj;
+
+		// It is important to use <=, not <.  The next two for-loops are initialization
+		for(ii = 0; ii <= n; ++ii) {
+			S[ii][0] = 0;
+			R[ii][0] = UP;
+		}
+		for(jj = 0; jj <= m; ++jj) {
+			S[0][jj] = 0;
+			R[0][jj] = LEFT;
+		}
+
+		// This is the main dynamic programming loop that computes the score and
+		// backtracking arrays.
+		for(ii = 1; ii <= n; ++ii) {
+			for(jj = 1; jj <= m; ++jj) { 
+	
+				if( a.charAt(ii-1) == b.charAt(jj-1) ) {
+					S[ii][jj] = S[ii-1][jj-1] + 1;
+					R[ii][jj] = UP_AND_LEFT;
+				}
+
+				else {
+					S[ii][jj] = S[ii-1][jj-1] + 0;
+					R[ii][jj] = NEITHER;
+				}
+
+				if( S[ii-1][jj] >= S[ii][jj] ) {	
+					S[ii][jj] = S[ii-1][jj];
+					R[ii][jj] = UP;
+				}
+
+				if( S[ii][jj-1] >= S[ii][jj] ) {
+					S[ii][jj] = S[ii][jj-1];
+					R[ii][jj] = LEFT;
+				}
+			}
+		}
+
+		// The length of the longest substring is S[n][m]
+		ii = n; 
+		jj = m;
+		int pos = S[ii][jj] - 1;
+		char lcs[] = new char[ pos+1 ];
+
+		// Trace the backtracking matrix.
+		while( ii > 0 || jj > 0 ) {
+			if( R[ii][jj] == UP_AND_LEFT ) {
+				ii--;
+				jj--;
+				lcs[pos--] = a.charAt(ii);
+			}
+	
+			else if( R[ii][jj] == UP ) {
+				ii--;
+			}
+	
+			else if( R[ii][jj] == LEFT ) {
+				jj--;
+			}
+		}
+
+		return new String(lcs);
+	}
+    
+    
+    
+    
+    public String alignPrimer(String seq, String primer){
+        char[] blanks = new char[primer.length()];
+        for (int i = 0; i < primer.length(); i++) {
+            blanks[i] = '-';
+        }
+        String seq_blanks = new String(blanks);
+        String seq_target = seq_blanks + seq.substring(primer.length()) + seq_blanks;
+        
+        String match = "";
+        String match2 = "";
+        
+        for (int i = 0; i < seq.length(); i++) {
             for (int j = 0; j < primer.length(); j++) {
-                if (seq.charAt(i+j) == complemNUCL(primer.charAt(j))){
-                    if (flag) {
-                        match = match + 1;
-                    }
-                    else{
-                        if (match > LCS) {
-                            LCS = match;
-                        }
-                        match = 1;
-                    }
+                if (seq_target.charAt(i+j) == complemNUCL(primer.charAt(j))) {
+                    match2 = match2 + seq_target.charAt(i+j);
                 }
                 else{
-                    flag = false;
+                    if (match.length() < match2.length()) {
+                        match = match2;
+                    }
+                    match2 = "";
                 }
             }
-            matchList.add(LCS);
         }
-        return matchList;
+        double pTM = calculateTm(match);
+        match = match + " - " + pTM;
+        return match;
     }
     
-    public int maxValue(List lista){
-        int max = (int) lista.get(0);
-        for (int i = 0; i < lista.size(); i++) {
-            if ((int) lista.get(i) > max){
-                max = (int) lista.get(i);
-            }
-        }
-        return max;
-    }
     public char complemNUCL(char nucleotido){
         char resp;
         resp = 'X';
@@ -132,19 +200,19 @@ public class Primer {
         this.GC = GC;
     }
 
-    public int getMaxAF() {
+    public String getMaxAF() {
         return maxAF;
     }
 
-    public void setMaxAF(int maxAF) {
+    public void setMaxAF(String maxAF) {
         this.maxAF = maxAF;
     }
 
-    public int getMaxAR() {
+    public String getMaxAR() {
         return maxAR;
     }
 
-    public void setMaxAR(int maxAR) {
+    public void setMaxAR(String maxAR) {
         this.maxAR = maxAR;
     }
 

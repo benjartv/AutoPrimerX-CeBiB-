@@ -12,18 +12,14 @@
             <h:form id="EnzymeEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{enzymeController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditEnzymeLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{enzymeController.selected.id}" title="#{bundle.EditEnzymeTitle_id}" />
-                        <p:outputLabel value="#{bundle.EditEnzymeLabel_nameEnzyme}" for="nameEnzyme" />
-                        <p:inputText id="nameEnzyme" value="#{enzymeController.selected.nameEnzyme}" title="#{bundle.EditEnzymeTitle_nameEnzyme}" />
-                        <p:outputLabel value="#{bundle.EditEnzymeLabel_dnaTarget}" for="dnaTarget" />
-                        <p:inputText id="dnaTarget" value="#{enzymeController.selected.dnaTarget}" title="#{bundle.EditEnzymeTitle_dnaTarget}" />
-                        <p:outputLabel value="#{bundle.EditEnzymeLabel_alt_dnaTarget}" for="alt_dnaTarget" />
-                        <p:inputText id="alt_dnaTarget" value="#{enzymeController.selected.alt_dnaTarget}" title="#{bundle.EditEnzymeTitle_alt_dnaTarget}" />
-                        <p:outputLabel value="#{bundle.EditEnzymeLabel_numBasePair}" for="numBasePair" />
-                        <p:inputText id="numBasePair" value="#{enzymeController.selected.numBasePair}" title="#{bundle.EditEnzymeTitle_numBasePair}" />
+                        <p:outputLabel value="Enzyme name" for="nameEnzyme" />
+                        <p:inputText id="nameEnzyme" value="#{enzymeController.selected.nameEnzyme}" title="#{bundle.CreateEnzymeTitle_nameEnzyme}" />
+                        <p:outputLabel value="DNA Target" for="dnaTarget" />
+                        <p:inputText id="dnaTarget" value="#{enzymeController.selected.dnaTarget}" title="#{bundle.CreateEnzymeTitle_dnaTarget}" />
+                        <p:outputLabel value="Number of base pairs" for="numBasePair" />
+                        <p:inputText id="numBasePair" value="#{enzymeController.selected.numBasePair}" title="#{bundle.CreateEnzymeTitle_numBasePair}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{enzymeController.update}" value="#{bundle.Save}" update="display,:EnzymeListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EnzymeEditDialog');"/>
+                    <p:commandButton actionListener="#{enzymeController.update}" value="Save" update="display,:EnzymeListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EnzymeEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="EnzymeEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

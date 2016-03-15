@@ -5,22 +5,27 @@
  */
 package managedbeans;
 
+import entities.Enzyme;
 import managedbeans.util.JsfUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import primerg1Domain.Primer;
+import primerg1Domain.PrimerEnzRes;
 import primerg1Domain.PrimerRF;
+import sessionBeans.EnzymeFacadeLocal;
 
 /**
  *
  * @author MacBookPro
  */
 @Named(value = "primerG1")
-@ManagedBean
-public class PrimerG1{
+@SessionScoped
+public class PrimerG1 implements Serializable{
 
     /**
      * Creates a new instance of primerG1
@@ -34,13 +39,61 @@ public class PrimerG1{
     private List<Primer> primers_rev;
     private List<Primer> primers_fwd;
     private List<PrimerRF> primersMatch;
+    private List<PrimerEnzRes> primersExt;
+    
+    private Enzyme enzima_sel;
+    private Enzyme enzima_sel2;
     
     private Primer service = new Primer();
     private PrimerRF serviceMatch = new PrimerRF();
+    private PrimerEnzRes serviceExt = new PrimerEnzRes();
+    
+    private PrimerEnzRes selected;
+    
+    private Boolean var = false;
+    
+    @EJB
+    private EnzymeFacadeLocal enzymeFacade;
+
+    public EnzymeFacadeLocal getEnzymeFacade() {
+        return enzymeFacade;
+    }
     
     public PrimerG1() {
     }
 
+    public Enzyme getEnzima_sel2() {
+        return enzima_sel2;
+    }
+
+    public void setEnzima_sel2(Enzyme enzima_sel2) {
+        this.enzima_sel2 = enzima_sel2;
+    }
+
+    public Boolean getVar() {
+        return var;
+    }
+
+    public void setVar(Boolean var) {
+        this.var = var;
+    }
+
+    public PrimerEnzRes getSelected() {
+        return selected;
+    }
+
+    public void setSelected(PrimerEnzRes selected) {
+        this.selected = selected;
+    }
+
+    public Enzyme getEnzima_sel() {
+        return enzima_sel;
+    }
+
+    public void setEnzima_sel(Enzyme enzima_sel) {
+        this.enzima_sel = enzima_sel;
+    }
+    
     public int getSize_seq() {
         return size_seq;
     }
@@ -105,15 +158,59 @@ public class PrimerG1{
         this.primersMatch = primersMatch;
     }
 
+    public List<PrimerEnzRes> getPrimersExt() {
+        return primersExt;
+    }
+
+    public void setPrimersExt(List<PrimerEnzRes> primersExt) {
+        this.primersExt = primersExt;
+    }
+    
+    public void chageEnz(){
+        var = true;
+    }
+
 
     public void submit(){
-        sequence = sequence.replaceAll("\\s+","");
-        size_seq = sequence.length();
-        com_sequence = service.complemento(sequence);
-        String sequence_back = new StringBuilder(sequence).reverse().toString();
-        primers_rev = service.createPrimer(sequence_back, com_sequence, largo1, largo2);
-        primers_fwd = service.createPrimer(com_sequence, sequence_back, largo1, largo2);
-        primersMatch = serviceMatch.findbestPrimers(primers_fwd, primers_rev);
+        if (enzima_sel == null) {
+            System.out.println("No hay enzima seleccionada");
+            System.out.println("Iniciando...");
+            sequence = sequence.replaceAll("\\s+","");
+            size_seq = sequence.length();
+            com_sequence = service.complemento(sequence);
+            String sequence_back = new StringBuilder(sequence).reverse().toString();
+            primers_rev = service.createPrimer(sequence_back, com_sequence, largo1, largo2);
+            primers_fwd = service.createPrimer(com_sequence, sequence_back, largo1, largo2);
+            System.out.println("Primers Calculados");
+            System.out.println("Realizando match de primers");
+            primersMatch = serviceMatch.findbestPrimers(primers_fwd, primers_rev);
+            System.out.println("Proceso terminado");
+        }
+        else{
+            System.out.println("Iniciando...");
+            sequence = sequence.replaceAll("\\s+","");
+            size_seq = sequence.length();
+            com_sequence = service.complemento(sequence);
+            String sequence_back = new StringBuilder(sequence).reverse().toString();
+            String sequence_back_comp = new StringBuilder(com_sequence).reverse().toString();
+            primers_rev = service.createPrimer(sequence_back, sequence_back_comp, largo1, largo2);
+            primers_fwd = service.createPrimer(com_sequence, sequence_back, largo1, largo2);
+            System.out.println("Primers Calculados");
+            System.out.println("Realizando match de primers");
+            primersMatch = serviceMatch.findbestPrimers(primers_fwd, primers_rev);
+            System.out.println("Calculando primer extensión");
+            System.out.println("Enzymas: " + enzima_sel.getDnaTarget() + ", " + enzima_sel2.getDnaTarget() );
+            if (enzima_sel2 == null) {
+                primersExt = serviceExt.addEnzyme(primersMatch, enzima_sel, enzima_sel, sequence_back, com_sequence);
+                System.out.println("Proceso terminado");
+            }
+            else{
+                primersExt = serviceExt.addEnzyme(primersMatch, enzima_sel, enzima_sel2, sequence_back, com_sequence);
+                System.out.println("Proceso terminado");
+            }
+        }
+        
+        
     }
     
     
