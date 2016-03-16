@@ -36,6 +36,12 @@ public class PrimerG1 implements Serializable{
     private int largo1 = 20;
     private int largo2 = 30;
     
+    /**
+     * sequence: La secuencia objetivo
+     * com_sequence: El complemento de la secuencia objetivo
+     */
+    
+    
     private List<Primer> primers_rev;
     private List<Primer> primers_fwd;
     private List<PrimerRF> primersMatch;
@@ -169,7 +175,14 @@ public class PrimerG1 implements Serializable{
     public void chageEnz(){
         var = true;
     }
-
+    
+    /**
+     * La secuencia objetivo es invertida (5-3) -> (3-5)
+     * Se generan los primers fwd y rev usando las secuencias rev y fwd respectivamente
+     * Si no se selecciona enzima, se generan los primers de clonación
+     * Si se seleccionan enzimas se generan tanto los primers de clonación como los de extensión
+     * En cada caso se llama a la función "findebestPrimers" para seleccionar los mejores pares de primers
+     */
 
     public void submit(){
         if (enzima_sel == null) {
