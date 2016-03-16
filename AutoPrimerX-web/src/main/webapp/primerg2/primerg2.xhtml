@@ -17,45 +17,46 @@
 				<h3>Primer's design for Gibson assembly dna fragments</h3>
 
 				<h:form>
-					<h:panelGrid columns="6" cellpadding="4">
-						<h:outputLabel for="tm" value="TM min:" style="width:150px" />
+					<p:panelGrid columns="6" margin="15px">
+						<p:outputLabel for="tm" value="TM min:"
+							style="text-align:right; width:150px;" />
 						<p:inputText id="tm" value="#{primerG2.TM}" style="width:150px"
 							required="true" requiredMessage="Ingrese valor TM"></p:inputText>
+						
 
-						<h:outputLabel for="tmmax" value="TM max:" style="float:right; width:150px;" />
+
+						<p:outputLabel for="tmmax" value="TM max:"
+							style="text-align:right; width:150px;" />
 						<p:inputText id="tmmax" value="#{primerG2.TMprimer}"
 							style="width:150px" required="true"
 							requiredMessage="Ingrese valor TM"></p:inputText>
 
-						<h:outputLabel for="tmh" value="TM Homology:" style="width:150px" />
+						<p:outputLabel for="tmh" value="TM Homology:"
+							style="text-align:right; width:150px;" />
 						<p:inputText id="tmh" value="#{primerG2.TMh}" style="width:150px"
 							required="true" requiredMessage="Ingrese valor TM"></p:inputText>
 
-						<h:outputLabel for="tolerance" value="Tolerance:"
-							style="width:150px" />
+						<p:outputLabel for="tolerance" value="Tolerance:"
+							style="text-align:right; width:150px;" />
 						<p:inputText id="tolerance" value="#{primerG2.tolerance}"
 							style="width:150px" required="true"
 							requiredMessage="Ingrese valor tolerance"></p:inputText>
 
-						<h:outputLabel for="sodio" value="Na concentration:"
-							style="width:150px" />
+						<p:outputLabel for="sodio" value="Na concentration:"
+							style="text-align:right; width:150px;" />
 						<p:inputText id="sodio" value="#{primerG2.sodio}"
 							style="width:150px" required="true"
 							requiredMessage="Ingrese valor sodio"></p:inputText>
-
-
-
-
-
-					</h:panelGrid>
-					<h:panelGrid columns="5" cellpadding="4">
-						<h:outputLabel for="input1" value="Sequence name:"
-							style="width:150px" />
+					</p:panelGrid>
+					<p:panelGrid columns="5" cellpadding="4">
+						<p:outputLabel for="input1" value="Sequence name:"
+							style="text-align:right; width:150px;" />
 						<p:inputText id="input1" value="#{primerG2.name}"
 							style="width:150px" required="true"
 							requiredMessage="Ingrese nombre de la secuencia"></p:inputText>
 
-						<h:outputLabel for="input2" value="Sequence:" style="width:150px" />
+						<p:outputLabel for="input2" value="Sequence (5' -> 3'):"
+							style="text-align:right; width:180px;" />
 						<p:inputTextarea id="input2" value="#{primerG2.sequence}"
 							autoResize="false" rows="3" cols="35"
 							onkeyup="javascript:this.value = this.value.toUpperCase();"
@@ -66,12 +67,13 @@
 
 
 						<h:commandButton id="add" value="Add sequence" update="inputs"
-							action="#{primerG2.add()}" style="float:center; width:120px;" />
-						<p:tooltip id="tooltip_add" for="add"
-							value="Add sequence" trackMouse="true" />
+							action="#{primerG2.add()}"
+							style="text-align:center; width:120px;" />
+						<p:tooltip id="tooltip_add" for="add" value="Add sequence"
+							trackMouse="true" />
 
 
-					</h:panelGrid>
+					</p:panelGrid>
 				</h:form>
 				<h:form>
 					<h:panelGrid cellpadding="2">
@@ -80,7 +82,7 @@
 							resizableColumns="true" paginator="true" rows="5"
 							style="margin-bottom:20px">
 							<f:facet name="header">
-                                Sequences
+                                Sequences (5' -> 3')
                                 <h:commandLink id="download_inputs"
 									style="float:right;">
 									<p:graphicImage value="/resources/images/excel.png" width="24" />
@@ -138,8 +140,8 @@
 						<h:commandButton id="clean" value="Clean all"
 							update="tabla, tabla2, tabla3, inputs, :growl"
 							action="#{primerG2.init()}" style="width:150px" />
-						<p:tooltip id="tooltip_clean" for="clean"
-							value="Reset values" trackMouse="true" />
+						<p:tooltip id="tooltip_clean" for="clean" value="Reset values"
+							trackMouse="true" />
 
 
 					</h:panelGrid>
@@ -150,7 +152,7 @@
 							value="#{primerG2.primers_fwd}" paginator="true" rows="10"
 							style="margin-bottom:20px">
 							<f:facet name="header">
-                                Fwd Sequence Primer's
+                                Fwd Sequence Primer's (5' -> 3')
                                 <h:commandLink id="download_primers"
 									style="float:right;">
 									<p:graphicImage value="/resources/images/excel.png" width="24" />
@@ -226,7 +228,7 @@
 							value="#{primerG2.primers_rev}" paginator="true" rows="10"
 							style="margin-bottom:20px">
 							<f:facet name="header">
-                                Rev Sequence Primer's
+                                Rev Sequence Primer's (5' -> 3')
                                 <h:commandLink id="download_reverses"
 									style="float:right;">
 									<p:graphicImage value="/resources/images/excel.png" width="24" />
@@ -303,7 +305,7 @@
 							value="#{primerG2.homologys}" paginator="true" rows="10"
 							style="margin-bottom:20px">
 							<f:facet name="header">
-                                Homology regions
+                                Homology regions (5' -> 3')
                                 <h:commandLink style="float:right;">
 									<p:graphicImage id="download_homologys"
 										value="/resources/images/excel.png" width="24"

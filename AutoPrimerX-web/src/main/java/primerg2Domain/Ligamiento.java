@@ -1,5 +1,6 @@
 package primerg2Domain;
 
+import primerg1Domain.Primer;
 
 public class Ligamiento{
 	
@@ -12,6 +13,8 @@ public class Ligamiento{
 	private String seq2;
 	
 	private String primer;
+	
+	private String dimer;
 	
 	private double largo;
 	
@@ -34,6 +37,8 @@ public class Ligamiento{
 		this.gc = G2Utils.porcentajeGC(primer);
 		this.tmAdjust = G2Utils.funcionTMajustada(primer);
 		this.molWeight = G2Utils.molecularWeight(primer);
+		this.dimer = G2Utils.alignPrimer2(sequence, primer);
+		System.out.println("El dimero es"+this.dimer );
 	}
 	
 	public String getSeq1() {
@@ -107,12 +112,20 @@ public class Ligamiento{
 		this.molWeight = molWeight;
 	}
 
+	public String getDimer() {
+		return dimer;
+	}
+
+	public void setDimer(String dimer) {
+		this.dimer = dimer;
+	}
+
 	@Override
 	public String toString() {
 		return "Ligamiento [nameSequence=" + nameSequence + ", sequence=" + sequence + ", seq1=" + seq1 + ", seq2="
-				+ seq2 + ", primer=" + primer + ", largo=" + largo + ", tm=" + tm + ", gc=" + gc + ", tmAdjust="
-				+ tmAdjust + ", molWeight=" + molWeight + "]";
+				+ seq2 + ", primer=" + primer + ", dimer=" + dimer + ", largo=" + largo + ", tm=" + tm + ", gc=" + gc
+				+ ", tmAdjust=" + tmAdjust + ", molWeight=" + molWeight + "]";
 	}
 
-	
+		
 }

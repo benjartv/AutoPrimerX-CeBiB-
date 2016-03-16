@@ -52,9 +52,9 @@ public class G2Utils {
 		}
 		return strComplemento;
 	}
-	
+
 	public static String complemento2(String secuencia) {
-	
+
 		ArrayList<Character> array = new ArrayList<Character>();
 		for (int i = 0; i < secuencia.length(); i++) {
 			if (secuencia.charAt(i) == 'C')
@@ -255,14 +255,98 @@ public class G2Utils {
 		return forwardExtension;
 		// System.out.println("El frwd extension es: "+ forwardExtension);
 	}
+	
+	public static double calculateTm(String seq){
+        int A = 0;
+        int C = 0;
+        int T = 0;
+        int G = 0;
+        double Tm1;
+        for (int i = 0; i < seq.length(); i++) {
+            if (seq.charAt(i) == 'A') {
+                A = A + 1;
+            }
+            else{
+                if (seq.charAt(i) == 'T') {
+                    T = T + 1;
+                }
+                else{
+                    if (seq.charAt(i) == 'G') {
+                        G = G + 1;
+                    }
+                    else{
+                        if (seq.charAt(i) == 'C') {
+                            C = C + 1;
+                        }
+                    }
+                }
+            }
+        }
+        if(seq.length() < 14){
+            Tm1 = (A+T) * 2 + (G+C) * 4;
+        }
+        else{
+            Tm1 = 64.9 +41*(G+C-16.4)/(A+T+G+C);
+        }
+        Tm1 = (double)Math.round(Tm1 * 100d) / 100d;
+        return Tm1;
+    }
+	
+	public static char complemNUCL(char nucleotido){
+        char resp;
+        resp = 'X';
+        if (nucleotido == 'A') {
+            resp = 'T';
+        }else{
+            if (nucleotido == 'T') {
+                resp = 'A';
+            }else{
+                if (nucleotido == 'G') {
+                    resp = 'C';
+                }else{
+                    if (nucleotido == 'C') {
+                        resp = 'G';
+                    }
+                }
+            }
+        }
+        return resp;
+    }
+
+	public static String alignPrimer2(String seq, String primer) {
+		char[] blanks = new char[primer.length()];
+		for (int i = 0; i < primer.length(); i++) {
+			blanks[i] = '-';
+		}
+		String seq_blanks = new String(blanks);
+		String seq_target = seq_blanks + seq + seq_blanks;
+
+		String match = "";
+		String match2 = "";
+
+		for (int i = 0; i < seq.length(); i++) {
+			for (int j = 0; j < primer.length(); j++) {
+				if (seq_target.charAt(i + j) == complemNUCL(primer.charAt(j))) {
+					match2 = match2 + seq_target.charAt(i + j);
+				} else {
+					if (match.length() < match2.length()) {
+						match = match2;
+					}
+					match2 = "";
+				}
+			}
+		}
+		double pTM = calculateTm(match);
+		match = match + " - " + pTM;
+		return match;
+	}
 
 	public static String reverString(String sequence) {
 		char[] arr = sequence.toCharArray();
 		ArrayUtils.reverse(arr);
 		// sequence = arr.toString();
-	
-		sequence = String.valueOf(arr);
 
+		sequence = String.valueOf(arr);
 
 		return sequence;
 	}
@@ -489,7 +573,8 @@ public class G2Utils {
 							System.out.println("rev_ext complemento reversado" + reverString(complemento2(rev_ext)));
 							homology2 = complemento2(rev_ext);
 							System.out.println("rev_ext con variable" + homology2);
-							Ligamiento hom = new Ligamiento(homology_name, homology, reverString(fwd_ext),complemento2(rev_ext) );
+							Ligamiento hom = new Ligamiento(homology_name, homology, reverString(fwd_ext),
+									complemento2(rev_ext));
 							homologys.add(hom);
 							Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
 									sequences_ext.get(i).getSequence(), "", sequences_ext.get(i).getFwd());
@@ -556,7 +641,8 @@ public class G2Utils {
 							System.out.println("rev_ext complemento reversado" + reverString(complemento2(rev_ext)));
 							homology2 = complemento2(rev_ext);
 							System.out.println("rev_ext con variable" + homology2);
-							Ligamiento hom = new Ligamiento(homology_name, homology,reverString(fwd_ext), complemento2(rev_ext) );
+							Ligamiento hom = new Ligamiento(homology_name, homology, reverString(fwd_ext),
+									complemento2(rev_ext));
 							homologys.add(hom);
 							Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
 									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd_ext(),
@@ -628,7 +714,8 @@ public class G2Utils {
 							System.out.println("rev_ext complemento reversado" + reverString(complemento2(rev_ext)));
 							homology2 = complemento2(rev_ext);
 							System.out.println("rev_ext con variable" + homology2);
-							Ligamiento hom = new Ligamiento(homology_name, homology, reverString(fwd_ext), complemento2(rev_ext) );
+							Ligamiento hom = new Ligamiento(homology_name, homology, reverString(fwd_ext),
+									complemento2(rev_ext));
 							homologys.add(hom);
 							Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
 									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd_ext(),
@@ -687,8 +774,9 @@ public class G2Utils {
 							System.out.println("rev_ext complemento reversado" + reverString(complemento2(rev_ext)));
 							homology2 = complemento2(rev_ext);
 							System.out.println("rev_ext con variable" + homology2);
-							
-							Ligamiento hom = new Ligamiento(homology_name, homology, reverString(fwd_ext), complemento2(rev_ext) );
+
+							Ligamiento hom = new Ligamiento(homology_name, homology, reverString(fwd_ext),
+									complemento2(rev_ext));
 							homologys.add(hom);
 							Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
 									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd_ext(),
@@ -746,7 +834,8 @@ public class G2Utils {
 							System.out.println("rev_ext complemento reversado" + reverString(complemento2(rev_ext)));
 							homology2 = complemento2(rev_ext);
 							System.out.println("rev_ext con variable" + homology2);
-							Ligamiento hom = new Ligamiento(homology_name, homology, reverString(fwd_ext), reverString(complemento2(rev_ext)) );
+							Ligamiento hom = new Ligamiento(homology_name, homology, reverString(fwd_ext),
+									reverString(complemento2(rev_ext)));
 							homologys.add(hom);
 							Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
 									sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd_ext(),
