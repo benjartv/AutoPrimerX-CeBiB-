@@ -20,7 +20,7 @@
                     <p:panel id="pnl" styleClass="no-border" >
                     <h:panelGrid columns="3" cellpadding="4">
                         <p:panel>
-                        <h:outputLabel for="sequence" value="Enter the target sequence: " />
+                            <h:outputLabel for="sequence" value="Enter the target sequence (5->3): " />
                         <p:inputTextarea id="sequence" value="#{primerG1.sequence}" autoResize="false" rows="6" cols="100" onkeyup="javascript:this.value = this.value.toUpperCase();" >
                             <f:validator validatorId="custom.seqValidator" />
                         </p:inputTextarea>
@@ -61,7 +61,7 @@
                     </p:panel>
                     <br/>
                     
-                    <h:outputLabel value="Complement sequence: "/>
+                    <h:outputLabel value="Complement sequence (3->5): "/>
                     <p:panel style="width:200; overflow-x: scroll" >
                     <h:outputText id="answer" value="#{primerG1.com_sequence}" style="display:block;width:135px" />
                     </p:panel>
@@ -75,28 +75,20 @@
                             <f:facet name="header">
                                 Fwd Sequence Primer's
                             </f:facet>
-                            <p:column headerText="Sequence"  width="200" sortBy="#{dato.seq}">
-                                <h:outputText value="#{dato.seq}" />
+                            <p:column headerText="Sequence (5->3)"  width="120" sortBy="#{dato.seq}">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.seq}" />
                             </p:column>
 
-                            <p:column headerText="Tm" width="100" sortBy="#{dato.tm}">
-                                <h:outputText value="#{dato.tm}" />
+                            <p:column headerText="Tm" width="80" sortBy="#{dato.tm}">
+                                <div style="text-align: center;"><h:outputText value="#{dato.tm}" /></div>
                             </p:column>
 
-                            <p:column headerText="GC %" width="100" sortBy="#{dato.GC}">
-                                <h:outputText value="#{dato.GC}" />
+                            <p:column headerText="GC %" width="80" sortBy="#{dato.GC}">
+                                <div style="text-align: center;"><h:outputText  value="#{dato.GC}" /></div>
                             </p:column>
 
-                            <p:column headerText="Primer Size" width="100" sortBy="#{dato.largo}">
-                                <h:outputText value="#{dato.largo}" />
-                            </p:column>
-
-                            <p:column headerText="LCS Fwd" width="100" sortBy="#{dato.maxAR}">
-                                <h:outputText value="#{dato.maxAF}"/>
-                            </p:column>
-
-                            <p:column headerText="LCS Rev" width="100" sortBy="#{dato.maxAF}">
-                                <h:outputText value="#{dato.maxAR}" />
+                            <p:column headerText="Primer size" width="80" sortBy="#{dato.largo}">
+                                <div style="text-align: center;"><h:outputText value="#{dato.largo}" /></div>
                             </p:column>
                         </p:dataTable>
                         <br/>
@@ -108,28 +100,20 @@
                             <f:facet name="header">
                                 Rev Sequence Primer's 
                             </f:facet>
-                            <p:column headerText="Sequence" width="200" sortBy="#{dato.seq}">
-                                <h:outputText value="#{dato.seq}" />
+                            <p:column headerText="Sequence (5->3)" width="120" sortBy="#{dato.seq}">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.seq}" />
                             </p:column>
 
-                            <p:column headerText="Tm" width="100" sortBy="#{dato.tm}">
-                                <h:outputText value="#{dato.tm}" />
+                            <p:column headerText="Tm" width="80" sortBy="#{dato.tm}">
+                                <div style="text-align: center;"><h:outputText value="#{dato.tm}" /></div>
                             </p:column>
 
-                            <p:column headerText="GC %" width="100" sortBy="#{dato.GC}">
-                                <h:outputText value="#{dato.GC}" />
+                            <p:column headerText="GC %" width="80" sortBy="#{dato.GC}">
+                                <div style="text-align: center;"><h:outputText  value="#{dato.GC}" /></div>
                             </p:column>
 
-                            <p:column headerText="Primer size" width="100" sortBy="#{dato.largo}">
-                                <h:outputText value="#{dato.largo}" />
-                            </p:column>
-
-                            <p:column headerText="LCS Fwd" width="100" sortBy="#{dato.maxAF}">
-                                <h:outputText value="#{dato.maxAR}" />
-                            </p:column>
-
-                            <p:column headerText="LCS Rev" width="100" sortBy="#{dato.maxAR}">
-                                <h:outputText value="#{dato.maxAF}" />
+                            <p:column headerText="Primer size" width="80" sortBy="#{dato.largo}">
+                                <div style="text-align: center;"><h:outputText value="#{dato.largo}" /></div>
                             </p:column>
                         </p:dataTable>
                         <br/>
@@ -140,46 +124,57 @@
                             <f:facet name="header">
                                 Best Cloning Primer's 
                             </f:facet>
-                            <p:column headerText="Primer fwd" width="400" sortBy="#{dato.pri_seq_fw}">
-                                <h:outputText value="#{dato.pri_seq_fw}" />
+                            <p:column headerText="Primer fwd (5->3)" width="400" sortBy="#{dato.pri_seq_fw}">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.pri_seq_fw}" />
                             </p:column>
                             
-                            <p:column headerText="Primer rev" width="400" sortBy="#{dato.pri_seq_rv}">
-                                <h:outputText value="#{dato.pri_seq_rv}" />
+                            <p:column headerText="Primer rev (5->3)" width="400" sortBy="#{dato.pri_seq_rv}">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.pri_seq_rv}" />
                             </p:column>
 
                             <p:column headerText="&#916; Tm" width="100" sortBy="#{dato.tmD}">
-                                <h:outputText value="#{dato.tmD}" />
+                                <div style="text-align: center;"><h:outputText value="#{dato.tmD}" /></div>
                             </p:column>
                             
                             <p:column headerText="Tm" width="100" sortBy="#{dato.tmP}">
-                                <h:outputText value="#{dato.tmP}" />
+                                <div style="text-align: center;"><h:outputText value="#{dato.tmP}" /></div>
                             </p:column>
 
                             <p:column headerText="Fwd size" width="100" sortBy="#{dato.length_fw}">
-                                <h:outputText value="#{dato.length_fw}" />
+                                <div style="text-align: center;"><h:outputText value="#{dato.length_fw}" /></div>
                             </p:column>
 
                             <p:column headerText="Rev size" width="100" sortBy="#{dato.length_rv}">
-                                <h:outputText value="#{dato.length_rv}" />
+                                <div style="text-align: center;"><h:outputText value="#{dato.length_rv}" /></div>
                             </p:column>
                             
-                            <p:column headerText="Fwd LCS FWD" sortBy="#{dato.fwdseqLCS}" width="120">
-                                <h:outputText value="#{dato.fwdseqLCS}" />
+                            <p:column headerText="Align Fwd-Fwd" sortBy="#{dato.fwdcomLCS}" width="130">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.fwdcomLCS}" />
                             </p:column>
                             
-                            <p:column headerText="Fwd LCS REV" sortBy="#{dato.fwdcomLCS}" width="120">
-                                <h:outputText value="#{dato.fwdcomLCS}" />
+                            <p:column headerText="Align Fwd-Rev" sortBy="#{dato.fwdseqLCS}" width="130">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.fwdseqLCS}" />
                             </p:column>
                             
-                            <p:column headerText="Rev LCS FWD" sortBy="#{dato.fwdseqLCS}" width="120">
-                                <h:outputText value="#{dato.revcomLCS}" />
+                            <p:column headerText="Align Rev-Fwd" sortBy="#{dato.fwdseqLCS}" width="130">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.revseqLCS}" />
                             </p:column>
                             
-                            <p:column headerText="Rev LCS REV" sortBy="#{dato.fwdcomLCS}" width="120">
-                                <h:outputText value="#{dato.revseqLCS}" />
+                            <p:column headerText="Align Rev-Rev" sortBy="#{dato.fwdcomLCS}" width="130">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.revcomLCS}" />
                             </p:column>
                             
+                            <p:column headerText="Primer's Align" sortBy="#{dato.frLCS}" width="130">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.frLCS}" />
+                            </p:column>
+                            
+                            <p:column headerText="Primer-fwd Align" sortBy="#{dato.fwdLCS}" width="140">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.fwdLCS}" />
+                            </p:column>
+                            
+                            <p:column headerText="Primer-rev Align" sortBy="#{dato.revLCS}" width="140">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.revLCS}" />
+                            </p:column>
                             
                         </p:dataTable>
                         <br/>
@@ -190,45 +185,57 @@
                             <f:facet name="header">
                                 Best Cloning Primer's with restriction enzyme
                             </f:facet>
-                            <p:column headerText="Primer fwd" width="400" sortBy="#{dato.primerPar.pri_seq_fw}">
-                                <h:outputText value="#{dato.primerPar.pri_seq_fw}" />
+                            <p:column headerText="Primer fwd (5->3)" width="400" sortBy="#{dato.primerPar.pri_seq_fw}">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.primerPar.pri_seq_fw}" />
                             </p:column>
                             
-                            <p:column headerText="Primer rev" width="400" sortBy="#{dato.primerPar.pri_seq_rv}">
-                                <h:outputText value="#{dato.primerPar.pri_seq_rv}" />
+                            <p:column headerText="Primer rev (5->3)" width="400" sortBy="#{dato.primerPar.pri_seq_rv}">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.primerPar.pri_seq_rv}" />
                             </p:column>
 
                             <p:column headerText="&#916; Tm" sortBy="#{dato.primerPar.tmD}" width="100">
-                                <h:outputText value="#{dato.primerPar.tmD}" />
+                                <div style="text-align: center;"><h:outputText value="#{dato.primerPar.tmD}" /></div>
                             </p:column>
                             
                             <p:column headerText="Tm" sortBy="#{dato.primerPar.tmP}" width="100">
-                                <h:outputText value="#{dato.primerPar.tmP}" />
+                                <div style="text-align: center;"><h:outputText value="#{dato.primerPar.tmP}" /></div>
                             </p:column>
 
                             <p:column headerText="Fwd size" sortBy="#{dato.primerPar.length_fw}" width="100">
-                                <h:outputText value="#{dato.primerPar.length_fw}" />
+                                <div style="text-align: center;"><h:outputText value="#{dato.primerPar.length_fw}" /></div>
                             </p:column>
 
                             <p:column headerText="Rev size" sortBy="#{dato.primerPar.length_rv}" width="100">
-                                <h:outputText value="#{dato.primerPar.length_rv}" />
+                                <div style="text-align: center;"><h:outputText value="#{dato.primerPar.length_rv}" /></div>
                             </p:column>
                             
-                            <p:column headerText="Fwd LCS Seq" sortBy="#{dato.primerPar.fwdseqLCS}" width="120">
-                                <h:outputText value="#{dato.primerPar.fwdseqLCS}" />
+                            <p:column headerText="Align Fwd-Fwd" sortBy="#{dato.primerPar.fwdseqLCS}" width="130">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.primerPar.fwdseqLCS}" />
                             </p:column>
                             
-                            <p:column headerText="Fwd LCS Com" sortBy="#{dato.primerPar.fwdcomLCS}" width="120">
-                                <h:outputText value="#{dato.primerPar.fwdcomLCS}" />
+                            <p:column headerText="Align Fwd-Rev" sortBy="#{dato.primerPar.fwdcomLCS}" width="130">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.primerPar.fwdcomLCS}" />
                             </p:column>
                             
-                            <p:column headerText="Rev LCS Seq" sortBy="#{dato.primerPar.fwdseqLCS}" width="120">
-                                <h:outputText value="#{dato.primerPar.revseqLCS}" />
+                            <p:column headerText="Align Rev-Fwd" sortBy="#{dato.primerPar.fwdseqLCS}" width="130">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.primerPar.revseqLCS}" />
                             </p:column>
                             
-                            <p:column headerText="Rev LCS Com" sortBy="#{dato.primerPar.fwdcomLCS}" width="120">
-                                <h:outputText value="#{dato.primerPar.revcomLCS}" />
+                            <p:column headerText="Align Rev-Rev" sortBy="#{dato.primerPar.fwdcomLCS}" width="130">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.primerPar.revcomLCS}" />
                             </p:column>
+                            <p:column headerText="Primer's Align" sortBy="#{dato.primerPar.frLCS}" width="130">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.primerPar.frLCS}" />
+                            </p:column>
+                            
+                            <p:column headerText="Primer-fwd Align" sortBy="#{dato.primerPar.fwdLCS}" width="140">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.primerPar.fwdLCS}" />
+                            </p:column>
+                            
+                            <p:column headerText="Primer-rev Align" sortBy="#{dato.primerPar.revLCS}" width="140">
+                                <h:outputText style="float:left;overflow-y: auto;width: 100%;" value="#{dato.primerPar.revLCS}" />
+                            </p:column>
+                            
                             <f:facet name="footer">
                                 <p:commandButton process="tabla4" update=":form:primerDetail" icon="ui-icon-search" value="View" oncomplete="PF('primerDialog').show()" />
                             </f:facet>
@@ -241,32 +248,32 @@
                         <p:graphicImage library="images" name="loader.gif"/>
                     </p:blockUI>
                     
-                    <p:dialog header="Primer Info" widgetVar="primerDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                        <p:outputPanel id="primerDetail" style="text-align:center;">
+                    <p:dialog header="Primer's Info" widgetVar="primerDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="primerDetail">
                             <p:panelGrid  columns="2" rendered="#{not empty primerG1.selected}" columnClasses="label,value">
                                 
-                                <h:outputLabel value="First cycle's"/>
+                                <h:outputLabel id="label-fc" value="First cycles" style="text-align:center;"/>
                                 <br/>
                                 <h:outputLabel value="Primer Fwd"/>
                                 <h:outputText value="#{primerG1.selected.primerFirstCycle.pri_seq_fw}" />
-                                <h:outputLabel value="Tm Fwd"/>
-                                <h:outputText value="#{primerG1.selected.primerFirstCycle.tmf}" />
                                 <h:outputLabel value="Primer Rev"/>
                                 <h:outputText value="#{primerG1.selected.primerFirstCycle.pri_seq_rv}" />
-                                <h:outputLabel value="Tm Rev"/>
-                                <h:outputText value="#{primerG1.selected.primerFirstCycle.tmr}" />
-                                
-                                <h:outputLabel value="Extention cycle's"/>
+                                <h:outputLabel value="Tm's Fwd-Rev"/>
+                                <h:outputText value="#{primerG1.selected.primerFirstCycle.tmf} - #{primerG1.selected.primerFirstCycle.tmr}" />
+                                <h:outputLabel value="GC Content F-R"/>
+                                <h:outputText value="#{primerG1.selected.primerFirstCycle.GCf} - #{primerG1.selected.primerFirstCycle.GCr}"/>
+                                <h:outputLabel id="label-ec" value="Extention cycles" style="text-align:center;"/>
                                 <br/>
                                 <h:outputLabel value="Primer Fwd:" />
                                 <h:outputText value="#{primerG1.selected.primerPar.pri_seq_fw}" />
-                                <h:outputLabel value="Tm Fwd:" />
-                                <h:outputText value="#{primerG1.selected.primerPar.tmf}" />
                                 <h:outputLabel value="Primer Rev:" />
                                 <h:outputText value="#{primerG1.selected.primerPar.pri_seq_rv}" />
-                                <h:outputLabel value="Tm Rev:" />
-                                <h:outputText value="#{primerG1.selected.primerPar.tmr}" />
+                                <h:outputLabel value="Tm's Fwd-Rev:" />
+                                <h:outputText value="#{primerG1.selected.primerPar.tmf} - #{primerG1.selected.primerPar.tmr}" />
+                                <h:outputLabel value="GC Content F-R"/>
+                                <h:outputText value="#{primerG1.selected.primerFirstCycle.GCf} - #{primerG1.selected.primerFirstCycle.GCr}"/>
                             </p:panelGrid>
+                            <p:commandButton value="Close" onclick="EnzymeViewDialog.hide()"/>
                         </p:outputPanel>
                     </p:dialog>
                     

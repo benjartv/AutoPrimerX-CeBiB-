@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import org.primefaces.util.ArrayUtils;
 
 /**
  *
@@ -78,19 +77,16 @@ public class PrimerEnzRes {
         System.out.println("Enzyme 2: " + sequence_back);
         
         List<PrimerEnzRes> primers_list = new ArrayList<PrimerEnzRes>();
-        for (int i = 0; i < primers.size(); i++) {
-            String seq_fwd = primers.get(i).pri_seq_fw;
-            String seq_rev = primers.get(i).pri_seq_rv;
+        for (PrimerRF primer : primers) {
+            String seq_fwd = primer.pri_seq_fw;
+            String seq_rev = primer.pri_seq_rv;
             seq_fwd = enzyme.getDnaTarget() + seq_fwd;
             seq_rev = sequence_back + seq_rev;
             List<Primer> primerext_fwd = new ArrayList<Primer>();
             List<Primer> primerext_rev = new ArrayList<Primer>();
-            
             char[] chars = "GACT".toCharArray();
-            
             String seq_ext_fwd = new String();
             String seq_ext_rev = new String();
-            
             //Primer's Enz1 bp: 1
             
             if (enzyme.getNumBasePair() == 1 && enzyme2.getNumBasePair() == 1) {
@@ -158,9 +154,9 @@ public class PrimerEnzRes {
                     Primer newPrimer_fwd = new Primer(seq_ext_fwd, Tmf, GCf, largof, "LCSseq", "LCSrev");
                     primerext_fwd.add(newPrimer_fwd);
                     for ( char e: chars )
-                     {
-                         for ( char f: chars )
-                         {
+                    {
+                        for ( char f: chars )
+                        {
                             seq_ext_rev = "" + d + e + f + seq_rev;
                             double Tmr;
                             double GCr;
@@ -170,25 +166,25 @@ public class PrimerEnzRes {
                             largor = seq_ext_rev.length();
                             Primer newPrimer_rev = new Primer(seq_ext_rev, Tmr, GCr, largor, "LCSseq", "LCSrev");
                             primerext_rev.add(newPrimer_rev);
-                         }
-                     }
+                        }
+                    }
                 }
             }
             if (enzyme.getNumBasePair() == 1 && enzyme2.getNumBasePair() == 4) {
                 for ( char c : chars )
-               {
-                   seq_ext_fwd = "" + c + seq_fwd;
-                   double Tmf;
-                   double GCf;
-                   int largof;
-                   Tmf = calculateTm(seq_ext_fwd);
-                   GCf = calculateGC(seq_ext_fwd);
-                   largof = seq_ext_fwd.length();
-                   Primer newPrimer_fwd = new Primer(seq_ext_fwd, Tmf, GCf, largof, "LCSseq", "LCSrev");
-                   primerext_fwd.add(newPrimer_fwd);
-                   for ( char d: chars )
-                   {
-                       for ( char e: chars )
+                {
+                    seq_ext_fwd = "" + c + seq_fwd;
+                    double Tmf;
+                    double GCf;
+                    int largof;
+                    Tmf = calculateTm(seq_ext_fwd);
+                    GCf = calculateGC(seq_ext_fwd);
+                    largof = seq_ext_fwd.length();
+                    Primer newPrimer_fwd = new Primer(seq_ext_fwd, Tmf, GCf, largof, "LCSseq", "LCSrev");
+                    primerext_fwd.add(newPrimer_fwd);
+                    for ( char d: chars )
+                    {
+                        for ( char e: chars )
                         {
                             for ( char f: chars )
                             {
@@ -203,8 +199,8 @@ public class PrimerEnzRes {
                                 primerext_rev.add(newPrimer_rev);
                             }
                         }
-                   }
-               }
+                    }
+                }
             }
             if (enzyme.getNumBasePair() == 1 && enzyme2.getNumBasePair() == 5) {
                 for ( char b: chars )
@@ -223,9 +219,9 @@ public class PrimerEnzRes {
                         for ( char d: chars )
                         {
                             for ( char e: chars )
-                             {
-                                 for ( char f: chars )
-                                 {
+                            {
+                                for ( char f: chars )
+                                {
                                     seq_ext_rev = "" + b + c + d + e + f + seq_rev;
                                     double Tmr;
                                     double GCr;
@@ -236,12 +232,11 @@ public class PrimerEnzRes {
                                     Primer newPrimer_rev = new Primer(seq_ext_rev, Tmr, GCr, largor, "LCSseq", "LCSrev");
                                     primerext_rev.add(newPrimer_rev);
                                 }
-                             }
+                            }
                         }
                     }
                 }
             }
-            
             //PRIMER'S Enz1 bp: 2
             
             if (enzyme.getNumBasePair() == 2 && enzyme2.getNumBasePair() == 1) {
@@ -302,7 +297,7 @@ public class PrimerEnzRes {
                 for ( char d: chars )
                 {
                     for ( char e: chars )
-                     {
+                    {
                         seq_ext_fwd = "" + d + e + seq_fwd;
                         double Tmf;
                         double GCf;
@@ -312,8 +307,8 @@ public class PrimerEnzRes {
                         largof = seq_ext_fwd.length();
                         Primer newPrimer_fwd = new Primer(seq_ext_fwd, Tmf, GCf, largof, "LCSseq", "LCSrev");
                         primerext_fwd.add(newPrimer_fwd);
-                         for ( char f: chars )
-                         {
+                        for ( char f: chars )
+                        {
                             seq_ext_rev = "" + d + e + f + seq_rev;
                             double Tmr;
                             double GCr;
@@ -323,25 +318,25 @@ public class PrimerEnzRes {
                             largor = seq_ext_rev.length();
                             Primer newPrimer_rev = new Primer(seq_ext_rev, Tmr, GCr, largor, "LCSseq", "LCSrev");
                             primerext_rev.add(newPrimer_rev);
-                         }
-                     }
+                        }
+                    }
                 }
             }
             if (enzyme.getNumBasePair() == 2 && enzyme2.getNumBasePair() == 4) {
                 for ( char c : chars )
-               {
-                   for ( char d: chars )
-                   {
-                       seq_ext_fwd = "" + c + d + seq_fwd;
-                       double Tmf;
-                       double GCf;
-                       int largof;
-                       Tmf = calculateTm(seq_ext_fwd);
-                       GCf = calculateGC(seq_ext_fwd);
-                       largof = seq_ext_fwd.length();
-                       Primer newPrimer_fwd = new Primer(seq_ext_fwd, Tmf, GCf, largof, "LCSseq", "LCSrev");
-                       primerext_fwd.add(newPrimer_fwd);
-                       for ( char e: chars )
+                {
+                    for ( char d: chars )
+                    {
+                        seq_ext_fwd = "" + c + d + seq_fwd;
+                        double Tmf;
+                        double GCf;
+                        int largof;
+                        Tmf = calculateTm(seq_ext_fwd);
+                        GCf = calculateGC(seq_ext_fwd);
+                        largof = seq_ext_fwd.length();
+                        Primer newPrimer_fwd = new Primer(seq_ext_fwd, Tmf, GCf, largof, "LCSseq", "LCSrev");
+                        primerext_fwd.add(newPrimer_fwd);
+                        for ( char e: chars )
                         {
                             for ( char f: chars )
                             {
@@ -356,8 +351,8 @@ public class PrimerEnzRes {
                                 primerext_rev.add(newPrimer_rev);
                             }
                         }
-                   }
-               }
+                    }
+                }
             }
             if (enzyme.getNumBasePair() == 2 && enzyme2.getNumBasePair() == 5) {
                 for ( char b: chars )
@@ -376,9 +371,9 @@ public class PrimerEnzRes {
                         for ( char d: chars )
                         {
                             for ( char e: chars )
-                             {
-                                 for ( char f: chars )
-                                 {
+                            {
+                                for ( char f: chars )
+                                {
                                     seq_ext_rev = "" + b + c + d + e + f + seq_rev;
                                     double Tmr;
                                     double GCr;
@@ -389,12 +384,11 @@ public class PrimerEnzRes {
                                     Primer newPrimer_rev = new Primer(seq_ext_rev, Tmr, GCr, largor, "LCSseq", "LCSrev");
                                     primerext_rev.add(newPrimer_rev);
                                 }
-                             }
+                            }
                         }
                     }
                 }
             }
-            
             //PRIMER'S Enz1 bp: 3
             
             if (enzyme.getNumBasePair() == 3 && enzyme2.getNumBasePair() == 1) {
@@ -410,9 +404,9 @@ public class PrimerEnzRes {
                     Primer newPrimer_rev = new Primer(seq_ext_rev, Tmr, GCr, largor, "LCSseq", "LCSrev");
                     primerext_rev.add(newPrimer_rev);
                     for ( char e: chars )
-                     {
-                         for ( char f: chars )
-                         {
+                    {
+                        for ( char f: chars )
+                        {
                             seq_ext_fwd = "" + d + e + f + seq_fwd;
                             double Tmf;
                             double GCf;
@@ -422,15 +416,15 @@ public class PrimerEnzRes {
                             largof = seq_ext_fwd.length();
                             Primer newPrimer_fwd = new Primer(seq_ext_fwd, Tmf, GCf, largof, "LCSseq", "LCSrev");
                             primerext_fwd.add(newPrimer_fwd);
-                         }
-                     }
+                        }
+                    }
                 }
             }
             if (enzyme.getNumBasePair() == 3 && enzyme2.getNumBasePair() == 2) {
                 for ( char d: chars )
                 {
                     for ( char e: chars )
-                     {
+                    {
                         seq_ext_rev = "" + d + e + seq_rev;
                         double Tmr;
                         double GCr;
@@ -440,8 +434,8 @@ public class PrimerEnzRes {
                         largor = seq_ext_rev.length();
                         Primer newPrimer_rev = new Primer(seq_ext_rev, Tmr, GCr, largor, "LCSseq", "LCSrev");
                         primerext_rev.add(newPrimer_rev);
-                         for ( char f: chars )
-                         {
+                        for ( char f: chars )
+                        {
                             seq_ext_fwd = "" + d + e + f + seq_fwd;
                             double Tmf;
                             double GCf;
@@ -451,17 +445,17 @@ public class PrimerEnzRes {
                             largof = seq_ext_fwd.length();
                             Primer newPrimer_fwd = new Primer(seq_ext_fwd, Tmf, GCf, largof, "LCSseq", "LCSrev");
                             primerext_fwd.add(newPrimer_fwd);
-                         }
-                     }
+                        }
+                    }
                 }
             }
             if (enzyme.getNumBasePair() == 3 && enzyme2.getNumBasePair() == 3) {
                 for ( char d: chars )
                 {
                     for ( char e: chars )
-                     {
-                         for ( char f: chars )
-                         {
+                    {
+                        for ( char f: chars )
+                        {
                             seq_ext_rev = "" + d + e + f + seq_rev;
                             seq_ext_fwd = "" + d + e + f + seq_fwd;
                             double Tmf;
@@ -482,16 +476,16 @@ public class PrimerEnzRes {
 
                             primerext_fwd.add(newPrimer_fwd);
                             primerext_rev.add(newPrimer_rev);
-                         }
-                     }
+                        }
+                    }
                 }
             }
             if (enzyme.getNumBasePair() == 3 && enzyme2.getNumBasePair() == 4) {
                 for ( char c : chars )
-               {
-                   for ( char d: chars )
-                   {
-                       for ( char e: chars )
+                {
+                    for ( char d: chars )
+                    {
+                        for ( char e: chars )
                         {
                             seq_ext_fwd = "" + c + d + e + seq_fwd;
                             double Tmf;
@@ -515,8 +509,8 @@ public class PrimerEnzRes {
                                 primerext_rev.add(newPrimer_rev);
                             }
                         }
-                   }
-               }
+                    }
+                }
             }
             if (enzyme.getNumBasePair() == 3 && enzyme2.getNumBasePair() == 5) {
                 for ( char b: chars )
@@ -535,9 +529,9 @@ public class PrimerEnzRes {
                             Primer newPrimer_fwd = new Primer(seq_ext_fwd, Tmf, GCf, largof, "LCSseq", "LCSrev");
                             primerext_fwd.add(newPrimer_fwd);
                             for ( char e: chars )
-                             {
-                                 for ( char f: chars )
-                                 {
+                            {
+                                for ( char f: chars )
+                                {
                                     seq_ext_rev = "" + b + c + d + e + f + seq_rev;
                                     double Tmr;
                                     double GCr;
@@ -548,17 +542,16 @@ public class PrimerEnzRes {
                                     Primer newPrimer_rev = new Primer(seq_ext_rev, Tmr, GCr, largor, "LCSseq", "LCSrev");
                                     primerext_rev.add(newPrimer_rev);
                                 }
-                             }
+                            }
                         }
                     }
                 }
             }
-            
             //PRIMER'S Enz1 bp: 4
             
             if (enzyme.getNumBasePair() == 4 && enzyme2.getNumBasePair() == 1) {
                 for ( char c : chars )
-               {
+                {
                     seq_ext_rev = "" + c + seq_rev;
                     double Tmr;
                     double GCr;
@@ -568,9 +561,9 @@ public class PrimerEnzRes {
                     largor = seq_ext_rev.length();
                     Primer newPrimer_rev = new Primer(seq_ext_rev, Tmr, GCr, largor, "LCSseq", "LCSrev");
                     primerext_rev.add(newPrimer_rev);
-                   for ( char d: chars )
-                   {
-                       for ( char e: chars )
+                    for ( char d: chars )
+                    {
+                        for ( char e: chars )
                         {
                             for ( char f: chars )
                             {
@@ -585,14 +578,14 @@ public class PrimerEnzRes {
                                 primerext_fwd.add(newPrimer_fwd);
                             }
                         }
-                   }
-               }
+                    }
+                }
             }
             if (enzyme.getNumBasePair() == 4 && enzyme2.getNumBasePair() == 2) {
                 for ( char c : chars )
-               {
-                   for ( char d: chars )
-                   {
+                {
+                    for ( char d: chars )
+                    {
                         seq_ext_rev = "" + c + d + seq_rev;
                         double Tmr;
                         double GCr;
@@ -602,7 +595,7 @@ public class PrimerEnzRes {
                         largor = seq_ext_rev.length();
                         Primer newPrimer_rev = new Primer(seq_ext_rev, Tmr, GCr, largor, "LCSseq", "LCSrev");
                         primerext_rev.add(newPrimer_rev);
-                       for ( char e: chars )
+                        for ( char e: chars )
                         {
                             for ( char f: chars )
                             {
@@ -617,15 +610,15 @@ public class PrimerEnzRes {
                                 primerext_fwd.add(newPrimer_fwd);
                             }
                         }
-                   }
-               }
+                    }
+                }
             }
             if (enzyme.getNumBasePair() == 4 && enzyme2.getNumBasePair() == 3) {
                 for ( char c : chars )
-               {
-                   for ( char d: chars )
-                   {
-                       for ( char e: chars )
+                {
+                    for ( char d: chars )
+                    {
+                        for ( char e: chars )
                         {
                             seq_ext_rev = "" + c + d + e + seq_rev;
                             double Tmr;
@@ -649,15 +642,15 @@ public class PrimerEnzRes {
                                 primerext_fwd.add(newPrimer_fwd);
                             }
                         }
-                   }
-               }
+                    }
+                }
             }
             if (enzyme.getNumBasePair() == 4 && enzyme2.getNumBasePair() == 4) {
                 for ( char c : chars )
-               {
-                   for ( char d: chars )
-                   {
-                       for ( char e: chars )
+                {
+                    for ( char d: chars )
+                    {
+                        for ( char e: chars )
                         {
                             for ( char f: chars )
                             {
@@ -683,8 +676,8 @@ public class PrimerEnzRes {
                                 primerext_rev.add(newPrimer_rev);
                             }
                         }
-                   }
-               }
+                    }
+                }
             }
             if (enzyme.getNumBasePair() == 4 && enzyme2.getNumBasePair() == 5) {
                 for ( char b: chars )
@@ -694,7 +687,7 @@ public class PrimerEnzRes {
                         for ( char d: chars )
                         {
                             for ( char e: chars )
-                             {
+                            {
                                 seq_ext_fwd = "" + b + c + d + e + seq_fwd;
                                 double Tmf;
                                 double GCf;
@@ -704,8 +697,8 @@ public class PrimerEnzRes {
                                 largof = seq_ext_fwd.length();
                                 Primer newPrimer_fwd = new Primer(seq_ext_fwd, Tmf, GCf, largof, "LCSseq", "LCSrev");
                                 primerext_fwd.add(newPrimer_fwd);
-                                 for ( char f: chars )
-                                 {
+                                for ( char f: chars )
+                                {
                                     seq_ext_rev = "" + b + c + d + e + f + seq_rev;
                                     double Tmr;
                                     double GCr;
@@ -716,12 +709,11 @@ public class PrimerEnzRes {
                                     Primer newPrimer_rev = new Primer(seq_ext_rev, Tmr, GCr, largor, "LCSseq", "LCSrev");
                                     primerext_rev.add(newPrimer_rev);
                                 }
-                             }
+                            }
                         }
                     }
                 }
             }
-            
             //PRIMER'S Enz1 bp: 5
             
             if (enzyme.getNumBasePair() == 5 && enzyme2.getNumBasePair() == 1) {
@@ -741,9 +733,9 @@ public class PrimerEnzRes {
                         for ( char d: chars )
                         {
                             for ( char e: chars )
-                             {
-                                 for ( char f: chars )
-                                 {
+                            {
+                                for ( char f: chars )
+                                {
                                     seq_ext_fwd = "" + b + c + d + e + f + seq_fwd;
                                     double Tmf;
                                     double GCf;
@@ -754,7 +746,7 @@ public class PrimerEnzRes {
                                     Primer newPrimer_fwd = new Primer(seq_ext_fwd, Tmf, GCf, largof, "LCSseq", "LCSrev");
                                     primerext_fwd.add(newPrimer_fwd);
                                 }
-                             }
+                            }
                         }
                     }
                 }
@@ -776,9 +768,9 @@ public class PrimerEnzRes {
                         for ( char d: chars )
                         {
                             for ( char e: chars )
-                             {
-                                 for ( char f: chars )
-                                 {
+                            {
+                                for ( char f: chars )
+                                {
                                     seq_ext_fwd = "" + b + c + d + e + f + seq_fwd;
                                     double Tmf;
                                     double GCf;
@@ -789,7 +781,7 @@ public class PrimerEnzRes {
                                     Primer newPrimer_fwd = new Primer(seq_ext_fwd, Tmf, GCf, largof, "LCSseq", "LCSrev");
                                     primerext_fwd.add(newPrimer_fwd);
                                 }
-                             }
+                            }
                         }
                     }
                 }
@@ -811,9 +803,9 @@ public class PrimerEnzRes {
                             Primer newPrimer_rev = new Primer(seq_ext_rev, Tmr, GCr, largor, "LCSseq", "LCSrev");
                             primerext_rev.add(newPrimer_rev);
                             for ( char e: chars )
-                             {
-                                 for ( char f: chars )
-                                 {
+                            {
+                                for ( char f: chars )
+                                {
                                     seq_ext_fwd = "" + b + c + d + e + f + seq_fwd;
                                     double Tmf;
                                     double GCf;
@@ -824,7 +816,7 @@ public class PrimerEnzRes {
                                     Primer newPrimer_fwd = new Primer(seq_ext_fwd, Tmf, GCf, largof, "LCSseq", "LCSrev");
                                     primerext_fwd.add(newPrimer_fwd);
                                 }
-                             }
+                            }
                         }
                     }
                 }
@@ -837,7 +829,7 @@ public class PrimerEnzRes {
                         for ( char d: chars )
                         {
                             for ( char e: chars )
-                             {
+                            {
                                 seq_ext_rev = "" + b + c + d + e + seq_rev;
                                 double Tmr;
                                 double GCr;
@@ -847,8 +839,8 @@ public class PrimerEnzRes {
                                 largor = seq_ext_rev.length();
                                 Primer newPrimer_rev = new Primer(seq_ext_rev, Tmr, GCr, largor, "LCSseq", "LCSrev");
                                 primerext_rev.add(newPrimer_rev);
-                                 for ( char f: chars )
-                                 {
+                                for ( char f: chars )
+                                {
                                     seq_ext_fwd = "" + b + c + d + e + f + seq_fwd;
                                     double Tmf;
                                     double GCf;
@@ -859,7 +851,7 @@ public class PrimerEnzRes {
                                     Primer newPrimer_fwd = new Primer(seq_ext_fwd, Tmf, GCf, largof, "LCSseq", "LCSrev");
                                     primerext_fwd.add(newPrimer_fwd);
                                 }
-                             }
+                            }
                         }
                     }
                 }
@@ -872,9 +864,9 @@ public class PrimerEnzRes {
                         for ( char d: chars )
                         {
                             for ( char e: chars )
-                             {
-                                 for ( char f: chars )
-                                 {
+                            {
+                                for ( char f: chars )
+                                {
                                     seq_ext_rev = "" + b + c + d + e + f + seq_rev;
                                     seq_ext_fwd = "" + b + c + d + e + f + seq_fwd;
                                     double Tmf;
@@ -896,22 +888,18 @@ public class PrimerEnzRes {
                                     primerext_fwd.add(newPrimer_fwd);
                                     primerext_rev.add(newPrimer_rev);
                                 }
-                             }
+                            }
                         }
                     }
                 }
             }
-            
-            
-           
             System.out.println("Primer's generados");
             System.out.println("Calculando mejores primers...");
             List<PrimerRF> parcial_primer_list = new ArrayList<PrimerRF>();
             parcial_primer_list = findbestPrimers(primerext_fwd, primerext_rev, seq, com);
-            PrimerEnzRes primer_ext_final1 = new PrimerEnzRes(parcial_primer_list.get(0), primers.get(i), enzyme, enzyme2);
-            PrimerEnzRes primer_ext_final2 = new PrimerEnzRes(parcial_primer_list.get(1), primers.get(i), enzyme, enzyme2);
-            PrimerEnzRes primer_ext_final3 = new PrimerEnzRes(parcial_primer_list.get(2), primers.get(i), enzyme, enzyme2);
-            
+            PrimerEnzRes primer_ext_final1 = new PrimerEnzRes(parcial_primer_list.get(0), primer, enzyme, enzyme2);
+            PrimerEnzRes primer_ext_final2 = new PrimerEnzRes(parcial_primer_list.get(1), primer, enzyme, enzyme2);
+            PrimerEnzRes primer_ext_final3 = new PrimerEnzRes(parcial_primer_list.get(2), primer, enzyme, enzyme2);
             primers_list.add(primer_ext_final1);
             primers_list.add(primer_ext_final2);
             primers_list.add(primer_ext_final3);
@@ -969,79 +957,6 @@ public class PrimerEnzRes {
         return GC;
     }
     
-    public static String LCSAlgorithm(String a, String b) {
-		int n = a.length();
-		int m = b.length();
-		int S[][] = new int[n+1][m+1];
-		int R[][] = new int[n+1][m+1];
-		int ii, jj;
-
-		// It is important to use <=, not <.  The next two for-loops are initialization
-		for(ii = 0; ii <= n; ++ii) {
-			S[ii][0] = 0;
-			R[ii][0] = UP;
-		}
-		for(jj = 0; jj <= m; ++jj) {
-			S[0][jj] = 0;
-			R[0][jj] = LEFT;
-		}
-
-		// This is the main dynamic programming loop that computes the score and
-		// backtracking arrays.
-		for(ii = 1; ii <= n; ++ii) {
-			for(jj = 1; jj <= m; ++jj) { 
-	
-				if( a.charAt(ii-1) == b.charAt(jj-1) ) {
-					S[ii][jj] = S[ii-1][jj-1] + 1;
-					R[ii][jj] = UP_AND_LEFT;
-				}
-
-				else {
-					S[ii][jj] = S[ii-1][jj-1] + 0;
-					R[ii][jj] = NEITHER;
-				}
-
-				if( S[ii-1][jj] >= S[ii][jj] ) {	
-					S[ii][jj] = S[ii-1][jj];
-					R[ii][jj] = UP;
-				}
-
-				if( S[ii][jj-1] >= S[ii][jj] ) {
-					S[ii][jj] = S[ii][jj-1];
-					R[ii][jj] = LEFT;
-				}
-			}
-		}
-
-		// The length of the longest substring is S[n][m]
-		ii = n; 
-		jj = m;
-		int pos = S[ii][jj] - 1;
-		char lcs[] = new char[ pos+1 ];
-
-		// Trace the backtracking matrix.
-		while( ii > 0 || jj > 0 ) {
-			if( R[ii][jj] == UP_AND_LEFT ) {
-				ii--;
-				jj--;
-				lcs[pos--] = a.charAt(ii);
-			}
-	
-			else if( R[ii][jj] == UP ) {
-				ii--;
-			}
-	
-			else if( R[ii][jj] == LEFT ) {
-				jj--;
-			}
-		}
-
-		return new String(lcs);
-	}
-    
-    
-    
-    
     public static char complemNUCL(char nucleotido){
         char resp;
         resp = 'X';
@@ -1094,22 +1009,26 @@ public class PrimerEnzRes {
 
     public static List<PrimerRF> findbestPrimers(List<Primer> p_fwd, List<Primer> p_rv, String seq, String com) {
         List<PrimerRF> primers_list = new ArrayList<PrimerRF>();
-        for (int i = 0; i < p_fwd.size(); i++) {
-            for (int j = 0; j < p_rv.size(); j++) {
+        for (Primer p_fwd1 : p_fwd) {
+            for (Primer p_rv1 : p_rv) {
                 //System.out.println("Tm fwd: "+ p_fwd.get(i).Tm);
                 //System.out.println("Tm rev: "+ p_rv.get(j).Tm);
                 //System.out.println("Tm delta: " + Math.abs(p_fwd.get(i).Tm - p_rv.get(j).Tm));
-                if (Math.abs(p_fwd.get(i).Tm - p_rv.get(j).Tm) <= 1.00) {
+                if (Math.abs(p_fwd1.Tm - p_rv1.Tm) <= 1.00) {
                     //System.out.println("MATCH");
-                    double TmP = p_fwd.get(i).Tm + p_rv.get(j).Tm;
+                    double TmP = p_fwd1.Tm + p_rv1.Tm;
                     TmP = TmP / 2;
                     TmP = (double)Math.round(TmP * 100d) / 100d;
-                    double TmD = Math.abs(p_fwd.get(i).Tm - p_rv.get(j).Tm);
+                    double TmD = Math.abs(p_fwd1.Tm - p_rv1.Tm);
                     TmD = (double)Math.round(TmD * 100d) / 100d;
-                    PrimerRF pmatch = new PrimerRF(ids, p_fwd.get(i).seq, p_rv.get(j).seq, p_fwd.get(i).largo, p_rv.get(j).largo,
-                            p_fwd.get(i).Tm, p_rv.get(j).Tm, TmD, TmP, p_fwd.get(i).GC,
-                            p_rv.get(j).GC, alignPrimer(seq, p_fwd.get(i).seq), alignPrimer(com, p_fwd.get(i).seq), 
-                            alignPrimer(seq, p_rv.get(j).seq), alignPrimer(com, p_rv.get(j).seq), LCSAlgorithm(p_fwd.get(i).seq, p_rv.get(j).seq));
+                    String pfwd_rev = new StringBuilder(p_fwd1.seq).reverse().toString();
+                    String prev_rev = new StringBuilder(p_rv1.seq).reverse().toString();
+                    PrimerRF pmatch = new PrimerRF(ids, p_fwd1.seq, p_rv1.seq, p_fwd1.largo, p_rv1.largo, p_fwd1.Tm,
+                            p_rv1.Tm, TmD, TmP, p_fwd1.GC, p_rv1.GC, 
+                            alignPrimer(com, p_fwd1.seq), alignPrimer2(seq, p_fwd1.seq),
+                            alignPrimer(seq, p_rv1.seq), alignPrimer2(com, p_rv1.seq),
+                            alignPrimer2(pfwd_rev, p_fwd1.seq), alignPrimer2(prev_rev, p_rv1.seq),
+                            alignPrimer2(p_fwd1.seq, p_rv1.seq));
                     primers_list.add(pmatch);
                     ids += 1;
                 }
@@ -1132,6 +1051,35 @@ public class PrimerEnzRes {
         }
         String seq_blanks = new String(blanks);
         String seq_target = seq_blanks + seq.substring(primer.length()) + seq_blanks;
+        
+        String match = "";
+        String match2 = "";
+        
+        for (int i = 0; i < seq.length(); i++) {
+            for (int j = 0; j < primer.length(); j++) {
+                if (seq_target.charAt(i+j) == complemNUCL(primer.charAt(j))) {
+                    match2 = match2 + seq_target.charAt(i+j);
+                }
+                else{
+                    if (match.length() < match2.length()) {
+                        match = match2;
+                    }
+                    match2 = "";
+                }
+            }
+        }
+        double pTM = calculateTm(match);
+        match = match + " - " + pTM;
+        return match;
+    }
+    
+    public static String alignPrimer2(String seq, String primer){
+        char[] blanks = new char[primer.length()];
+        for (int i = 0; i < primer.length(); i++) {
+            blanks[i] = '-';
+        }
+        String seq_blanks = new String(blanks);
+        String seq_target = seq_blanks + seq + seq_blanks;
         
         String match = "";
         String match2 = "";
