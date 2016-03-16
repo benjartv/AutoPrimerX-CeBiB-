@@ -16,8 +16,9 @@
 			<b:container>
 				<h3>Primer's design for Gibson assembly dna fragments</h3>
 
-				<h:form>
-					<p:panelGrid columns="8" margin="15px">
+				<h:form  >
+				<h:panelGrid cellpadding="2" style="width:822px" >
+					<p:panelGrid columns="8" margin="15px" layout="grid"  >
 						<p:outputLabel for="tm" value="TM min:"
 							style="text-align:right; width:150px;" />
 						<p:inputText id="tm" value="#{primerG2.TM}" style="width:150px"
@@ -83,9 +84,12 @@
 							<h:outputText value="This is a Modal Dialog." />
 						</p:dialog>
 					</p:panelGrid>
+					</h:panelGrid>
 
 				</h:form>
+				<p:separator />
 				<h:form>
+				
 					<h:panelGrid cellpadding="2">
 						<p:panelGrid columns="5" cellpadding="4">
 							<p:outputLabel for="input1" value="Sequence name:"
