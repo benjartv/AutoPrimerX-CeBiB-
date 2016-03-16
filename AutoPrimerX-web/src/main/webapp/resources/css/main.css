@@ -349,3 +349,24 @@ border: none;
     margin-right: 10px;
     margin-bottom: 10px;
 }
+#commnetbtn{
+    float:  left;
+    position:  absolute;
+    padding-top: 15px;
+}
+.commnetbtn{
+    margin-left: 1100px;
+    position:absolute;
+    z-index:100;
+    background-image: none;
+    color:#ffffff;
+    font-weight: normal;
+    background-color: #4a9d7a;
+    width: 200px;
+}
+#commnetbtn a{
+    text-decoration: none;
+}
+#commnetbtn a:hover{
+    color: #c7cbc9;
+}
