@@ -40,6 +40,10 @@
                 <b:navLink href="/faces/primerg2/primerg2.xhtml" value="PRIMERS DESIGN"></b:navLink>
                 <b:navLink href="/faces/primerg3/index.xhtml" value="MICROORGANISMS"></b:navLink>
                 <b:navLink href="/faces/about.xhtml" value="ABOUT" ></b:navLink>
+                
+                <h:form>
+                <p:commandButton id="createButton"  value="#{bundle.Create}" actionListener="#{commentController.prepareCreate}" update=":CommentCreateForm" oncomplete="PF('CommentCreateDialog').show()"/>
+                </h:form>
             </b:navbarLinks>
         </b:navBar>
         <p:growl id="growl" life="2000" />
@@ -51,6 +55,8 @@
             <p ><h4 class="footer-content"><i class="fa fa-shield fa-rotate-270"></i> Project Developed by Bioinformatics group USACH</h4></p>
 
         </div>
+        <ui:include src="/comments/Create.xhtml"/>
+            
     </h:body>
 
 
