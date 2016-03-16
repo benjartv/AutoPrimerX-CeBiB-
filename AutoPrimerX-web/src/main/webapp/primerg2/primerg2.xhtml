@@ -16,13 +16,21 @@
 			<b:container>
 				<h3>Primer's design for Gibson assembly dna fragments</h3>
 
-				<h:form>
-					<p:panelGrid columns="6" margin="15px">
+				<h:form  >
+				<h:panelGrid cellpadding="2" style="width:822px" >
+					<p:panelGrid columns="8" margin="15px" layout="grid"  >
 						<p:outputLabel for="tm" value="TM min:"
 							style="text-align:right; width:150px;" />
 						<p:inputText id="tm" value="#{primerG2.TM}" style="width:150px"
 							required="true" requiredMessage="Ingrese valor TM"></p:inputText>
-						
+
+						<p:commandLink class="glyphicon glyphicon-question-sign"
+							onclick="PF('dlg1').show();" style="width:30px">
+						</p:commandLink>
+						<p:dialog header="Modal Dialog" widgetVar="dlg1" modal="true"
+							height="100">
+							<h:outputText value="This is a Modal Dialog." />
+						</p:dialog>
 
 
 						<p:outputLabel for="tmmax" value="TM max:"
@@ -30,53 +38,85 @@
 						<p:inputText id="tmmax" value="#{primerG2.TMprimer}"
 							style="width:150px" required="true"
 							requiredMessage="Ingrese valor TM"></p:inputText>
+						<p:commandLink class="glyphicon glyphicon-question-sign"
+							onclick="PF('dlg2').show();" style="width:30px">
+						</p:commandLink>
+						<p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true"
+							height="100">
+							<h:outputText value="This is a Modal Dialog." />
+						</p:dialog>
 
 						<p:outputLabel for="tmh" value="TM Homology:"
 							style="text-align:right; width:150px;" />
 						<p:inputText id="tmh" value="#{primerG2.TMh}" style="width:150px"
 							required="true" requiredMessage="Ingrese valor TM"></p:inputText>
+						<p:commandLink class="glyphicon glyphicon-question-sign"
+							onclick="PF('dlg3').show();" style="width:30px">
+						</p:commandLink>
+						<p:dialog header="Modal Dialog" widgetVar="dlg3" modal="true"
+							height="100">
+							<h:outputText value="This is a Modal Dialog." />
+						</p:dialog>
 
 						<p:outputLabel for="tolerance" value="Tolerance:"
 							style="text-align:right; width:150px;" />
 						<p:inputText id="tolerance" value="#{primerG2.tolerance}"
 							style="width:150px" required="true"
 							requiredMessage="Ingrese valor tolerance"></p:inputText>
+						<p:commandLink class="glyphicon glyphicon-question-sign"
+							onclick="PF('dlg4').show();" style="width:30px">
+						</p:commandLink>
+						<p:dialog header="Modal Dialog" widgetVar="dlg4" modal="true"
+							height="100">
+							<h:outputText value="This is a Modal Dialog." />
+						</p:dialog>
 
 						<p:outputLabel for="sodio" value="Na concentration:"
 							style="text-align:right; width:150px;" />
 						<p:inputText id="sodio" value="#{primerG2.sodio}"
 							style="width:150px" required="true"
 							requiredMessage="Ingrese valor sodio"></p:inputText>
+						<p:commandLink class="glyphicon glyphicon-question-sign"
+							onclick="PF('dlg5').show();" style="width:30px">
+						</p:commandLink>
+						<p:dialog header="Modal Dialog" widgetVar="dlg5" modal="true"
+							height="100">
+							<h:outputText value="This is a Modal Dialog." />
+						</p:dialog>
 					</p:panelGrid>
-					<p:panelGrid columns="5" cellpadding="4">
-						<p:outputLabel for="input1" value="Sequence name:"
-							style="text-align:right; width:150px;" />
-						<p:inputText id="input1" value="#{primerG2.name}"
-							style="width:150px" required="true"
-							requiredMessage="Ingrese nombre de la secuencia"></p:inputText>
+					</h:panelGrid>
 
-						<p:outputLabel for="input2" value="Sequence (5' -> 3'):"
-							style="text-align:right; width:180px;" />
-						<p:inputTextarea id="input2" value="#{primerG2.sequence}"
-							autoResize="false" rows="3" cols="35"
-							onkeyup="javascript:this.value = this.value.toUpperCase();"
-							style="width:150px" required="true"
-							requiredMessage="Ingrese secuencia">
-							<f:validator validatorId="custom.seqValidator" />
-						</p:inputTextarea>
-
-
-						<h:commandButton id="add" value="Add sequence" update="inputs"
-							action="#{primerG2.add()}"
-							style="text-align:center; width:120px;" />
-						<p:tooltip id="tooltip_add" for="add" value="Add sequence"
-							trackMouse="true" />
-
-
-					</p:panelGrid>
 				</h:form>
+				<p:separator />
 				<h:form>
+				
 					<h:panelGrid cellpadding="2">
+						<p:panelGrid columns="5" cellpadding="4">
+							<p:outputLabel for="input1" value="Sequence name:"
+								style="text-align:right; width:150px;" />
+							<p:inputText id="input1" value="#{primerG2.name}"
+								style="width:150px" required="true"
+								requiredMessage="Ingrese nombre de la secuencia"></p:inputText>
+
+							<p:outputLabel for="input2" value="Sequence (5'->3'):"
+								style="text-align:right; width:150px;" />
+							<p:inputTextarea id="input2" value="#{primerG2.sequence}"
+								autoResize="false" rows="3" cols="35"
+								onkeyup="javascript:this.value = this.value.toUpperCase();"
+								style="width:150px" required="true"
+								requiredMessage="Ingrese secuencia">
+								<f:validator validatorId="custom.seqValidator" />
+							</p:inputTextarea>
+
+
+							<h:commandButton id="add" value="Add sequence" update="inputs"
+								action="#{primerG2.add()}"
+								style="text-align:center; width:120px;" />
+							<p:tooltip id="tooltip_add" for="add" value="Add sequence"
+								trackMouse="true" />
+
+
+						</p:panelGrid>
 
 						<p:dataTable id="inputs" value="#{primerG2.inputs}" var="dato"
 							resizableColumns="true" paginator="true" rows="5"
