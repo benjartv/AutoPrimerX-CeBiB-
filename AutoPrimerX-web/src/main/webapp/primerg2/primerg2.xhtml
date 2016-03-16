@@ -22,7 +22,7 @@
 						<p:inputText id="tm" value="#{primerG2.TM}" style="width:150px"
 							required="true" requiredMessage="Ingrese valor TM"></p:inputText>
 
-						<h:outputLabel for="tmmax" value="TM max:" style="width:150px" />
+						<h:outputLabel for="tmmax" value="TM max:" style="float:right; width:150px;" />
 						<p:inputText id="tmmax" value="#{primerG2.TMprimer}"
 							style="width:150px" required="true"
 							requiredMessage="Ingrese valor TM"></p:inputText>
@@ -65,8 +65,8 @@
 						</p:inputTextarea>
 
 
-						<h:commandButton id="add" value="add" update="inputs"
-							action="#{primerG2.add()}" style="width:150px" />
+						<h:commandButton id="add" value="Add sequence" update="inputs"
+							action="#{primerG2.add()}" style="float:center; width:120px;" />
 						<p:tooltip id="tooltip_add" for="add"
 							value="Add sequence" trackMouse="true" />
 
@@ -139,10 +139,11 @@
 							update="tabla, tabla2, tabla3, inputs, :growl"
 							action="#{primerG2.init()}" style="width:150px" />
 						<p:tooltip id="tooltip_clean" for="clean"
-							value="Set default values" trackMouse="true" />
+							value="Reset values" trackMouse="true" />
 
 
 					</h:panelGrid>
+					<p:separator />
 
 					<h:panelGrid cellpadding="2">
 						<p:dataTable id="tabla" var="dato" resizableColumns="true"
@@ -190,7 +191,7 @@
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Tm" style="width: 100px;">
+							<p:column headerText="TM" style="width: 100px;">
 								<h:outputText value="#{dato.tm}"
 									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
@@ -204,7 +205,7 @@
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Tm adjust" style="width: 100px;">
+							<p:column headerText="Adjust TM" style="width: 100px;">
 								<h:outputText value="#{dato.tmAdjust}"
 									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
@@ -267,7 +268,7 @@
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Tm" style="width: 100px;">
+							<p:column headerText="TM" style="width: 100px;">
 								<h:outputText value="#{dato.tm}"
 									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
@@ -281,7 +282,7 @@
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Tm adjust" style="width: 100px;">
+							<p:column headerText="Adjust TM" style="width: 100px;">
 								<h:outputText value="#{dato.tmAdjust}"
 									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
@@ -307,7 +308,7 @@
 									<p:graphicImage id="download_homologys"
 										value="/resources/images/excel.png" width="24"
 										style="text-aling:right;" />
-									<p:dataExporter type="xls" target="tabla2"
+									<p:dataExporter type="xls" target="tabla3"
 										fileName="Homology_regions" pageOnly="true" />
 								</h:commandLink>
 								<p:tooltip id="tooltip_download_homologys"
@@ -344,7 +345,7 @@
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Tm" style="width: 100px;">
+							<p:column headerText="TM" style="width: 100px;">
 								<h:outputText value="#{dato.tm}"
 									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
@@ -358,7 +359,7 @@
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Tm adjust" style="width: 100px;">
+							<p:column headerText="Adjust TM" style="width: 100px;">
 								<h:outputText value="#{dato.tmAdjust}"
 									style="float:left;overflow-y: auto;width: 100%;">
 									<f:convertNumber groupingUsed="true" minFractionDigits="2" />
