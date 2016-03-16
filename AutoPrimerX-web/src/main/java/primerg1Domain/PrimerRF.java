@@ -60,6 +60,26 @@ public class PrimerRF{
     public PrimerRF(){
     }
     
+    /**
+     * 
+     * @param p_fwd
+     * Lista de primers fwd
+     * @param p_rv
+     * Lista de primers fwd
+     * @param seq
+     * secuencia objetivo
+     * @param com
+     * complemento secuencia objetivo
+     * @return 
+     * lista con los mejores pares de primers
+     * Realiza una combinación entre los 2 conjuntos de primers y compara las temperaturas,
+     * solo guarda los pares cuya diferencia de tm sea menor a 1.
+     * Para los primers seleccionados realiza diferentes alinemientos:
+     *      Primer fwd con secuencia objetivo, complemento, primer fwd y primer rev
+     *      Primer rev con secuencia objetivo y complemento, primer fwd y primer rev
+     * ordena la lista por Tm.
+     */
+    
     public List<PrimerRF> findbestPrimers(List<Primer> p_fwd, List<Primer> p_rv, String seq, String comp_seq){
         List<PrimerRF> primers_list = new ArrayList<PrimerRF>();
         for (Primer p_fwd1 : p_fwd) {
@@ -89,6 +109,19 @@ public class PrimerRF{
         return primers_list;
     }
     
+    /**
+     * 
+     * @param seq
+     * secuencia objetivo
+     * @param primer
+     * primer o secuencia que se desea alinear
+     * @return 
+     * subsecuencia con mayor tm
+     * realiza un alinamiento base a base entre las 2 secuencias y busca la subsecuencia con mayor tm
+     * reporta dicha secuencia.
+     * elimina de la secuencia objetivo las primeras bases, para evitar que se reporte la zona de alinamiento
+     * ej Primer fwd con secuencia complementaria
+     */
     
     public String alignPrimer(String seq, String primer){
         char[] blanks = new char[primer.length()];
@@ -107,7 +140,7 @@ public class PrimerRF{
                     match2 = match2 + seq_target.charAt(i+j);
                 }
                 else{
-                    if (match.length() < match2.length()) {
+                    if (calculateTm(match) < calculateTm(match2)) {
                         match = match2;
                     }
                     match2 = "";
@@ -118,6 +151,19 @@ public class PrimerRF{
         match = match + " - " + pTM;
         return match;
     }
+    /**
+     * 
+     * @param seq
+     * secuencia objetivo
+     * @param primer
+     * primer o secuencia que se desea alinear
+     * @return 
+     * subsecuencia con mayor tm
+     * realiza un alinamiento base a base entre las 2 secuencias y busca la subsecuencia con mayor tm
+     * reporta dicha secuencia.
+     * no elimina bases de ninguna secuencia, utilizada par alinear secuencias y primers que no deberían
+     * alinearse en el PCR
+     */
     
     public String alignPrimer2(String seq, String primer){
         char[] blanks = new char[primer.length()];
@@ -136,7 +182,7 @@ public class PrimerRF{
                     match2 = match2 + seq_target.charAt(i+j);
                 }
                 else{
-                    if (match.length() < match2.length()) {
+                    if (calculateTm(match) < calculateTm(match2)) {
                         match = match2;
                     }
                     match2 = "";
@@ -147,6 +193,16 @@ public class PrimerRF{
         match = match + " - " + pTM;
         return match;
     }
+    
+    /**
+     * 
+     * @param seq
+     * secuencia a la que se quiere calcular la Tm
+     * @return
+     * Tm de la secuencia respectiva
+     * 
+     * Aplica las formulas de Tm para calcular la tm de la respectiva secuencia
+     */
     
     public double calculateTm(String seq){
         int A = 0;
@@ -184,6 +240,14 @@ public class PrimerRF{
         return Tm;
     }
     
+    /**
+     * 
+     * @param nucleotido
+     * @return 
+     * calcula la base respectiva a cada nucleotido
+     * A-T
+     * C-G
+     */
     
     public char complemNUCL(char nucleotido){
         char resp;

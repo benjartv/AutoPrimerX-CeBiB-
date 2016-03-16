@@ -33,6 +33,19 @@ public class Primer {
     public Primer() {
     }
     
+    /**
+     * 
+     * @param seq
+     * @param comp_seq
+     * @param largo1
+     * largo min de los primers
+     * @param largo2
+     * largo max de los primers
+     * @return 
+     * Calcula todos los primers entre los largos ingresados
+     */
+    
+    
     public List<Primer> createPrimer(String seq, String comp_seq, int largo1, int largo2){
         List<Primer> primer_list = new ArrayList<Primer>();
         for (int i = largo1; i <= largo2; i++) {
@@ -49,6 +62,19 @@ public class Primer {
         return primer_list;
     }
     
+    /**
+     * 
+     * @param seq
+     * secuencia objetivo
+     * @param primer
+     * primer o secuencia que se desea alinear
+     * @return 
+     * subsecuencia con mayor tm
+     * realiza un alinamiento base a base entre las 2 secuencias y busca la subsecuencia con mayor tm
+     * reporta dicha secuencia.
+     * elimina de la secuencia objetivo las primeras bases, para evitar que se reporte la zona de alinamiento
+     * ej Primer fwd con secuencia complementaria
+     */
     
     public String alignPrimer(String seq, String primer){
         char[] blanks = new char[primer.length()];
@@ -67,7 +93,7 @@ public class Primer {
                     match2 = match2 + seq_target.charAt(i+j);
                 }
                 else{
-                    if (match.length() < match2.length()) {
+                    if (calculateTm(match) < calculateTm(match2)) {
                         match = match2;
                     }
                     match2 = "";
@@ -78,6 +104,20 @@ public class Primer {
         match = match + " - " + pTM;
         return match;
     }
+    
+    /**
+     * 
+     * @param seq
+     * secuencia objetivo
+     * @param primer
+     * primer o secuencia que se desea alinear
+     * @return 
+     * subsecuencia con mayor tm
+     * realiza un alinamiento base a base entre las 2 secuencias y busca la subsecuencia con mayor tm
+     * reporta dicha secuencia.
+     * no elimina bases de ninguna secuencia, utilizada par alinear secuencias y primers que no deberían
+     * alinearse en el PCR
+     */
     
     public String alignPrimer2(String seq, String primer){
         char[] blanks = new char[primer.length()];
@@ -96,7 +136,7 @@ public class Primer {
                     match2 = match2 + seq_target.charAt(i+j);
                 }
                 else{
-                    if (match.length() < match2.length()) {
+                    if (calculateTm(match) < calculateTm(match2)) {
                         match = match2;
                     }
                     match2 = "";
@@ -107,6 +147,15 @@ public class Primer {
         match = match + " - " + pTM;
         return match;
     }
+    
+    /**
+     * 
+     * @param nucleotido
+     * @return 
+     * calcula la base respectiva a cada nucleotido
+     * A-T
+     * C-G
+     */
     
     public char complemNUCL(char nucleotido){
         char resp;
@@ -179,7 +228,15 @@ public class Primer {
 
     
     
-     
+     /**
+     * 
+     * @param seq
+     * secuencia a la que se quiere calcular la Tm
+     * @return
+     * Tm de la secuencia respectiva
+     * 
+     * Aplica las formulas de Tm para calcular la tm de la respectiva secuencia
+     */
     
     public double calculateTm(String seq){
         int A = 0;
@@ -217,6 +274,14 @@ public class Primer {
         return Tm1;
     }
     
+    /**
+     * 
+     * @param seq
+     * secuencia objetivo
+     * @return 
+     * calcula el % de bases G-C en la secuencia
+     */
+    
     public double calculateGC(String seq){
         double GC1;
         double cantidadGC = 0;
@@ -229,6 +294,14 @@ public class Primer {
         GC1 = (double)Math.round(GC1 * 100d) / 100d;
         return GC1;
     }
+    
+    /**
+     * 
+     * @param seq
+     * secuencia objetivo
+     * @return 
+     * Calcula la secuencia complementaria a la secuencia objetivo
+     */
     
     public String complemento(String seq){
         char[] charArray = new char[seq.length()];

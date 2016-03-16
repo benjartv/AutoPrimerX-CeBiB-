@@ -15,16 +15,22 @@ import java.util.List;
  *
  * @author MacBookPro
  */
+
+
+/**
+ * 
+ * objeto para primers con enzimas de restriccion
+ * primerPar, mejores pares de primers
+ * primerFirstCycle mejores pares de primers de los primeros ciclos (antes de usar enzimas)
+ * enzymeRes(2) enzimas de restricción
+ */
+
 public class PrimerEnzRes {
     PrimerRF primerPar;
     PrimerRF primerFirstCycle;
     Enzyme enzymeRes;
     Enzyme enzymeRes2;
     
-    private static final int NEITHER     = 0;
-    private static final int UP          = 1;
-    private static final int LEFT        = 2;
-    private static final int UP_AND_LEFT = 3;
     
     private static int ids = 0;
     
@@ -69,6 +75,31 @@ public class PrimerEnzRes {
     public void setEnzymeRes(Enzyme enzymeRes) {
         this.enzymeRes = enzymeRes;
     }
+    
+    /**
+     * 
+     * @param primers
+     * Lista de mejores primers de primeros ciclos
+     * @param enzyme
+     * enzima de restriccion para fwd
+     * @param enzyme2
+     * enzima de restriccion para rev
+     * @param seq
+     * secuencia objetivo
+     * @param com
+     * complemento de secuencia objetivo
+     * @return 
+     * Lista con mejores primers usando enzimas de restricción
+     * 
+     * A partir de las enzimas de restriccion seleccionadas, comienza a generar los primers por pasos:
+     *  1. agregar la secuencia de la enzima a cada primer
+     *  2. dependiendo de la enzima agregar las bases extra que la enzima requiera a la secuencia
+     *      genera todas las combinaciones
+     *  3. Función findbestPrimers para encontrar los mejores pares entre los conjuntos de primer fwd
+     * y de primer rev
+     * Solo guarda los mejores 3 pares para cada par de primer de los primeros ciclos
+     */
+    
     
     public List<PrimerEnzRes> addEnzyme(List<PrimerRF> primers, Enzyme enzyme, Enzyme enzyme2,  String seq, String com){
         System.out.println("Primers size: " + primers.size());
@@ -908,6 +939,16 @@ public class PrimerEnzRes {
         return primers_list;
     }
     
+    /**
+     * 
+     * @param seq
+     * secuencia a la que se quiere calcular la Tm
+     * @return
+     * Tm de la secuencia respectiva
+     * 
+     * Aplica las formulas de Tm para calcular la tm de la respectiva secuencia
+     */
+    
     public static double calculateTm(String seq){
         int A = 0;
         int C = 0;
@@ -944,6 +985,14 @@ public class PrimerEnzRes {
         return Tm;
     }
     
+    /**
+     * 
+     * @param seq
+     * secuencia objetivo
+     * @return 
+     * calcula el % de bases G-C en la secuencia
+     */
+    
     public double calculateGC(String seq){
         double GC;
         double cantidadGC = 0;
@@ -956,6 +1005,15 @@ public class PrimerEnzRes {
         GC = (double)Math.round(GC * 100d) / 100d;
         return GC;
     }
+    
+    /**
+     * 
+     * @param nucleotido
+     * @return 
+     * calcula la base respectiva a cada nucleotido
+     * A-T
+     * C-G
+     */
     
     public static char complemNUCL(char nucleotido){
         char resp;
@@ -977,6 +1035,14 @@ public class PrimerEnzRes {
         }
         return resp;
     }
+    
+    /**
+     * 
+     * @param seq
+     * secuencia objetivo
+     * @return 
+     * Calcula la secuencia complementaria a la secuencia objetivo
+     */
     
     public String complemento(String seq){
         char[] charArray = new char[seq.length()];
@@ -1005,7 +1071,25 @@ public class PrimerEnzRes {
         return comp_seq;
     }
     
-    
+    /**
+     * 
+     * @param p_fwd
+     * Lista de primers fwd
+     * @param p_rv
+     * Lista de primers fwd
+     * @param seq
+     * secuencia objetivo
+     * @param com
+     * complemento secuencia objetivo
+     * @return 
+     * lista con los mejores pares de primers
+     * Realiza una combinación entre los 2 conjuntos de primers y compara las temperaturas,
+     * solo guarda los pares cuya diferencia de tm sea menor a 1.
+     * Para los primers seleccionados realiza diferentes alinemientos:
+     *      Primer fwd con secuencia objetivo, complemento, primer fwd y primer rev
+     *      Primer rev con secuencia objetivo y complemento, primer fwd y primer rev
+     * ordena la lista por Tm.
+     */
 
     public static List<PrimerRF> findbestPrimers(List<Primer> p_fwd, List<Primer> p_rv, String seq, String com) {
         List<PrimerRF> primers_list = new ArrayList<PrimerRF>();
@@ -1044,6 +1128,21 @@ public class PrimerEnzRes {
         
         return primers_list;    
     }
+    
+    /**
+     * 
+     * @param seq
+     * secuencia objetivo
+     * @param primer
+     * primer o secuencia que se desea alinear
+     * @return 
+     * subsecuencia con mayor tm
+     * realiza un alinamiento base a base entre las 2 secuencias y busca la subsecuencia con mayor tm
+     * reporta dicha secuencia.
+     * elimina de la secuencia objetivo las primeras bases, para evitar que se reporte la zona de alinamiento
+     * ej Primer fwd con secuencia complementaria
+     */
+    
     public static String alignPrimer(String seq, String primer){
         char[] blanks = new char[primer.length()];
         for (int i = 0; i < primer.length(); i++) {
@@ -1061,7 +1160,7 @@ public class PrimerEnzRes {
                     match2 = match2 + seq_target.charAt(i+j);
                 }
                 else{
-                    if (match.length() < match2.length()) {
+                    if (calculateTm(match) < calculateTm(match2)) {
                         match = match2;
                     }
                     match2 = "";
@@ -1072,6 +1171,20 @@ public class PrimerEnzRes {
         match = match + " - " + pTM;
         return match;
     }
+    
+    /**
+     * 
+     * @param seq
+     * secuencia objetivo
+     * @param primer
+     * primer o secuencia que se desea alinear
+     * @return 
+     * subsecuencia con mayor tm
+     * realiza un alinamiento base a base entre las 2 secuencias y busca la subsecuencia con mayor tm
+     * reporta dicha secuencia.
+     * no elimina bases de ninguna secuencia, utilizada par alinear secuencias y primers que no deberían
+     * alinearse en el PCR
+     */
     
     public static String alignPrimer2(String seq, String primer){
         char[] blanks = new char[primer.length()];
@@ -1090,7 +1203,7 @@ public class PrimerEnzRes {
                     match2 = match2 + seq_target.charAt(i+j);
                 }
                 else{
-                    if (match.length() < match2.length()) {
+                    if (calculateTm(match) < calculateTm(match2)) {
                         match = match2;
                     }
                     match2 = "";
