@@ -7,7 +7,6 @@ package primerg1Domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import static javax.management.Query.value;
 
 /**
  *
@@ -29,17 +28,15 @@ public class PrimerRF{
     String fwdcomLCS;
     String revseqLCS;
     String revcomLCS;
+    String fwdLCS;
+    String revLCS;
     String frLCS;
     
     
-    private static final int NEITHER     = 0;
-    private static final int UP          = 1;
-    private static final int LEFT        = 2;
-    private static final int UP_AND_LEFT = 3;
     
     PrimerRF(int id, String pri_seq_fw, String pri_seq_rv, int length_fw, 
             int length_rv, double Tmf, double Tmr, double TmD, double TmP, double GCf, double GCr, 
-            String fwdseqLCS, String fwdcomLCS, String revseqLCS, String revcomLCS, String frLCS){
+            String fwdseqLCS, String fwdcomLCS, String revseqLCS, String revcomLCS, String fwdLCS, String revLCS, String frLCS){
         this.id = id;
         this.pri_seq_fw = pri_seq_fw;
         this.pri_seq_rv = pri_seq_rv;
@@ -55,30 +52,36 @@ public class PrimerRF{
         this.fwdcomLCS = fwdcomLCS;
         this.revseqLCS = revseqLCS;
         this.revcomLCS = revcomLCS;
+        this.fwdLCS = fwdLCS;
+        this.revLCS = revLCS;
         this.frLCS = frLCS;
     }
     
     public PrimerRF(){
     }
     
-    public List<PrimerRF> findbestPrimers(List<Primer> p_fwd, List<Primer> p_rv){
+    public List<PrimerRF> findbestPrimers(List<Primer> p_fwd, List<Primer> p_rv, String seq, String comp_seq){
         List<PrimerRF> primers_list = new ArrayList<PrimerRF>();
-        for (int i = 0; i < p_fwd.size(); i++) {
-            for (int j = 0; j < p_rv.size(); j++) {
+        for (Primer p_fwd1 : p_fwd) {
+            for (Primer p_rv1 : p_rv) {
                 //System.out.println("Tm fwd: "+ p_fwd.get(i).Tm);
                 //System.out.println("Tm rev: "+ p_rv.get(j).Tm);
                 //System.out.println("Tm delta: " + Math.abs(p_fwd.get(i).Tm - p_rv.get(j).Tm));
-                if (Math.abs(p_fwd.get(i).Tm - p_rv.get(j).Tm) <= 1.00) {
+                if (Math.abs(p_fwd1.Tm - p_rv1.Tm) <= 1.00) {
                     //System.out.println("MATCH");
-                    double TmP = p_fwd.get(i).Tm + p_rv.get(j).Tm;
-                    TmP = TmP / 2;
-                    TmP = (double)Math.round(TmP * 100d) / 100d;
-                    double TmD = Math.abs(p_fwd.get(i).Tm - p_rv.get(j).Tm);
-                    TmD = (double)Math.round(TmD * 100d) / 100d;
-                    PrimerRF pmatch = new PrimerRF(0, p_fwd.get(i).seq, p_rv.get(j).seq, p_fwd.get(i).largo, p_rv.get(j).largo,
-                            p_fwd.get(i).Tm, p_rv.get(j).Tm, TmD, TmP, p_fwd.get(i).GC,
-                            p_rv.get(j).GC, p_fwd.get(i).maxAF, p_fwd.get(i).maxAR, p_rv.get(j).maxAF, p_rv.get(j).maxAR, 
-                            LCSAlgorithm(p_fwd.get(i).seq, p_rv.get(j).seq));
+                    double TmP1 = p_fwd1.Tm + p_rv1.Tm;
+                    TmP1 = TmP1 / 2;
+                    TmP1 = (double)Math.round(TmP1 * 100d) / 100d;
+                    double TmD1 = Math.abs(p_fwd1.Tm - p_rv1.Tm);
+                    TmD1 = (double)Math.round(TmD1 * 100d) / 100d;
+                    String pfwd_rev = new StringBuilder(p_fwd1.seq).reverse().toString();
+                    String prev_rev = new StringBuilder(p_rv1.seq).reverse().toString();
+                    PrimerRF pmatch = new PrimerRF(0, p_fwd1.seq, p_rv1.seq, p_fwd1.largo, p_rv1.largo, p_fwd1.Tm,
+                            p_rv1.Tm, TmD1, TmP1, p_fwd1.GC, p_rv1.GC, 
+                            alignPrimer(comp_seq, p_fwd1.seq), alignPrimer2(seq, p_fwd1.seq),
+                            alignPrimer(seq, p_rv1.seq), alignPrimer2(comp_seq, p_rv1.seq),
+                            alignPrimer2(pfwd_rev, p_fwd1.seq), alignPrimer2(prev_rev, p_rv1.seq),
+                            alignPrimer2(p_fwd1.seq, p_rv1.seq));
                     primers_list.add(pmatch);
                 }
             }
@@ -87,164 +90,100 @@ public class PrimerRF{
     }
     
     
-    public static String LCSAlgorithm(String a, String b) {
-		int n = a.length();
-		int m = b.length();
-		int S[][] = new int[n+1][m+1];
-		int R[][] = new int[n+1][m+1];
-		int ii, jj;
-
-		// It is important to use <=, not <.  The next two for-loops are initialization
-		for(ii = 0; ii <= n; ++ii) {
-			S[ii][0] = 0;
-			R[ii][0] = UP;
-		}
-		for(jj = 0; jj <= m; ++jj) {
-			S[0][jj] = 0;
-			R[0][jj] = LEFT;
-		}
-
-		// This is the main dynamic programming loop that computes the score and
-		// backtracking arrays.
-		for(ii = 1; ii <= n; ++ii) {
-			for(jj = 1; jj <= m; ++jj) { 
-	
-				if( a.charAt(ii-1) == b.charAt(jj-1) ) {
-					S[ii][jj] = S[ii-1][jj-1] + 1;
-					R[ii][jj] = UP_AND_LEFT;
-				}
-
-				else {
-					S[ii][jj] = S[ii-1][jj-1] + 0;
-					R[ii][jj] = NEITHER;
-				}
-
-				if( S[ii-1][jj] >= S[ii][jj] ) {	
-					S[ii][jj] = S[ii-1][jj];
-					R[ii][jj] = UP;
-				}
-
-				if( S[ii][jj-1] >= S[ii][jj] ) {
-					S[ii][jj] = S[ii][jj-1];
-					R[ii][jj] = LEFT;
-				}
-			}
-		}
-
-		// The length of the longest substring is S[n][m]
-		ii = n; 
-		jj = m;
-		int pos = S[ii][jj] - 1;
-		char lcs[] = new char[ pos+1 ];
-
-		// Trace the backtracking matrix.
-		while( ii > 0 || jj > 0 ) {
-			if( R[ii][jj] == UP_AND_LEFT ) {
-				ii--;
-				jj--;
-				lcs[pos--] = a.charAt(ii);
-			}
-	
-			else if( R[ii][jj] == UP ) {
-				ii--;
-			}
-	
-			else if( R[ii][jj] == LEFT ) {
-				jj--;
-			}
-		}
-
-		return new String(lcs);
-	}
-    
-    
-    public List alignPrimer(String seq, String primer){
-        List matchList = new ArrayList();
-        for (int i = primer.length(); i < (seq.length()-primer.length()); i++) {
-            int LCS = 0;
-            int match = 0;
-            boolean flag = true;
+    public String alignPrimer(String seq, String primer){
+        char[] blanks = new char[primer.length()];
+        for (int i = 0; i < primer.length(); i++) {
+            blanks[i] = '-';
+        }
+        String seq_blanks = new String(blanks);
+        String seq_target = seq_blanks + seq.substring(primer.length()) + seq_blanks;
+        
+        String match = "";
+        String match2 = "";
+        
+        for (int i = 0; i < seq.length(); i++) {
             for (int j = 0; j < primer.length(); j++) {
-                if (seq.charAt(i+j) == complemNUCL(primer.charAt(j))){
-                    if (flag) {
-                        match = match + 1;
-                    }
-                    else{
-                        if (match > LCS) {
-                            LCS = match;
-                        }
-                        match = 1;
-                    }
+                if (seq_target.charAt(i+j) == complemNUCL(primer.charAt(j))) {
+                    match2 = match2 + seq_target.charAt(i+j);
                 }
                 else{
-                    flag = false;
+                    if (match.length() < match2.length()) {
+                        match = match2;
+                    }
+                    match2 = "";
                 }
             }
-            matchList.add(LCS);
         }
-        return matchList;
+        double pTM = calculateTm(match);
+        match = match + " - " + pTM;
+        return match;
     }
     
-    public List alignPrimer2(String seq, String seq2){
-        List matchList = new ArrayList();
+    public String alignPrimer2(String seq, String primer){
+        char[] blanks = new char[primer.length()];
+        for (int i = 0; i < primer.length(); i++) {
+            blanks[i] = '-';
+        }
+        String seq_blanks = new String(blanks);
+        String seq_target = seq_blanks + seq + seq_blanks;
         
-        /*if (seq2.length() >= seq.length()) {
-            for (int i = 0; i < seq.length(); i++) {
-                int LCS = 0;
-                int match = 0;
-                boolean flag = true;
-                if (seq.charAt(i) == complemNUCL(seq2.charAt(i))) {
-                    if (flag) {
-                        match = match + 1;
-                    }
-                    else{
-                        if (match > LCS) {
-                            LCS = match;
-                        }
-                        match = 1;
-                    }
+        String match = "";
+        String match2 = "";
+        
+        for (int i = 0; i < seq.length(); i++) {
+            for (int j = 0; j < primer.length(); j++) {
+                if (seq_target.charAt(i+j) == complemNUCL(primer.charAt(j))) {
+                    match2 = match2 + seq_target.charAt(i+j);
                 }
                 else{
-                    flag = false;
+                    if (match.length() < match2.length()) {
+                        match = match2;
+                    }
+                    match2 = "";
                 }
-                matchList.add(LCS);
             }
+        }
+        double pTM = calculateTm(match);
+        match = match + " - " + pTM;
+        return match;
+    }
+    
+    public double calculateTm(String seq){
+        int A = 0;
+        int C = 0;
+        int T = 0;
+        int G = 0;
+        double Tm;
+        for (int i = 0; i < seq.length(); i++) {
+            if (seq.charAt(i) == 'A') {
+                A = A + 1;
+            }
+            else{
+                if (seq.charAt(i) == 'T') {
+                    T = T + 1;
+                }
+                else{
+                    if (seq.charAt(i) == 'G') {
+                        G = G + 1;
+                    }
+                    else{
+                        if (seq.charAt(i) == 'C') {
+                            C = C + 1;
+                        }
+                    }
+                }
+            }
+        }
+        if(seq.length() < 14){
+            Tm = (A+T) * 2 + (G+C) * 4;
         }
         else{
-            for (int i = 0; i < seq2.length(); i++) {
-                int LCS = 0;
-                int match = 0;
-                boolean flag = true;
-                if (seq2.charAt(i) == complemNUCL(seq.charAt(i))) {
-                    if (flag) {
-                        match = match + 1;
-                    }
-                    else{
-                        if (match > LCS) {
-                            LCS = match;
-                        }
-                        match = 1;
-                    }
-                }
-                else{
-                    flag = false;
-                }
-                matchList.add(LCS);
-            }
-        }*/
-        
-        return matchList;
+            Tm = 64.9 +41*(G+C-16.4)/(A+T+G+C);
+        }
+        Tm = (double)Math.round(Tm * 100d) / 100d;
+        return Tm;
     }
     
-    public int maxValue(List lista){
-        int max = (int) lista.get(0);
-        for (int i = 0; i < lista.size(); i++) {
-            if ((int) lista.get(i) > max){
-                max = (int) lista.get(i);
-            }
-        }
-        return max;
-    }
     
     public char complemNUCL(char nucleotido){
         char resp;
@@ -277,6 +216,22 @@ public class PrimerRF{
 
     public double getTmP() {
         return TmP;
+    }
+
+    public String getFwdLCS() {
+        return fwdLCS;
+    }
+
+    public void setFwdLCS(String fwdLCS) {
+        this.fwdLCS = fwdLCS;
+    }
+
+    public String getRevLCS() {
+        return revLCS;
+    }
+
+    public void setRevLCS(String revLCS) {
+        this.revLCS = revLCS;
     }
 
     public String getFwdseqLCS() {

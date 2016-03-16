@@ -183,7 +183,9 @@ public class PrimerG1 implements Serializable{
             primers_fwd = service.createPrimer(com_sequence, sequence_back, largo1, largo2);
             System.out.println("Primers Calculados");
             System.out.println("Realizando match de primers");
-            primersMatch = serviceMatch.findbestPrimers(primers_fwd, primers_rev);
+            System.out.println("size rev: " + primers_rev.size());
+            System.out.println("size fwd: " + primers_fwd.size());
+            primersMatch = serviceMatch.findbestPrimers(primers_fwd, primers_rev, sequence_back, com_sequence);
             System.out.println("Proceso terminado");
         }
         else{
@@ -197,7 +199,9 @@ public class PrimerG1 implements Serializable{
             primers_fwd = service.createPrimer(com_sequence, sequence_back, largo1, largo2);
             System.out.println("Primers Calculados");
             System.out.println("Realizando match de primers");
-            primersMatch = serviceMatch.findbestPrimers(primers_fwd, primers_rev);
+            System.out.println("size rev: " + primers_rev.size());
+            System.out.println("size fwd: " + primers_fwd.size());
+            primersMatch = serviceMatch.findbestPrimers(primers_fwd, primers_rev, sequence_back, com_sequence);
             System.out.println("Calculando primer extensión");
             System.out.println("Enzymas: " + enzima_sel.getDnaTarget() + ", " + enzima_sel2.getDnaTarget() );
             if (enzima_sel2 == null) {

@@ -20,10 +20,6 @@ public class Primer {
     String maxAF;
     String maxAR;
 
-    private static final int NEITHER     = 0;
-    private static final int UP          = 1;
-    private static final int LEFT        = 2;
-    private static final int UP_AND_LEFT = 3;
     
     Primer(String seq, double Tm, double GC, int largo, String maxAF, String maxAR){
         this.seq = seq;
@@ -47,7 +43,7 @@ public class Primer {
             String seq_string = new String(seq_array);
             String primer_string = complemento(seq_string);
             Primer primer = new Primer(primer_string, calculateTm(primer_string), calculateGC(primer_string), primer_string.length(), 
-                    alignPrimer(seq, primer_string), alignPrimer2(comp_seq, primer_string));
+                    "", "");
             primer_list.add(primer);
         }
         return primer_list;
@@ -190,7 +186,7 @@ public class Primer {
         int C = 0;
         int T = 0;
         int G = 0;
-        double Tm;
+        double Tm1;
         for (int i = 0; i < seq.length(); i++) {
             if (seq.charAt(i) == 'A') {
                 A = A + 1;
@@ -212,26 +208,26 @@ public class Primer {
             }
         }
         if(seq.length() < 14){
-            Tm = (A+T) * 2 + (G+C) * 4;
+            Tm1 = (A+T) * 2 + (G+C) * 4;
         }
         else{
-            Tm = 64.9 +41*(G+C-16.4)/(A+T+G+C);
+            Tm1 = 64.9 +41*(G+C-16.4)/(A+T+G+C);
         }
-        Tm = (double)Math.round(Tm * 100d) / 100d;
-        return Tm;
+        Tm1 = (double)Math.round(Tm1 * 100d) / 100d;
+        return Tm1;
     }
     
     public double calculateGC(String seq){
-        double GC;
+        double GC1;
         double cantidadGC = 0;
         for (int i = 0; i < seq.length(); i++) {
             if (seq.charAt(i) == 'C' || seq.charAt(i) == 'G') {
                 cantidadGC = cantidadGC + 1;
             }
         }
-        GC = (cantidadGC / seq.length())*100.00;
-        GC = (double)Math.round(GC * 100d) / 100d;
-        return GC;
+        GC1 = (cantidadGC / seq.length())*100.00;
+        GC1 = (double)Math.round(GC1 * 100d) / 100d;
+        return GC1;
     }
     
     public String complemento(String seq){
