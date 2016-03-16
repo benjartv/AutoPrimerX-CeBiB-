@@ -9,8 +9,13 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.lang3.ArrayUtils;
 
 public class G2Utils {
-
-	public static double funcionTM(String secuencia) {
+        
+        /*
+        FunciónTM: Recibe como entrada una secuencia de nucleotidos, la cual se recorre
+        y se calcula la Telmin temperature en base a los nucleotidos que aparezcan
+        */
+    
+        public static double funcionTM(String secuencia) {
 		int A = 0;
 		int G = 0;
 		int C = 0;
@@ -33,7 +38,13 @@ public class G2Utils {
 		}
 		return Tm;
 	}
-
+        
+        /** Funcion complemento
+         * Entrada: * @param secuencia
+         * @return : String strComplemento
+         * Funcion que recibe como entrada una secuencia y retorna el complemento
+         * de la secuencia entregada
+         */
 	public static String complemento(String secuencia) {
 		String strComplemento = "";
 		ArrayList<Character> array = new ArrayList<Character>();
@@ -72,7 +83,13 @@ public class G2Utils {
 		}
 		return secuencia;
 	}
-
+        /**
+         * Funcion molecularWeight
+         * @param secuencia
+         * @return double molWeigth
+         * Funcion que recibe como entrada una secuencia de nucleotidos y 
+         * realiza el calculo del peso molecular de la secuencia en cuestión
+         */
 	public static double molecularWeight(String secuencia) {
 		int A = 0;
 		int G = 0;
@@ -93,7 +110,13 @@ public class G2Utils {
 
 		return molWeight;
 	}
-
+        /**
+         * Funcion funcionTMajustada
+         * @param secuencia
+         * @return double TmAjustada
+         * Funcion que recibe como entrada una secuencia de nucleotidos y devuelve
+         * el valor de la TM ajustada en base a dicha secuencia
+         */    
 	public static double funcionTMajustada(String secuencia) {
 		int A = 0;
 		int G = 0;
@@ -118,7 +141,14 @@ public class G2Utils {
 		}
 		return TmAjustada;
 	}
-
+        /**
+         * Funcion porcentajeGC
+         * @param secuencia
+         * @return double GC
+         * Funcion porcentajeGC recibe como parámetro una secuencia de nucleotidos
+         * y calcula la cantidad de 'G' y 'C' que se encuentren 
+         * para finalmente entregarlas como porcentaje
+         */
 	public static double porcentajeGC(String secuencia) {
 		double GC;
 		double cantidadGC = 0;
@@ -131,7 +161,17 @@ public class G2Utils {
 		GC = (double) Math.round(GC * 100d) / 100d;
 		return GC;
 	}
-
+        /**
+         * Funcion forward 
+         * @param secuencia
+         * @param TM
+         * @return String forward
+         * Funcion forward recibe como entrada la secuencia de nucleotidos y la TM deseada
+         * Primero ordena cada nucleotido de la secuencia en un arreglo, el cual es recorrido
+         * con la condición de que la TM no supere la TM entregada por el usuario, por cada iteración
+         * agrega un nuevo elemento a la lista hasta que se cumple la condición de la TM deseada, finalmente
+         * devuelve el String que corresponde al partidor forward de la secuencia.
+         */
 	public static String forward(String secuencia, double TM) {
 		ArrayList<Character> arregloFWD = new ArrayList<Character>();
 		ArrayList<Character> arreglo = new ArrayList<Character>();
@@ -166,7 +206,17 @@ public class G2Utils {
 
 		return forwd;
 	}
-
+        /**
+         * Funcion reverse
+         * @param secuencia
+         * @param TM
+         * @return String rvr
+         * Funcion reverse recibe como entrada el complemento de lala secuencia a calcular
+         * su primer reverse y la TM deseada.
+         * Similar al caso anterior se recorre el arreglo pero ahora se comienza desde atrás hacia adelante
+         * agregando los nucleotidos a la lista para luego concatenarlos con el String de reverso, finalmente
+         * retorna el String correspondiente al reverso de la secuencia
+         */
 	public static String reverse(String secuencia, double TM) {
 		char[] arr = secuencia.toCharArray();
 		char[] arregloRVR = new char[arr.length];
@@ -198,7 +248,17 @@ public class G2Utils {
 
 		return reversoComplementario;
 	}
-
+        /**
+         * Funcion reverse_EXT
+         * @param secuencia
+         * @param rev
+         * @param TM
+         * @return String rvr_ext
+         * Funcion reverse_EXT recibe como entrada la secuencia, el reverso que ya posee y 
+         * el valor de la TM al cual no debe superar, se recorre la secuencia agregando los primeros
+         * valores a un arreglo para luego concatenarlos al string de reverso, finalmente se calcula la TM
+         * considerando el partidor reverso y el partidor de extension que se está diseñando.
+         */
 	public static String reverse_EXT(String secuencia, String rev, double TM) {
 
 		char[] arr = secuencia.toCharArray();
@@ -222,7 +282,17 @@ public class G2Utils {
 
 		return rvrEXT;
 	}
-
+        /**
+         * Funcion forward_EXT
+         * @param secuencia
+         * @param fwd
+         * @param TM
+         * @return String fwd_ext
+         * Funcion forward_EXT recibe como entrada una secuencia de nucleotidos, el partidor forward y la TM
+         * similar al caso anterior comienza a recorrer la secuencia agregando los valores recorridos a una lista
+         * para luego concatenarlos en un string que será añadido al forward ya existente para realziar el calculo de la TM
+         * y así entregar el String correspondiente al forward de extension. 
+         */
 	public static String forward_EXT(String secuencia, String fwd, double TM) {
 		char[] arr = secuencia.toCharArray();
 		char[] arregloFWDEXT = new char[arr.length];
@@ -232,7 +302,6 @@ public class G2Utils {
 		int largoAux = arr.length - 1;
 		for (int i = largoAux; i > 0; i--) {
 			if (tmAux < TM) {
-				// System.out.println("hol"+i);
 				arregloFWDEXT[i] = arr[i];
 				// arregloRVR.add(arr[i]);
 				for (int j = 0; j < arregloFWDEXT.length; j++) {
@@ -340,7 +409,13 @@ public class G2Utils {
 		match = match + " - " + pTM;
 		return match;
 	}
-
+        /**
+         * Funcion reverString
+         * @param sequence
+         * @return 
+         * Funcion que reversa la secuencia que se entrega como entrada retornando el String entrgado pero 
+         * de manera reversa
+         */
 	public static String reverString(String sequence) {
 		char[] arr = sequence.toCharArray();
 		ArrayUtils.reverse(arr);
@@ -350,7 +425,17 @@ public class G2Utils {
 
 		return sequence;
 	}
-
+        /**
+         * Funcion create_sequence
+         * @param inputs
+         * @param option
+         * @param TM
+         * @param tolerance
+         * @return 
+         * Funcion create_sequence recibe como entrada la lista de secuencias entregadas por el usuario,
+         * la opcion que puede corrspondr a lineal o circular, la TM deseada y la tolerancia deseada por el usuario, en base
+         * a estos parámetros es que se comiena el calculo de los partidores reverso y forward 
+         */
 	public static List<Sequence> create_sequence(List<Input> inputs, String option, double TM, double tolerance) {
 		List<Sequence> sequences = new ArrayList<>();
 		String comp;
@@ -402,7 +487,17 @@ public class G2Utils {
 
 		return sequences;
 	}
-
+        /**
+         * Funcion secuences_ext
+         * @param pre_sequences
+         * @param option
+         * @param TMprimer
+         * @return 
+         * Funcion secuences_ext recibe como entrada la lista de secuencia anteriormente generadas, la opcion que puede
+         * ser circular o lineal más la TM deseada del primer, en base a estos parámetros realiza el cálculo de los partidores
+         * considerando sus extensiones, dependiendo el caso es que se realizarán las condiciones apropiadas las cuales son: la primera
+         * la última y las de intermedio. 
+         */
 	public static List<SequenceExt> sequences_ext(List<Sequence> pre_sequences, String option, double TMprimer) {
 		String rev_ext = "";
 		String fwd_ext = "";
@@ -415,7 +510,7 @@ public class G2Utils {
 		if (pre_sequences.size() > 0) {
 			for (int i = 0; i < pre_sequences.size(); i++) {
 				if (option.equals("lineal")) {
-
+                                        //calculando extensiones para la primera secuencia
 					if (i == 0) {
 						rev_ext = G2Utils.reverse_EXT(pre_sequences.get(i + 1).getComp(), pre_sequences.get(i).getRev(),
 								TMprimer);
@@ -428,7 +523,7 @@ public class G2Utils {
 								pre_sequences.get(i).getTm_fwd(), pre_sequences.get(i).getTm_rev(), 0, tm_rev_primer);
 						sequences_ext.add(sequence);
 					}
-
+                                        //Calculando extensiones para la última secuencia
 					else if (i + 1 == pre_sequences.size()) {
 						rev_ext = "";
 						fwd_ext = G2Utils.forward_EXT(pre_sequences.get(i - 1).getSequence(),
@@ -442,7 +537,7 @@ public class G2Utils {
 						sequences_ext.add(sequence);
 
 					}
-
+                                        //Calculando extensiones de entremedio 
 					else {
 
 						rev_ext = G2Utils.reverse_EXT(pre_sequences.get(i + 1).getComp(), pre_sequences.get(i).getRev(),
@@ -458,9 +553,9 @@ public class G2Utils {
 								tm_rev_primer);
 						sequences_ext.add(sequence);
 					}
-
+                                //Caso circular
 				} else {
-
+                                        //Calculando la primera secuencia
 					if (i == 0) {
 						rev_ext = G2Utils.reverse_EXT(pre_sequences.get(i + 1).getComp(), pre_sequences.get(i).getRev(),
 								TMprimer);
@@ -476,7 +571,7 @@ public class G2Utils {
 								tm_rev_primer);
 						sequences_ext.add(sequence);
 					}
-
+                                        //Calculando la última secuencia
 					else if (i + 1 == pre_sequences.size()) {
 						rev_ext = G2Utils.forward_EXT(pre_sequences.get(0).getComp(), pre_sequences.get(i).getFwd(),
 								TMprimer);
@@ -492,7 +587,7 @@ public class G2Utils {
 						sequences_ext.add(sequence);
 
 					}
-
+                                        //Calculando las secuencias de entremedio
 					else {
 						rev_ext = G2Utils.reverse_EXT(pre_sequences.get(i + 1).getComp(), pre_sequences.get(i).getRev(),
 								TMprimer);
@@ -516,7 +611,18 @@ public class G2Utils {
 		}
 		return sequences_ext;
 	}
-
+        /**
+         * Funcion results
+         * @param sequences_ext
+         * @param option
+         * @param TM
+         * @param TMh
+         * @param TMprimer
+         * @param tolerance
+         * @return
+         * Funcion results: recibe como parámetros las secuencias con sus respectivas extensiones y realiza el calculo
+         * de las regiones de homologia para cada par de secuencias en la lista 
+         */
 	public static List<List<Ligamiento>> results(List<SequenceExt> sequences_ext, String option, double TM, double TMh,
 			double TMprimer, double tolerance) {
 
@@ -539,7 +645,7 @@ public class G2Utils {
 			double tm_homology = 0;
 			if (option.equals("lineal")) {
 				// if (i + 1 < sequences_ext.size()) {
-
+                                //Primera secuencia
 				if (i == 0) {
 					char[] arr = sequences_ext.get(i).getRev_ext().toCharArray();
 					char[] arr2 = sequences_ext.get(i + 1).getFwd_ext().toCharArray();
@@ -589,7 +695,7 @@ public class G2Utils {
 							break;
 						}
 					}
-
+                                //Calculo de la últimas regiones
 				} else if (i + 1 == sequences_ext.size()) {
 					Ligamiento primer_fwd = new Ligamiento(sequences_ext.get(i).getName(),
 							sequences_ext.get(i).getSequence(), sequences_ext.get(i).getFwd_ext(),
@@ -602,7 +708,7 @@ public class G2Utils {
 					results.add(primers_rev);
 
 				}
-
+                                //Calculo de las regiones de entremedio
 				else {
 					char[] arr = sequences_ext.get(i).getRev_ext().toCharArray();
 					char[] arr2 = sequences_ext.get(i + 1).getFwd_ext().toCharArray();
