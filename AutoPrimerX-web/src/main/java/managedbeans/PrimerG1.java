@@ -202,13 +202,15 @@ public class PrimerG1 implements Serializable{
             System.out.println("size rev: " + primers_rev.size());
             System.out.println("size fwd: " + primers_fwd.size());
             primersMatch = serviceMatch.findbestPrimers(primers_fwd, primers_rev, sequence_back, com_sequence);
-            System.out.println("Calculando primer extensión");
-            System.out.println("Enzymas: " + enzima_sel.getDnaTarget() + ", " + enzima_sel2.getDnaTarget() );
             if (enzima_sel2 == null) {
+                System.out.println("Calculando primer extensión");
+                System.out.println("Enzymas: " + enzima_sel.getDnaTarget() + ", " + enzima_sel.getDnaTarget() );
                 primersExt = serviceExt.addEnzyme(primersMatch, enzima_sel, enzima_sel, sequence_back, com_sequence);
                 System.out.println("Proceso terminado");
             }
             else{
+                System.out.println("Calculando primer extensión");
+                System.out.println("Enzymas: " + enzima_sel.getDnaTarget() + ", " + enzima_sel2.getDnaTarget() );
                 primersExt = serviceExt.addEnzyme(primersMatch, enzima_sel, enzima_sel2, sequence_back, com_sequence);
                 System.out.println("Proceso terminado");
             }
